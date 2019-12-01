@@ -258,14 +258,10 @@ Seller* ShopSystem::readSellerData()
 	// Validate unique username, characters legnth and etc...
 	usernameValidation(username);
 	passwordValidation(password);
-	cout << "Country: ";;
-	cin.getline(country, MAX_CHARACTERS);
-	cout << "City: ";
-	cin.getline(city, MAX_CHARACTERS);
-	cout << "Street: ";
-	cin.getline(street, MAX_CHARACTERS);
-	cout << "Building number: ";
-	cin >> buildingNumber;
+	countryValidation(country);
+	cityValidation(city);
+	streetValidation(street);
+	buildingNumberValidation(buildingNumber);
 	cout << endl;
 
 	Address address(country, city, street, buildingNumber);
@@ -301,19 +297,12 @@ Customer* ShopSystem::readCustomerData()
 	cout << "Please fill in the following fields:" << endl;
 
 	// Validate unique username, characters legnth and etc...
-	cout << "Username: ";
-	cleanBuffer();
-	cin.getline(username, MAX_CHARACTERS);
-	cout << "Password: ";
-	cin.getline(password, MAX_CHARACTERS);
-	cout << "Country: ";;
-	cin.getline(country, MAX_CHARACTERS);
-	cout << "City: ";
-	cin.getline(city, MAX_CHARACTERS);
-	cout << "Street: ";
-	cin.getline(street, MAX_CHARACTERS);
-	cout << "Building number: ";
-	cin >> buildingNumber;
+	usernameValidation(username);
+	passwordValidation(password);
+	countryValidation(country);
+	cityValidation(city);
+	streetValidation(street);
+	buildingNumberValidation(buildingNumber);
 	cout << endl;
 
 	Address address(country, city, street, buildingNumber);

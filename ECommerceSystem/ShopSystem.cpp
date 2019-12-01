@@ -67,7 +67,6 @@ void ShopSystem::showSellers() const
 bool ShopSystem::showLoginMenu()
 {
 	int selection;
-	// char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
 
 	cout << "Press 1 to create a new seller account." << endl;
 	cout << "Press 2 to create a new customer account." << endl;
@@ -81,7 +80,7 @@ bool ShopSystem::showLoginMenu()
 	if (!cinTypeCheck())
 	{
 		cout << "Please choose from one of the following options!" << endl;
-		return true; // cin failed
+		return true; // cin failed - ask again for valid type
 	}
 
 	switch ((LoginOptions)selection)
@@ -92,7 +91,9 @@ bool ShopSystem::showLoginMenu()
 		addSeller(newSeller);
 		cout << "Registration completed successfully!\n" << endl;
 		if (!showSellerMenu(*newSeller))
+		{
 			return false; // Exit from the application
+		}
 		break;
 	}
 	case SignupNewCustomer:
@@ -101,27 +102,45 @@ bool ShopSystem::showLoginMenu()
 		addCustomer(newCustomer);
 		cout << "Registration completed successfully!\n" << endl;
 		if (!showCustomerMenu(*newCustomer))
+		{
 			return false; // Exit from the application
+		}
 		break;
 	}
 	case LoginSeller:
 	{
-		/* // TODO: get and validate from sellers array the login info
-		cout << "Logged in successfully!\n" << endl;
-		if (!showSellerMenu()) //insert Seller to SellerMenu from validation process
-			return false; */
+		char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
+		usernameValidation(username);
+		passwordValidation(password);
+		Seller* seller = loginSeller(username, password);
+		if (seller) // Seller found
+		{
+			if (!showSellerMenu(*seller))
+			{
+				return false; // Exit from the application
+			}
+		}
 		break;
 	}
 	case LoginCustomer:
 	{
-		/* // TODO: get and validate from customers array the login info.
-		cout << "Logged in successfully!\n" << endl;
-		if (!showCustomerMenu()) //insert Customer to CustomerMenu from validation process.
-			return false; */
+		char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
+		usernameValidation(username);
+		passwordValidation(password);
+		Customer* customer = loginCustomer(username, password);
+		if (customer) // Customer found
+		{
+			if (!showCustomerMenu(*customer))
+			{
+				return false; // Exit from the application
+			}
+		}
 		break;
 	}
 	case Exit:
+	{
 		return false; // Exit from the application
+	}
 	default:
 		cout << "Please choose from one of the following options!" << endl;
 	}
@@ -346,4 +365,40 @@ Product* ShopSystem::readProductData(Seller* seller)
 	cout << endl;
 
 	return new Product(productName, price, category, seller);
+}
+
+Seller* ShopSystem::loginSeller(char* username, char* password)
+{
+	for (unsigned int i = 0; i < numOfSellers; i++)
+	{
+		if (strcmp(sellers[i]->getUsername(), username) == 0)
+		{
+			if (strcmp(sellers[i]->getPassword(), password) == 0)
+			{
+				cout << "Logged in successfully!\n" << endl;
+				return sellers[i]; // Seller found
+			}
+		}
+	}
+
+	cout << "Wrong details. Login failed!\n" << endl;
+	return nullptr; // Seller not found - login failed
+}
+
+Customer* ShopSystem::loginCustomer(char* username, char* password)
+{
+	for (unsigned int i = 0; i < numOfCustomers; i++)
+	{
+		if (strcmp(customers[i]->getUsername(), username) == 0)
+		{
+			if (strcmp(customers[i]->getPassword(), password) == 0)
+			{
+				cout << "Logged in successfully!\n" << endl;
+				return customers[i]; // Customer found
+			}
+		}
+	}
+
+	cout << "Wrong details. Login failed!\n" << endl;
+	return nullptr; // Customer not found - login failed
 }

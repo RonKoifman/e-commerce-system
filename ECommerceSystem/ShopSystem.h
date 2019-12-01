@@ -48,6 +48,8 @@ public:
 	Customer* readCustomerData();
 	void addCustomer(Customer* customer);
 	Product* readProductData(Seller* seller);
+	Seller* loginSeller(char* username, char* password);
+	Customer* loginCustomer(char* username, char* password);
 };
 
 #endif // __SHOP_SYSTEM_H

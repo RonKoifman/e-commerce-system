@@ -106,7 +106,6 @@ void passwordValidation(char* password)
 	while (!isValid)
 	{
 		cout << "Password (between 6-20 characters): ";
-		cin.getline(password, MAX_CHARACTERS);
 
 		if (isStringLengthValid(password, len))
 		{

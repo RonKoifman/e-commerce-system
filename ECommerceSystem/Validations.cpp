@@ -11,13 +11,14 @@ void cleanBuffer()
 	//cout << "CHAR COUNT: " << c << endl;
 	if (c > 0)
 		cin.unget();
-	if (c == MAX_CHARACTERS - 1 || cin.peek() == int('\n')) {
-		do
-		{
-			cin.get(ch);
-		} while (ch != EOF && ch != '\n');
-	}
+	//cout << "SSSSSS" << cin.peek() << endl;
+	//if (c == MAX_CHARACTERS - 1 || cin.peek() == int('\n')) {
+	do
+	{
+		cin.get(ch);
+	} while (ch != EOF && ch != '\n');
 }
+
 
 bool cinTypeCheck()
 {
@@ -60,7 +61,7 @@ bool arePasswordCharactersValid(const char* str)
 	{
 		if ((str[i] <  '!') || (str[i] > '~'))  //All character from ! to ~ are allowed (excluding whitespaces and few extra chars).
 		{
-			cout << "Bad character found: '" << str[i] << "'" <<  endl;
+			cout << "Bad character found: '" << str[i] << "'" << ". Try again!" <<  endl;
 			return false;
 		}
 		i++;
@@ -142,9 +143,10 @@ void passwordValidation(char* password)
 
 		if (isStringLengthValid(password, len))
 		{
-			if (len >= 6)
-				if(arePasswordCharactersValid(password))
+			if (len >= 6) {
+				if (arePasswordCharactersValid(password))
 					isValid = true;
+			}
 			else
 				cout << "Password is too short. Try again!" << endl;
 		}

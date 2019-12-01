@@ -9,16 +9,18 @@ void cleanBuffer()
 	}
 	int c = int(cin.gcount());
 	//cout << "CHAR COUNT: " << c << endl;
-	if (c > 0)
-		cin.unget();
 	//cout << "SSSSSS" << cin.peek() << endl;
+	//cout << "XXXXXX" << cin.eof() << endl;
+	if (c > 1)
+		cin.unget();
+	//cout << "AAAAAA" << cin.peek() << endl;
 	//if (c == MAX_CHARACTERS - 1 || cin.peek() == int('\n')) {
 	do
 	{
 		cin.get(ch);
+		//cout << ch;
 	} while (ch != EOF && ch != '\n');
 }
-
 
 bool cinTypeCheck()
 {

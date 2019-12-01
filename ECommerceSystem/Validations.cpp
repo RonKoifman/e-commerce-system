@@ -137,11 +137,8 @@ void passwordValidation(char* password)
 	while (!isValid)
 	{
 		cout << "Password (between 6-20 characters): ";
-<<<<<<< HEAD
-=======
 		cin.getline(password, MAX_CHARACTERS);
 		cleanBuffer();
->>>>>>> 498cc9fca8665c9860c3fe8e306a45389138ce74
 
 		if (isStringLengthValid(password, len))
 		{

@@ -38,7 +38,7 @@ void ShopSystem::showCustomers() const
 	}
 	else
 	{
-		cout << name << " customers:" << endl;
+		cout << name << " customers:\n" << endl;
 		for (unsigned int i = 0; i < numOfCustomers; i++)
 		{
 			customers[i]->show();
@@ -55,7 +55,7 @@ void ShopSystem::showSellers() const
 	}
 	else
 	{
-		cout << name << " sellers:" << endl;
+		cout << name << " sellers:\n" << endl;
 		for (unsigned int i = 0; i < numOfSellers; i++)
 		{
 			sellers[i]->show();
@@ -115,6 +115,7 @@ bool ShopSystem::showLoginMenu()
 		Seller* seller = loginSeller(username, password);
 		if (seller) // Seller found
 		{
+			cout << "Welcome back " << seller->getUsername() << "!" << endl;
 			if (!showSellerMenu(*seller))
 			{
 				return false; // Exit from the application
@@ -130,6 +131,7 @@ bool ShopSystem::showLoginMenu()
 		Customer* customer = loginCustomer(username, password);
 		if (customer) // Customer found
 		{
+			cout << "Welcome back " << customer->getUsername() << "!" << endl;
 			if (!showCustomerMenu(*customer))
 			{
 				return false; // Exit from the application
@@ -272,7 +274,7 @@ Seller* ShopSystem::readSellerData()
 
 	cout << "Thanks for joining in, new seller! You are on the way of getting rich!" << endl;
 	cout << "We are using an universal and decentralized authentication." << endl;
-	cout << "Please fill in the following fields:" << endl;
+	cout << "Please fill in the following fields:\n" << endl;
 
 	// Validate unique username, characters legnth and etc...
 	usernameValidation(username);
@@ -313,7 +315,7 @@ Customer* ShopSystem::readCustomerData()
 
 	cout << "Thanks for joining in, new customer! Let's get you a good deal!" << endl;
 	cout << "We are using an universal and decentralized authentication." << endl;
-	cout << "Please fill in the following fields:" << endl;
+	cout << "Please fill in the following fields:\n" << endl;
 
 	// Validate unique username, characters legnth and etc...
 	usernameValidation(username);

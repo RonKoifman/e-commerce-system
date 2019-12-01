@@ -4,34 +4,18 @@
 void cleanBuffer()
 {
 	char ch;
-
-	do
-	{
-		ch = getchar();
-	} while (ch != EOF && ch != '\n');
-}
-
-void getInput(char* str)
-{
-	unsigned int i = 0;
-	char ch = ' ';
-
-	// Get input from buffer
-	while (i < MAX_CHARACTERS - 1 && ch != '\n')
-	{
-		ch = getchar();
-		if (ch != '\n')
-		{
-			str[i++] = ch;
-		}
+	if (cin.fail()) {
+		cin.clear();
 	}
-	str[i] = '\0';
-
-	// Invalid string length
-	if (i == MAX_CHARACTERS - 1)
-	{
-		cleanBuffer();
-		str[0] = '\0'; // Initialize string to empty string
+	int c = int(cin.gcount());
+	//cout << "CHAR COUNT: " << c << endl;
+	if (c > 0)
+		cin.unget();
+	if (c == MAX_CHARACTERS - 1 || cin.peek() == int('\n')) {
+		do
+		{
+			cin.get(ch);
+		} while (ch != EOF && ch != '\n');
 	}
 }
 
@@ -47,14 +31,13 @@ bool cinTypeCheck()
 	return true;
 }
 
-bool isStringLengthValid(char* str, unsigned int& len)
+bool isStringLengthValid(const char* str, unsigned int& len)
 {
-	getInput(str);
-	len = strlen(str);
-	return (0 < len && len < MAX_CHARACTERS - 1);
+	len = (unsigned int)(strlen(str));
+	return (len < MAX_CHARACTERS - 1);
 }
 
-bool areCharactersValid(char* str)
+bool areCharactersValid(const char* str)
 {
 	unsigned int i = 0;
 
@@ -80,16 +63,15 @@ void usernameValidation(char* username)
 	{
 		cout << "Username (maximum 20 characters, letters and numbers only): ";
 
+		cin.getline(username, MAX_CHARACTERS);
+		cleanBuffer();
+
 		if (isStringLengthValid(username, len))
 		{
 			if (areCharactersValid(username))
-			{
 				isValid = true;
-			}
 			else
-			{
 				cout << "Use only a-z, A-Z, 0-9 characters. Try again!" << endl;
-			}
 		}
 		else
 		{
@@ -103,21 +85,19 @@ void passwordValidation(char* password)
 	bool isValid = false;
 	unsigned int len = 0;
 
+	cleanBuffer();
 	while (!isValid)
 	{
 		cout << "Password (between 6-20 characters): ";
 		cin.getline(password, MAX_CHARACTERS);
+		cleanBuffer();
 
 		if (isStringLengthValid(password, len))
 		{
 			if (len >= 6)
-			{
 				isValid = true;
-			}
 			else
-			{
 				cout << "Password is too short. Try again!" << endl;
-			}
 		}
 		else
 		{

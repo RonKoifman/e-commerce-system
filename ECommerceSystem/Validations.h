@@ -4,8 +4,8 @@
 void cleanBuffer();
 bool cinTypeCheck();
 void usernameValidation(char* username);
-bool isStringLengthValid(char* str, unsigned int& length);
-bool areCharactersValid(char* str);
+bool isStringLengthValid(const char* str, unsigned int& length);
+bool areCharactersValid(const char* str);
 void passwordValidation(char* password);
 void getInput(char* str);
 

@@ -44,6 +44,7 @@ bool areUsernameCharactersValid(const char* str)
 	{
 		if (!((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= '0' && str[i] <= '9') || (str[i] >= 'A' && str[i] <= 'Z')))
 		{
+			cout << "Bad character found: '" << str[i] << "'" << endl;
 			return false;
 		}
 		i++;
@@ -75,6 +76,7 @@ bool areAddressCharactersValid(const char* str)
 	{
 		if (!((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] == ' ')))
 		{
+			cout << "Bad character found: '" << str[i] << "'" << endl;
 			return false;
 		}
 		i++;
@@ -91,6 +93,7 @@ bool isInt(const char* str)
 	{
 		if (!(str[i] >= '0' && str[i] <= '9'))
 		{
+			cout << "Bad character found: '" << str[i] << "'" << endl;
 			return false;
 		}
 		i++;

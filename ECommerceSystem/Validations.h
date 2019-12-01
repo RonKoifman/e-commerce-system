@@ -15,5 +15,4 @@ void cityValidation(char *city);
 void streetValidation(char *street);
 void buildingNumberValidation(unsigned int& buildingNumber);
 
-
-#endif // __VALIDATIONS_H
+#endif // __VALIDATIONS_

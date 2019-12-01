@@ -1,0 +1,5 @@
+Section 4 – Add feedback to seller
+
+* The user logged to his account -> The function will print user’s products (from his orders array) and will ask him to choose to
+which product he wants to add a feedback, the input will be a number (single char – to make an easy validation) -> Inside the chosen
+product’s class the function will add the feedback to seller’s feedbacks array.

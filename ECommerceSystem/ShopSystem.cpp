@@ -30,6 +30,16 @@ const char* ShopSystem::getName() const
 	return name;
 }
 
+unsigned int ShopSystem::getNumOfSellers() const
+{
+	return numOfSellers;
+}
+
+unsigned int ShopSystem::getNumOfCustomers() const
+{
+	return numOfCustomers;
+}
+
 void ShopSystem::showCustomers() const
 {
 	if (numOfCustomers == 0)
@@ -110,12 +120,12 @@ bool ShopSystem::showLoginMenu()
 	case LoginSeller:
 	{
 		char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
-		usernameValidation(username);
+		usernameValidation(username, *this);
 		passwordValidation(password);
 		Seller* seller = loginSeller(username, password);
 		if (seller) // Seller found
 		{
-			cout << "Welcome back " << seller->getUsername() << "!" << endl;
+			cout << "Welcome back " << seller->getUsername() << "!\n" << endl;
 			if (!showSellerMenu(*seller))
 			{
 				return false; // Exit from the application
@@ -126,12 +136,12 @@ bool ShopSystem::showLoginMenu()
 	case LoginCustomer:
 	{
 		char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
-		usernameValidation(username);
+		usernameValidation(username, *this);
 		passwordValidation(password);
 		Customer* customer = loginCustomer(username, password);
 		if (customer) // Customer found
 		{
-			cout << "Welcome back " << customer->getUsername() << "!" << endl;
+			cout << "Welcome back " << customer->getUsername() << "!\n" << endl;
 			if (!showCustomerMenu(*customer))
 			{
 				return false; // Exit from the application
@@ -277,7 +287,7 @@ Seller* ShopSystem::readSellerData()
 	cout << "Please fill in the following fields:\n" << endl;
 
 	// Validate unique username, characters legnth and etc...
-	usernameValidation(username);
+	usernameValidation(username, *this);
 	passwordValidation(password);
 	countryValidation(country);
 	cityValidation(city);
@@ -318,7 +328,7 @@ Customer* ShopSystem::readCustomerData()
 	cout << "Please fill in the following fields:\n" << endl;
 
 	// Validate unique username, characters legnth and etc...
-	usernameValidation(username);
+	usernameValidation(username, *this);
 	passwordValidation(password);
 	countryValidation(country);
 	cityValidation(city);
@@ -404,3 +414,4 @@ Customer* ShopSystem::loginCustomer(char* username, char* password)
 	cout << "Wrong details. Login failed!\n" << endl;
 	return nullptr; // Customer not found - login failed
 }
+

@@ -38,6 +38,8 @@ public:
 	ShopSystem(const ShopSystem& other) = delete; // Disable copy c'tor
 	~ShopSystem(); // D'tor
 	const char* getName() const;
+	unsigned int getNumOfSellers() const;
+	unsigned int getNumOfCustomers() const;
 	void showCustomers() const;
 	void showSellers() const;
 	bool showLoginMenu();
@@ -50,6 +52,8 @@ public:
 	Product* readProductData(Seller* seller);
 	Seller* loginSeller(char* username, char* password);
 	Customer* loginCustomer(char* username, char* password);
+	//bool isUniqueUsernameSeller(char* username);
+	//bool isUniqueUsernameCustomer(char* username);
 };
 
 #endif // __SHOP_SYSTEM_H

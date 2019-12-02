@@ -6,8 +6,10 @@ ShopSystem::ShopSystem(const char* name) // C'tor
 	// Initialize data members
 	numOfSellers = 0;
 	numOfCustomers = 0;
+	numOfProducts = 0;
 	sellers = nullptr;
 	customers = nullptr;
+	allProducts = nullptr;
 }
 
 ShopSystem::~ShopSystem() // D'tor
@@ -20,9 +22,14 @@ ShopSystem::~ShopSystem() // D'tor
 	{
 		delete customers[i];
 	}
+	for (unsigned int i = 0; i < numOfProducts; i++)
+	{
+		delete sellers[i];
+	}
 
 	delete[] sellers;
 	delete[] customers;
+	delete[] allProducts;
 }
 
 const char* ShopSystem::getName() const
@@ -180,6 +187,7 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 	case AddNewProductToSeller: 
 	{
 		Product* newProduct = readProductData(&seller);
+		addProductToProductsArray(newProduct);
 		seller.addProduct(newProduct);
 		break;
 	}
@@ -233,7 +241,7 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 	{
 	case CustomerSearchProduct:
 	{
-		// look for new product
+		searchProduct();
 		break;
 	}
 	case AddNewProductToCart:
@@ -415,3 +423,62 @@ Customer* ShopSystem::loginCustomer(char* username, char* password)
 	return nullptr; // Customer not found - login failed
 }
 
+Product** ShopSystem::searchProduct() 
+{
+	int selection;
+	char name[MAX_CHARACTERS]="";
+	Product** foundProducts = new Product*[1];
+
+	cout << "Press 1 to show all products." << endl;
+	cout << "Press 2 to look by name." << endl;
+	cout << "Your selection: ";
+
+	cin >> selection;
+	cout << endl;
+
+	if (selection == 2) {
+		cout << "Enter the name to look for: ";
+		cin.getline(name, MAX_CHARACTERS);
+		cleanBuffer();
+	}
+
+
+	unsigned int count = 1;
+	for (unsigned int i = 0; i < numOfProducts; i++) 
+	{
+		if (strcmp(name, "") != 0) 
+		{
+			if (strcmp(name, allProducts[i]->getName()) == 0) 
+			{
+				cout << count << ". ";
+				allProducts[i]->show();
+				cout << endl;
+				count++;
+			}
+		}
+		else {
+			cout << i + 1 << ". ";
+			allProducts[i]->show();
+			cout << endl;
+		}
+	}
+}
+
+void ShopSystem::addProductToProductsArray(Product* product) 
+{
+
+	unsigned int i;
+
+	Product** temp = new Product*[numOfProducts + 1]; // Create bigger array to add the new product
+
+	// Move the pointers from the current array to temp
+	for (i = 0; i < numOfProducts; i++)
+	{
+		temp[i] = allProducts[i];
+	}
+	temp[i] = product; // Add the new product
+	numOfProducts++;
+
+	delete[] allProducts; // Free the current array
+	allProducts = temp; // Update products array to temp
+}

@@ -15,6 +15,9 @@ private:
 	unsigned int numOfSellers;
 	Customer** customers;
 	unsigned int numOfCustomers;
+	Product ** allProducts;
+	unsigned int numOfProducts;
+
 
 public:
 	// enum declarations
@@ -50,8 +53,10 @@ public:
 	Customer* readCustomerData();
 	void addCustomer(Customer* customer);
 	Product* readProductData(Seller* seller);
+	void addProductToProductsArray(Product* product);
 	Seller* loginSeller(char* username, char* password);
 	Customer* loginCustomer(char* username, char* password);
+	Product** searchProduct();
 	//bool isUniqueUsernameSeller(char* username);
 	//bool isUniqueUsernameCustomer(char* username);
 };

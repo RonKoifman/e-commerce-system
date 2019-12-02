@@ -252,28 +252,28 @@ void buildingNumberValidation(unsigned int& buildingNumber)
 	}
 }
 
-bool ShopSystem::isUniqueUsernameSeller(char* username, const ShopSystem& shop)
-{
-	for (unsigned int i = 0; i < shop.getNumOfSellers(); i++)
-	{
-		if (strcmp(shop.sellers[i]->getUsername(), username) == 0) // Username taken
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
-
-bool ShopSystem::isUniqueUsernameCustomer(char* username, const ShopSystem& shop)
-{
-	for (unsigned int i = 0; i < numOfCustomers; i++)
-	{
-		if (strcmp(customers[i]->getUsername(), username) == 0) // Username taken
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
+//bool ShopSystem::isUniqueUsernameSeller(char* username, const ShopSystem& shop)
+//{
+//	for (unsigned int i = 0; i < shop.getNumOfSellers(); i++)
+//	{
+//		if (strcmp(shop.sellers[i]->getUsername(), username) == 0) // Username taken
+//		{
+//			return false;
+//		}
+//	}
+//
+//	return true;
+//}
+//
+//bool ShopSystem::isUniqueUsernameCustomer(char* username, const ShopSystem& shop)
+//{
+//	for (unsigned int i = 0; i < numOfCustomers; i++)
+//	{
+//		if (strcmp(customers[i]->getUsername(), username) == 0) // Username taken
+//		{
+//			return false;
+//		}
+//	}
+//
+//	return true;
+//}

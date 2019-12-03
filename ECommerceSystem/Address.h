@@ -9,10 +9,10 @@ private:
 	char* country;
 	char* city;
 	char* street;
-	unsigned int buildingNumber;
+	int buildingNumber;
 
 public:
-	Address(char* country, char* city, char* street, unsigned int buildingNumber); // C'tor
+	Address(char* country, char* city, char* street, int buildingNumber); // C'tor
 	Address(const Address &other); // Copy C'tor
 	~Address(); // D'tor
 	void show() const;
@@ -20,12 +20,12 @@ public:
 	void setCountry(char* country);
 	void setCity(char* city);
 	void setStreet(char* street);
-	void setBuildingNumber(unsigned int buildingNumber);
+	void setBuildingNumber(int buildingNumber);
 	// Getters
 	char* getCountry() const;
 	char* getCity() const;
 	char* getStreet() const;
-	unsigned int getBuildingNumber() const;
+	int getBuildingNumber() const;
 };
 
 #endif // __ADDRESS_H

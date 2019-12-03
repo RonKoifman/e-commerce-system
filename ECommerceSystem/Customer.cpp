@@ -19,11 +19,11 @@ Customer::~Customer() // D'tor
 	delete[] username;
 	delete[] password;
 
-	for (unsigned int i = 0; i < numOfProductsInCart; i++)
+	for (int i = 0; i < numOfProductsInCart; i++)
 	{
 		delete cart[i];
 	}
-	for (unsigned int i = 0; i < numOfOrders; i++)
+	for (int i = 0; i < numOfOrders; i++)
 	{
 		delete orders[i];
 	}
@@ -51,12 +51,12 @@ void Customer::setAddress(Address address)
 	this->address = address;
 }
 
-void Customer::setNumOfPruductsInCart(unsigned int numOfProductsInCart)
+void Customer::setNumOfPruductsInCart(int numOfProductsInCart)
 {
 	this->numOfProductsInCart = numOfProductsInCart;
 }
 
-void Customer::setNumOfOrders(unsigned int numOfOrders)
+void Customer::setNumOfOrders(int numOfOrders)
 {
 	this->numOfOrders = numOfOrders;
 }
@@ -81,7 +81,7 @@ Product** Customer::getCart() const
 	return cart;
 }
 
-unsigned int Customer::getNumOfProductsInCart() const
+int Customer::getNumOfProductsInCart() const
 {
 	return numOfProductsInCart;
 }
@@ -91,7 +91,7 @@ Checkout** Customer::getOrders() const
 	return orders;
 }
 
-unsigned int Customer::getNumOfOrders() const
+int Customer::getNumOfOrders() const
 {
 	return numOfOrders;
 }
@@ -111,7 +111,7 @@ void Customer::showCart() const
 	}
 	else
 	{
-		for (unsigned int i = 0; i < numOfProductsInCart; i++)
+		for (int i = 0; i < numOfProductsInCart; i++)
 		{
 			cart[i]->show(); cout << endl;
 		}

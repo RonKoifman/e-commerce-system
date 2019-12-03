@@ -16,11 +16,11 @@ Checkout::Checkout(Customer* customer) // C'tor
 
 Checkout::~Checkout() // D'tor
 {
-	for (unsigned int i = 0; i < numOfChosenProducts; i++)
+	for (int i = 0; i < numOfChosenProducts; i++)
 	{
 		delete chosenProducts[i];
 	}
-	for (unsigned int i = 0; i < numOfSellers; i++)
+	for (int i = 0; i < numOfSellers; i++)
 	{
 		delete sellers[i];
 	}
@@ -29,7 +29,7 @@ Checkout::~Checkout() // D'tor
 	delete[] sellers;
 }
 
-void Checkout::setNumOfChosenProducts(unsigned int numOfChosenProducts)
+void Checkout::setNumOfChosenProducts(int numOfChosenProducts)
 {
 	this->numOfChosenProducts = numOfChosenProducts;
 }
@@ -44,7 +44,7 @@ void Checkout::setPayment(float payment)
 	this->payment = payment;
 }
 
-void Checkout::setNumOfSellers(unsigned int numOfSellers)
+void Checkout::setNumOfSellers(int numOfSellers)
 {
 	this->numOfSellers = numOfSellers;
 }
@@ -54,7 +54,7 @@ Product** Checkout::getChosenProducts() const
 	return chosenProducts;
 }
 
-unsigned int Checkout::getNumOfChosenProducts() const
+int Checkout::getNumOfChosenProducts() const
 {
 	return numOfChosenProducts;
 }
@@ -74,7 +74,7 @@ Seller** Checkout::getSellers() const
 	return sellers;
 }
 
-unsigned int Checkout::getNumOfSellers() const
+int Checkout::getNumOfSellers() const
 {
 	return numOfSellers;
 }
@@ -87,7 +87,7 @@ Customer* Checkout::getCustomer() const
 void Checkout::show() const
 {
 	cout << "Chosen products:" << endl;
-	for (unsigned int i = 0; i < numOfChosenProducts; i++)
+	for (int i = 0; i < numOfChosenProducts; i++)
 	{
 		chosenProducts[i]->show(); cout << endl;
 	}

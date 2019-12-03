@@ -6,21 +6,21 @@
 class Date
 {
 private:
-	unsigned int day;
-	unsigned int month;
-	unsigned int year;
+	int day;
+	int month;
+	int year;
 
 public:
-	Date(unsigned int day, unsigned int month, unsigned int year); // C'tor
+	Date(int day,int month, int year); // C'tor
 	void show() const;
 	// Setters
-	void setDay(unsigned int day);
-	void setMonth(unsigned int month);
-	void setYear(unsigned int year);
+	void setDay(int day);
+	void setMonth(int month);
+	void setYear(int year);
 	// Getters
-	unsigned int getDay() const;
-	unsigned int getMonth() const;
-	unsigned int getYear() const;
+	int getDay() const;
+	int getMonth() const;
+	int getYear() const;
 };
 
 #endif // __DATE_H

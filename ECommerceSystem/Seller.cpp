@@ -1,4 +1,3 @@
-#include "Product.h"
 #include "Seller.h"
 
 Seller::Seller(char* username, char* password, Address address) // C'tor
@@ -19,11 +18,11 @@ Seller::~Seller() // D'tor
 	delete[] username;
 	delete[] password;
 
-	for (unsigned int i = 0; i < numOfProducts; i++)
+	for (int i = 0; i < numOfProducts; i++)
 	{
 		delete products[i];
 	}
-	for (unsigned int i = 0; i < numOfFeedbacks; i++)
+	for (int i = 0; i < numOfFeedbacks; i++)
 	{
 		delete feedbacks[i];
 	}
@@ -71,7 +70,7 @@ Feedback** Seller::getFeedbacks() const
 	return feedbacks;
 }
 
-unsigned int Seller::getNumOfFeedbacks() const
+int Seller::getNumOfFeedbacks() const
 {
 	return numOfFeedbacks;
 }
@@ -81,7 +80,7 @@ Product** Seller::getProducts() const
 	return products;
 }
 
-unsigned int Seller::getNumOfProducts() const
+int& Seller::getNumOfProducts()
 {
 	return numOfProducts;
 }
@@ -104,7 +103,7 @@ void Seller::showFeedbacks() const
 	}
 	else
 	{
-		for (unsigned int i = 0; i < numOfFeedbacks; i++)
+		for (int i = 0; i < numOfFeedbacks; i++)
 		{
 			cout << i + 1 << ". ";
 			feedbacks[i]->show(); cout << endl;
@@ -123,7 +122,7 @@ void Seller::showProducts() const
 	else
 	{
 		cout << endl;
-		for (unsigned int i = 0; i < numOfProducts; i++)
+		for (int i = 0; i < numOfProducts; i++)
 		{
 			cout << i + 1 << ". ";
 			products[i]->show();
@@ -131,20 +130,7 @@ void Seller::showProducts() const
 	}
 }
 
-void Seller::addProduct(Product* product)
+Product*** Seller::getProductsByPointer()
 {
-	unsigned int i;
-
-	Product** temp = new Product*[numOfProducts + 1]; // Create bigger array to add the new product
-
-	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfProducts; i++)
-	{
-		temp[i] = products[i];
-	}
-	temp[i] = product; // Add the new product
-	numOfProducts++;
-
-	delete[] products; // Free the current array
-	products = temp; // Update products array to temp
+	return &products;
 }

@@ -4,6 +4,7 @@
 #include "OutResources.h"
 #include "Address.h"
 #include "Feedback.h"
+#include "Product.h"
 #include "Validations.h"
 
 class Pruduct;
@@ -15,9 +16,9 @@ private:
 	char* password;
 	Address address;
 	Feedback** feedbacks;
-	unsigned int numOfFeedbacks;
+	int numOfFeedbacks;
 	Product** products;
-	unsigned int numOfProducts;
+	int numOfProducts;
 
 public:
 	Seller(char* username, char* password, Address address); // C'tor
@@ -26,7 +27,6 @@ public:
 	void show() const;
 	void showFeedbacks() const;
 	void showProducts() const;
-	void addProduct(Product* product);
 	// Setters
 	void setUsername(char* username);
 	void setPassword(char* password);
@@ -36,9 +36,10 @@ public:
 	char* getPassword() const;
 	Address getAddress() const;
 	Feedback** getFeedbacks() const;
-	unsigned int getNumOfFeedbacks() const;
+	int getNumOfFeedbacks() const;
 	Product** getProducts() const;
-	unsigned int getNumOfProducts() const;
+	Product*** getProductsByPointer();
+	int& getNumOfProducts();
 };
 
 #endif // __SELLER_H

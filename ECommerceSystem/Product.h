@@ -8,7 +8,7 @@ class Seller;
 class Product
 {
 public:
-	enum Category { Clothing = '1', Kids = '2', Electricity = '3', Office = '4' };
+	enum Category { Clothing = 1, Kids = 2, Electricity = 3, Office = 4 };
 
 private:
 	static unsigned int uniqueID;
@@ -19,7 +19,7 @@ private:
 	const unsigned int serialNumber;
 
 public:
-	Product(char* name, float price, char category, Seller* seller); // C'tor
+	Product(char* name, float price, int category, Seller* seller); // C'tor
 	Product(const Product& other); // Copy C'tor
 	~Product(); // D'tor
 	void show() const;

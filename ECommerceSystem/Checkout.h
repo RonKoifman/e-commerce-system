@@ -4,6 +4,7 @@
 #include "OutResources.h"
 #include "Product.h"
 #include "Seller.h"
+#include "Customer.h"
 
 class Customer;
 
@@ -11,11 +12,11 @@ class Checkout
 {
 private:
 	Product** chosenProducts;
-	unsigned int numOfChosenProducts;
+	int numOfChosenProducts;
 	float totalPrice; 
 	float payment;
 	Seller** sellers;
-	unsigned int numOfSellers;
+	int numOfSellers;
 	Customer* customer;
 
 public:
@@ -24,16 +25,16 @@ public:
 	~Checkout(); // D'tor
 	void show() const;
 	// Setters
-	void setNumOfChosenProducts(unsigned int numOfChosenProducts);
+	void setNumOfChosenProducts(int numOfChosenProducts);
 	void setTotalPrice(float totalPrice);
 	void setPayment(float payment);
-	void setNumOfSellers(unsigned int numOfSellers);
+	void setNumOfSellers(int numOfSellers);
 	// Getters
 	Product** getChosenProducts() const;
-	unsigned int getNumOfChosenProducts() const;
+	int getNumOfChosenProducts() const;
 	float getTotalPrice() const;
 	float getPayment();
-	unsigned int getNumOfSellers() const;
+	int getNumOfSellers() const;
 	Customer* getCustomer() const;
 	Seller** getSellers() const;
 };

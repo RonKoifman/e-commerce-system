@@ -1,6 +1,6 @@
 #include "Address.h"
 
-Address::Address(char* country, char* city, char* street, unsigned int buildingNumber) // C'tor
+Address::Address(char* country, char* city, char* street, int buildingNumber) // C'tor
 	: country(nullptr), city(nullptr), street(nullptr)
 {
 	setCountry(country);
@@ -46,7 +46,7 @@ void Address::setStreet(char* street)
 	strcpy(this->street, street);
 }
 
-void Address::setBuildingNumber(unsigned int buildingNumber)
+void Address::setBuildingNumber(int buildingNumber)
 {
 	this->buildingNumber = buildingNumber;
 }
@@ -66,7 +66,7 @@ char* Address::getStreet() const
 	return street;
 }
 
-unsigned int Address::getBuildingNumber() const
+int Address::getBuildingNumber() const
 {
 	return buildingNumber;
 }

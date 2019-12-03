@@ -1,25 +1,44 @@
-#include "OutResources.h"
 #include "Validations.h"
 
 void cleanBuffer()
 {
 	char ch;
-	if (cin.fail()) {
-		cin.clear();
-	}
-	int c = int(cin.gcount());
-	//cout << "CHAR COUNT: " << c << endl;
-	//cout << "SSSSSS" << cin.peek() << endl;
-	//cout << "XXXXXX" << cin.eof() << endl;
-	if (c > 1)
-		cin.unget();
-	//cout << "AAAAAA" << cin.peek() << endl;
-	//if (c == MAX_CHARACTERS - 1 || cin.peek() == int('\n')) {
+
 	do
 	{
-		cin.get(ch);
-		//cout << ch;
+		ch = getchar();
 	} while (ch != EOF && ch != '\n');
+}
+
+bool getInput(char* str, int& len)
+{
+	int i = 0;
+	char ch = ' ';
+
+	// Get input from buffer
+	while (i < MAX_CHARACTERS - 1 && ch != '\n')
+	{
+		ch = getchar();
+		if (ch != '\n')
+		{
+			str[i++] = ch;
+		}
+	}
+	str[i] = '\0';
+	len = i;
+
+	// Invalid string length or an empty string
+	if (len == MAX_CHARACTERS - 1 || len == 0)
+	{
+		if (len > 0)
+		{
+			cleanBuffer();
+		}
+		cout << "Invalid input length. Try again!" << endl;
+		return false;
+	}
+
+	return true; // Valid length
 }
 
 bool cinTypeCheck()
@@ -30,24 +49,19 @@ bool cinTypeCheck()
 		cleanBuffer();
 		return false; // The input does not match the expected type
 	}
-	return true;
+
+	return true; // Valid type
 }
 
-bool isStringLengthValid(const char* str, unsigned int& len)
+bool checkLettersAndDigits(const char* str)
 {
-	len = (unsigned int)(strlen(str));
-	return (len < MAX_CHARACTERS - 1);
-}
-
-bool areUsernameCharactersValid(const char* str)
-{
-	unsigned int i = 0;
+	int i = 0;
 
 	while (str[i] != '\0')
 	{
 		if (!((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= '0' && str[i] <= '9') || (str[i] >= 'A' && str[i] <= 'Z')))
 		{
-			cout << "Bad character found: '" << str[i] << "'" << endl;
+			cout << "Invalid character found: '" << str[i] << "'" << endl;
 			return false;
 		}
 		i++;
@@ -55,78 +69,98 @@ bool areUsernameCharactersValid(const char* str)
 	return true;
 }
 
-bool arePasswordCharactersValid(const char* str)
+bool checkLettersDigitsAndSpace(const char* str)
 {
-	unsigned int i = 0;
+	int i = 0;
 
 	while (str[i] != '\0')
 	{
-		if ((str[i] <  '!') || (str[i] > '~'))  //All character from ! to ~ are allowed (excluding whitespaces and few extra chars).
+		if (!((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9')))
 		{
-			cout << "Bad character found: '" << str[i] << "'" << ". Try again!" <<  endl;
-			return false;
+			if (str[i] == ' ')
+			{
+				if ((str[i] == ' ' && str[i + 1] == '\0') || str[0] == ' ' || (str[i] == ' ' && str[i + 1] == ' '))
+				{
+					cout << "Wrong spacing. ";
+					return false;
+				}
+			}
+			else
+			{
+				cout << "Invalid character found: '" << str[i] << "'" << endl;
+				return false;
+			}
 		}
 		i++;
 	}
+
 	return true;
 }
 
-bool areAddressCharactersValid(const char* str)
+bool checkSpecialCharacters(const char* str)
 {
-	unsigned int i = 0;
+	int i = 0;
 
 	while (str[i] != '\0')
 	{
-		if (!((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] == ' ')))
+		if ((str[i] < '!') || (str[i] > '~'))  // All character from '!' to '~'y' are allowed (excluding whitespaces and few extra chars)
 		{
-			cout << "Bad character found: '" << str[i] << "'" << endl;
+			cout << "Invalid character found: '" << str[i] << "'" << ". Try again!" << endl;
 			return false;
 		}
 		i++;
 	}
-
 	return true;
 }
 
-bool isInt(const char* str)
+bool checkLetters(const char* str)
 {
-	unsigned int i = 0;
+	int i = 0;
 
 	while (str[i] != '\0')
 	{
-		if (!(str[i] >= '0' && str[i] <= '9'))
+		if (!((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z')))
 		{
-			cout << "Bad character found: '" << str[i] << "'" << endl;
-			return false;
+			if (str[i] == ' ')
+			{
+				if ((str[i] == ' ' && str[i + 1] == '\0') || str[0] == ' ' || (str[i] == ' ' && str[i + 1] == ' '))
+				{
+					cout << "Wrong spacing. ";
+					return false;
+				}
+			}
+			else
+			{
+				cout << "Invalid character found: '" << str[i] << "'" << endl;
+				return false;
+			}
 		}
 		i++;
 	}
+
 	return true;
 }
 
-void usernameValidation(char* username)
+void usernameValidation(char* username, const ShopSystem& shop) 
 {
 	bool isValid = false;
-	unsigned int len = 0;
+	int len = 0;
 
 	cleanBuffer();
 	while (!isValid)
 	{
-		cout << "Username (maximum 20 characters, letters and numbers only): ";
+		cout << "Username (maximum 20 characters, letters and digits only): ";
 
-		cin.getline(username, MAX_CHARACTERS);
-		cleanBuffer();
-
-		if (isStringLengthValid(username, len))
+		if (getInput(username, len))
 		{
-			if (areUsernameCharactersValid(username))
-				isValid = true;
+			if (checkLettersAndDigits(username))
+			{
+				isValid = uniqueUsername(username, shop);
+			}
 			else
+			{
 				cout << "Use only a-z, A-Z, 0-9 characters. Try again!" << endl;
-		}
-		else
-		{
-			cout << "Username is too long. Try again!" << endl;
+			}
 		}
 	}
 }
@@ -134,53 +168,48 @@ void usernameValidation(char* username)
 void passwordValidation(char* password)
 {
 	bool isValid = false;
-	unsigned int len = 0;
+	int len = 0;
 
-	cleanBuffer();
 	while (!isValid)
 	{
 		cout << "Password (between 6-20 characters): ";
-		cin.getline(password, MAX_CHARACTERS);
-		cleanBuffer();
 
-		if (isStringLengthValid(password, len))
+		if (getInput(password, len))
 		{
-			if (len >= 6) {
-				if (arePasswordCharactersValid(password))
+			if (strlen(password) >= MIN_CHARACTERS_PASSWORD) 
+			{
+				if (checkSpecialCharacters(password))
+				{
 					isValid = true;
+				}
 			}
 			else
+			{
 				cout << "Password is too short. Try again!" << endl;
-		}
-		else
-		{
-			cout << "Password is too long. Try again!" << endl;
+			}
 		}
 	}
 }
 
-void countryValidation(char *country) 
+void countryValidation(char* country)
 {
 	bool isValid = false;
-	unsigned int len = 0;
+	int len = 0;
 
-	cleanBuffer();
 	while (!isValid)
 	{
-		cout << "Country name(maximum 20 characters, letters only): ";
-		cin.getline(country, MAX_CHARACTERS);
-		cleanBuffer();
+		cout << "Country (maximum 20 characters, letters and space only): ";
 
-		if (isStringLengthValid(country, len))
+		if (getInput(country, len))
 		{
-			if (areAddressCharactersValid(country))
+			if (checkLetters(country))
+			{
 				isValid = true;
+			}
 			else
+			{
 				cout << "Use only a-z, A-Z or space. Try again!" << endl;
-		}
-		else
-		{
-			cout << "Country name is too long. Try again!" << endl;
+			}
 		}
 	}
 }
@@ -188,25 +217,22 @@ void countryValidation(char *country)
 void cityValidation(char *city)
 {
 	bool isValid = false;
-	unsigned int len = 0;
+	int len = 0;
 
-	cleanBuffer();
 	while (!isValid)
 	{
-		cout << "City name(maximum 20 characters, letters only): ";
-		cin.getline(city, MAX_CHARACTERS);
-		cleanBuffer();
+		cout << "City (maximum 20 characters, letters and space only): ";
 
-		if (isStringLengthValid(city, len))
+		if (getInput(city, len))
 		{
-			if (areAddressCharactersValid(city))
+			if (checkLetters(city))
+			{
 				isValid = true;
+			}
 			else
+			{
 				cout << "Use only a-z, A-Z or space. Try again!" << endl;
-		}
-		else
-		{
-			cout << "City name is too long. Try again!" << endl;
+			}
 		}
 	}
 }
@@ -214,49 +240,157 @@ void cityValidation(char *city)
 void streetValidation(char *street)
 {
 	bool isValid = false;
-	unsigned int len = 0;
+	int len = 0;
 
-	cleanBuffer();
 	while (!isValid)
 	{
-		cout << "Street name(maximum 20 characters, letters only): ";
-		cin.getline(street, MAX_CHARACTERS);
-		cleanBuffer();
+		cout << "Street (maximum 20 characters, letters and space only): ";
 
-		if (isStringLengthValid(street, len))
+		if (getInput(street, len))
 		{
-			if (areAddressCharactersValid(street))
+			if (checkLetters(street))
+			{
 				isValid = true;
+			}
 			else
+			{
 				cout << "Use only a-z, A-Z or space. Try again!" << endl;
-		}
-		else
-		{
-			cout << "Street name is too long. Try again!" << endl;
+			}
 		}
 	}
 }
 
-void buildingNumberValidation(unsigned int& buildingNumber)
+void buildingNumberValidation(int& buildingNumber)
 {
 	bool isValid = false;
-	char number[MAX_CHARACTERS];
 
-	cleanBuffer();
 	while (!isValid)
 	{
 		cout << "Building number: ";
-		cin.getline(number, MAX_CHARACTERS);
-		cleanBuffer();
+		cin >> buildingNumber;
 
-		if (isInt(number))
+		if (cinTypeCheck() && buildingNumber > 0)
 		{
-			buildingNumber = atoi(number);
 			isValid = true;
 		}
 		else
 		{
-			cout << "Wrong building number, use only 0-9 characters. Try again!" << endl;
+			cout << "Invalid building number. Try again!" << endl;
+		}
+	}
+}
+
+bool uniqueUsername(char* username, const ShopSystem& shop)
+{
+	Seller** sellers = shop.getSellers();
+	Customer** customers = shop.getCustomers();
+	int numOfSellers = shop.getNumOfSellers();
+	int numOfCustomers = shop.getNumOfCustomers();
+
+	for (int i = 0; i < numOfSellers; i++) // Search through all sellers
+	{
+		if (strcmp(sellers[i]->getUsername(), username) == 0) // Username taken
+		{
+			cout << "Username taken! Please choose a different username." << endl;
+			return false;
+		}
+	}
+	for (int i = 0; i < numOfCustomers; i++) // Search through all customers
+	{
+		if (strcmp(customers[i]->getUsername(), username) == 0) // Username taken
+		{
+			cout << "Username taken! Please choose a different username." << endl;
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void productNameValidation(char* productName)
+{
+	bool isValid = false;
+	int len = 0;
+
+	cleanBuffer();
+	while (!isValid)
+	{
+		cout << "Product name (maximum 20 characters, letters digits and space only): ";
+
+		if (getInput(productName, len))
+		{
+			if (checkLettersDigitsAndSpace(productName))
+			{
+				isValid = true;
+			}
+			else
+			{
+				cout << "Product name is not valid. Try again!" << endl;
+			}
+		}
+	}
+}
+
+void priceValidation(float& price)
+{
+	bool isValid = false;
+
+	while (!isValid)
+	{
+		cout << "Price: ";
+		cin >> price;
+
+		if (cinTypeCheck() && price >= 0)
+		{
+			isValid = true;
+		}
+		else
+		{
+			cout << "Invalid price. Try again!" << endl;
+		}
+	}
+}
+
+void categoryValidation(int &category)
+{
+	bool isValid = false;
+
+	while (!isValid)
+	{
+		cout << "Category (choose from the following: 1-Clothing, 2-Kids, 3-Electricity, 4-Office): ";
+		cin >> category;
+
+		if (cinTypeCheck() && (1 <= category && category <= 4))
+		{
+			isValid = true;
+		}
+		else
+		{
+			cout << "Invalid category. Try again!" << endl;
+		}
+	}
+}
+
+void searchProductSelectionValidation(int& selection)
+{
+	bool isValid = false;
+
+	while (!isValid)
+	{
+		cout << "Press 1 to show all products in the shop." << endl;
+		cout << "Press 2 to search a product by name." << endl;
+		cout << "Your selection: ";
+
+		cin >> selection;
+		cout << endl;
+
+		if (cinTypeCheck() && (selection == ShopSystem::AllProducts || selection == ShopSystem::SpecificProductName))
+		{
+			isValid = true;
+		}
+		else
+		{
+			cout << "Please choose from one of the following options!\n" << endl;
 		}
 	}
 }

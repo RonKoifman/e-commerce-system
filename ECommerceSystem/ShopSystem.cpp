@@ -516,6 +516,7 @@ void ShopSystem::searchProducts(Product*** requestedProducts, int& numOfRequeste
 		}
 
 		showRequestedProducts(*requestedProducts, numOfRequestedProducts);
+		delete[] *requestedProducts; // Free the requested products array
 	}
 }
 

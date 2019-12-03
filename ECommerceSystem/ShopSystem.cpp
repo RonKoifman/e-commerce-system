@@ -200,15 +200,20 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 		case SellerLogOut:
 		{
 			cout << "Bye bye " << seller.getUsername() << "... We hope to see you again soon!\n" << endl;
+			delete[] requestedProducts; // Free the requested products array
 			return true; // Logout seller
 		}
 		case SellerExit:
+		{
+			delete[] requestedProducts; // Free the requested products array
 			return false; // Exit from the application
+		}
 		default:
 			cout << "Please choose from one of the following options!\n" << endl;
 		}
 	}
 
+	delete[] requestedProducts; // Free the requested products array
 	return showSellerMenu(seller); // Repeatedly show menu
 }
 
@@ -263,15 +268,20 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		case CustomerLogOut:
 		{
 			cout << "Bye bye " << customer.getUsername() << "... We hope to see you again soon!\n" << endl;
+			delete[] requestedProducts; // Free the requested products array
 			return true; // Logout customer
 		}
 		case CustomerExit:
+		{
+			delete[] requestedProducts; // Free the requested products array
 			return false; // Exit from the application
+		}
 		default:
 			cout << "Please choose from one of the following options!\n" << endl;
 		}
 	}
 
+	delete[] requestedProducts; // Free the requested products array
 	return showCustomerMenu(customer); // Repeatedly show menu
 }
 
@@ -516,7 +526,6 @@ void ShopSystem::searchProducts(Product*** requestedProducts, int& numOfRequeste
 		}
 
 		showRequestedProducts(*requestedProducts, numOfRequestedProducts);
-		delete[] *requestedProducts; // Free the requested products array
 	}
 }
 

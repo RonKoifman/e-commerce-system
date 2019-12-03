@@ -525,17 +525,11 @@ void ShopSystem::searchProducts(Product*** requestedProducts, int& numOfRequeste
 
 void ShopSystem::showRequestedProducts(Product** requestedProducts, int numOfRequestedProducts) const
 {
-	if (numOfRequestedProducts == 0) // No matching products
+	cout << numOfRequestedProducts << " products found.\n" << endl;
+
+	for (int i = 0; i < numOfRequestedProducts; i++) // Print matching products
 	{
-		cout << endl << "0 products found.\n" << endl;
-	}
-	else
-	{
-		cout << numOfRequestedProducts << " products found.\n" << endl;
-		for (int i = 0; i < numOfRequestedProducts; i++) // Print matching products
-		{
-			cout << i + 1 << "."; requestedProducts[i]->show();
-			cout << endl;
-		}
+		cout << i + 1 << "."; requestedProducts[i]->show();
+		cout << endl;
 	}
 }

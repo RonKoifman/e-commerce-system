@@ -25,7 +25,7 @@ ShopSystem::~ShopSystem() // D'tor
 
 	delete[] sellers;
 	delete[] customers;
-	delete[] allProducts; // The products pointers themselves will be released at each seller d'tor
+	delete[] allProducts; // The products pointers themselves already released at each of their seller d'tor
 }
 
 const char* ShopSystem::getName() const

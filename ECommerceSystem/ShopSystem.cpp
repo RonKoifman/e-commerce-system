@@ -22,14 +22,10 @@ ShopSystem::~ShopSystem() // D'tor
 	{
 		delete customers[i];
 	}
-	for (int i = 0; i < numOfAllProducts; i++)
-	{
-		delete allProducts[i];
-	}
 
 	delete[] sellers;
 	delete[] customers;
-	delete[] allProducts;
+	delete[] allProducts; // The products pointers themselves will be released at each seller d'tor
 }
 
 const char* ShopSystem::getName() const

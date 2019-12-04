@@ -117,3 +117,21 @@ void Customer::showCart() const
 		}
 	}
 }
+
+void Customer::addItemToCart(Product* item)
+{
+	int i;
+
+	Product** temp = new Product*[numOfProductsInCart + 1]; // Create bigger array to add the new product
+
+	// Move the pointers from the current array to temp
+	for (i = 0; i < numOfProductsInCart; i++)
+	{
+		temp[i] = cart[i];
+	}
+	temp[i] = item; // Add the new product
+	numOfProductsInCart++;
+
+	delete[] cart; // Free the current array
+	cart = temp; // Update products array to temp
+}

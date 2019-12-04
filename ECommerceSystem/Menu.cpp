@@ -26,13 +26,13 @@ void printSellerMenu()
 void printCustomerMenu()
 {
 	cout << "Press 1 to search for a product." << endl;
-	cout << "Press 2 to add product to your cart." << endl;
-	cout << "Press 3 to checkout." << endl;
-	cout << "Press 4 to write a feedback to a seller." << endl;
-	cout << "Press 5 to view all the customers in the shop." << endl;
-	cout << "Press 6 to view all the sellers in the shop." << endl;
-	cout << "Press 7 to logout." << endl;
-	cout << "Press 8 to exit." << endl;
+	//cout << "Press 2 to add product to your cart." << endl;
+	cout << "Press 2 to checkout." << endl;
+	cout << "Press 3 to write a feedback to a seller." << endl;
+	cout << "Press 4 to view all the customers in the shop." << endl;
+	cout << "Press 5 to view all the sellers in the shop." << endl;
+	cout << "Press 6 to logout." << endl;
+	cout << "Press 7 to exit." << endl;
 
 	cout << "Your selection: ";
 }

@@ -237,10 +237,7 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		case CustomerSearchProduct:
 		{
 			searchProducts(&requestedProducts, numOfRequestedProducts);
-			break;
-		}
-		case AddNewProductToCart:
-		{
+			addProductToCart(customer);
 			// add product to cart
 			break;
 		}
@@ -527,6 +524,43 @@ void ShopSystem::searchProducts(Product*** requestedProducts, int& numOfRequeste
 
 		showRequestedProducts(*requestedProducts, numOfRequestedProducts);
 	}
+}
+
+void ShopSystem::addProductToCart(Customer& customer)
+{
+	int selection;
+	unsigned int productId = 0;
+	
+	addProductSelectionValidation(selection);
+
+	if ((AddProductOptions)selection == GoBack)
+	{
+		cout << "Keep searching, we have it all in PiedPiper Shop." << endl;
+	}
+	else // AddProductToCart by name
+	{
+		do {
+			cout << "Please provide the serial number of wanted product to add to your cart: ";
+			cin >> productId;
+
+			if (!cinTypeCheck()) // cin failed - ask again for valid type
+			{
+				cout << "Wrong type please enter a number!\n" << endl;
+			}
+		} while (!productId);
+
+
+		for (int i = 0; i < numOfAllProducts; i++)
+		{
+			if (productId == allProducts[i]->getSerialNumber()) // Match
+			{
+				customer.addItemToCart(allProducts[i]);
+				cout << allProducts[i]->getName() << " was added to your cart succesfully!" << endl;
+			}
+		}
+	}
+
+	
 }
 
 void ShopSystem::showRequestedProducts(Product** requestedProducts, int numOfRequestedProducts) const

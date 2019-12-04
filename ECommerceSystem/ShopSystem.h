@@ -33,12 +33,17 @@ public:
 	};
 	enum CustomerOptions
 	{
-		CustomerSearchProduct = 1, AddNewProductToCart = 2, Checkout = 3, WriteFeedback = 4,
-		CustomerViewCustomers = 5, CustomerViewSellers = 6, CustomerLogOut = 7, CustomerExit = 8
+		CustomerSearchProduct = 1, Checkout = 2, WriteFeedback = 3,
+		CustomerViewCustomers = 4, CustomerViewSellers = 5, CustomerLogOut = 6, CustomerExit = 7
 	};
 	enum SearchProductOptions
 	{
 		AllProducts = 1, SpecificProductName = 2
+	};
+
+	enum AddProductOptions
+	{
+		AddProductToCart = 1, GoBack = 2
 	};
 
 	ShopSystem(const char* name); // C'tor
@@ -60,6 +65,7 @@ public:
 	Customer* loginCustomer(char* username, char* password);
 	void addProductToProductsArray(Product* newProduct, Product*** products, int& numOfProducts);
 	void searchProducts(Product*** requestedProducts, int& numOfRequestedProducts);
+	void addProductToCart(Customer& customer);
 	// Getters
 	const char* getName() const;
 	Seller** getSellers() const;

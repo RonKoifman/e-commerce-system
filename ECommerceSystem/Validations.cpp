@@ -394,3 +394,27 @@ void searchProductSelectionValidation(int& selection)
 		}
 	}
 }
+
+void addProductSelectionValidation(int& selection)
+{
+	bool isValid = false;
+
+	while (!isValid)
+	{
+		cout << "Press 1 to add a product to your cart." << endl;
+		cout << "Press 2 to go back." << endl;
+		cout << "Your selection: ";
+
+		cin >> selection;
+		cout << endl;
+
+		if (cinTypeCheck() && (selection == ShopSystem::AddProductToCart || selection == ShopSystem::GoBack))
+		{
+			isValid = true;
+		}
+		else
+		{
+			cout << "Please choose from one of the following options!\n" << endl;
+		}
+	}
+}

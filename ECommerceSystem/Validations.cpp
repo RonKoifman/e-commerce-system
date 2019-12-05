@@ -34,7 +34,6 @@ bool getInput(char* str, int& len)
 		{
 			cleanBuffer();
 		}
-		cout << "Invalid input length. Try again!" << endl;
 		return false;
 	}
 
@@ -162,6 +161,10 @@ void usernameValidation(char* username, const ShopSystem& shop)
 				cout << "Use only a-z, A-Z, 0-9 characters. Try again!" << endl;
 			}
 		}
+		else
+		{
+			cout << "Invalid username length. Try again!" << endl;
+		}
 	}
 }
 
@@ -188,6 +191,10 @@ void passwordValidation(char* password)
 				cout << "Password is too short. Try again!" << endl;
 			}
 		}
+		else
+		{
+			cout << "Invalid password length. Try again!" << endl;
+		}
 	}
 }
 
@@ -210,6 +217,10 @@ void countryValidation(char* country)
 			{
 				cout << "Use only a-z, A-Z or space. Try again!" << endl;
 			}
+		}
+		else
+		{
+			cout << "Invalid country name length. Try again!" << endl;
 		}
 	}
 }
@@ -234,6 +245,10 @@ void cityValidation(char *city)
 				cout << "Use only a-z, A-Z or space. Try again!" << endl;
 			}
 		}
+		else
+		{
+			cout << "Invalid city name length. Try again!" << endl;
+		}
 	}
 }
 
@@ -256,6 +271,10 @@ void streetValidation(char *street)
 			{
 				cout << "Use only a-z, A-Z or space. Try again!" << endl;
 			}
+		}
+		else
+		{
+			cout << "Invalid street name length. Try again!" << endl;
 		}
 	}
 }
@@ -328,6 +347,10 @@ void productNameValidation(char* productName)
 				cout << "Product name is not valid. Try again!" << endl;
 			}
 		}
+		else
+		{
+			cout << "Invalid product name length. Try again!" << endl;
+		}
 	}
 }
 
@@ -391,6 +414,43 @@ void searchProductSelectionValidation(int& selection)
 		else
 		{
 			cout << "Please choose from one of the following options!\n" << endl;
+		}
+	}
+}
+
+void searchProductNameValidation(char* productName)
+{
+	int len = 0;
+
+	// Get a name of a product to search
+	while (!(0 < len && len <= MAX_CHARACTERS))
+	{
+		cout << "Product to search: ";
+
+		if (!getInput(productName, len))
+		{
+			cout << "Invalid product name length. Try again!" << endl;
+		}
+	}
+}
+
+void addProductToCartValidation(unsigned int& productID, const int numOfAllProducts)
+{
+	bool isValid = false;
+
+	while (!isValid)
+	{
+		cout << "Please provide the serial number of wanted product to add to your cart: ";
+		cin >> productID;
+
+		// Check valid type and valid range of the serial number
+		if (cinTypeCheck() && (productID <= Product::uniqueID - 1 && productID >= Product::uniqueID - numOfAllProducts))
+		{
+			isValid = true;
+		}
+		else
+		{
+			cout << "Wrong serial number! Try again." << endl;
 		}
 	}
 }

@@ -25,5 +25,7 @@ void productNameValidation(char* productName);
 void priceValidation(float& price);
 void categoryValidation(int& category);
 void searchProductSelectionValidation(int& selection);
+void searchProductNameValidation(char* productName);
+void addProductToCartValidation(unsigned int& productID, const int numOfAllProducts);
 
 #endif // __VALIDATIONS_

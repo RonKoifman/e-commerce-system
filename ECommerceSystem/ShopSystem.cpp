@@ -235,6 +235,7 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		case AddNewProductToCart:
 		{
 			// add product to cart
+			addProductToCart(customer);
 			break;
 		}
 		case Checkout:
@@ -382,7 +383,7 @@ Seller* ShopSystem::loginSeller(char* username, char* password)
 
 	if (!(isValidUsername && isValidPassword)) // One of the inputs not valid
 	{
-		cout << "Wrong details. Login failed!\n" << endl;
+		cout << endl << "Wrong details. Login failed!\n" << endl;
 		return nullptr; // Invalid input - login failed
 	}
 
@@ -399,7 +400,7 @@ Seller* ShopSystem::loginSeller(char* username, char* password)
 		}
 	}
 
-	cout << "Wrong details. Login failed!\n" << endl;
+	cout << endl << "Wrong details. Login failed!\n" << endl;
 	return nullptr; // Seller not found - login failed
 }
 
@@ -488,43 +489,71 @@ void ShopSystem::addProductToProductsArray(Product* newProduct, Product*** produ
 
 void ShopSystem::searchProducts()
 {
-	char nameOfProduct[MAX_CHARACTERS];
-	int selection, len = 0, numOfMatchingProducts = 0;
+	char productName[MAX_CHARACTERS];
+	int selection, numOfMatchingProducts = 0;
 	bool isFound = false;
 	
-	searchProductSelectionValidation(selection); // Selection validation
-
-	if ((SearchProductOptions)selection == AllProducts)
+	if (numOfAllProducts == 0) // No products in the shop
 	{
-		showAllProducts(); // Show all the products in the shop
+		cout << "There are no products in the shop yet.\n" << endl;
 	}
-	else // SpecificProductName
+	else
 	{
-		cleanBuffer();
-		do // Get a name of a product to search
-		{
-			cout << "Product to search: ";
-		} while (!getInput(nameOfProduct, len));
+		searchProductSelectionValidation(selection); // Selection validation
 
-		for (int i = 0; i < numOfAllProducts; i++)
+		if ((SearchProductOptions)selection == AllProducts)
 		{
-			if (strcmp(nameOfProduct, allProducts[i]->getName()) == 0) // Match
+			showAllProducts(); // Show all the products in the shop
+		}
+		else // SpecificProductName
+		{
+			cleanBuffer();
+			searchProductNameValidation(productName);
+
+			// Search for matching products in the general products array
+			for (int i = 0; i < numOfAllProducts; i++)
 			{
-				if (!isFound)
+				if (strcmp(productName, allProducts[i]->getName()) == 0) // Match
 				{
-					cout << "Products found:\n" << endl;
-					isFound = true;
-				}
+					if (!isFound)
+					{
+						cout << "Products found:\n" << endl;
+						isFound = true;
+					}
 
-				cout << numOfMatchingProducts + 1 << "."; allProducts[i]->show();
-				cout << endl;
-				numOfMatchingProducts++;
+					cout << numOfMatchingProducts + 1 << "."; allProducts[i]->show();
+					cout << endl;
+					numOfMatchingProducts++;
+				}
+			}
+
+			if (numOfMatchingProducts == 0) // No matching products found
+			{
+				cout << "No products found. Keep searching! We have it all in " << ShopSystem::name << ".\n" << endl;
 			}
 		}
+	}
+}
 
-		if (numOfMatchingProducts == 0)
+void ShopSystem::addProductToCart(Customer& customer)
+{
+	unsigned int productID = 0;
+
+	if (numOfAllProducts == 0) // No products in the shop
+	{
+		cout << "There are no available products at the moment in the shop.\n" << endl;
+	}
+	else
+	{
+		addProductToCartValidation(productID, numOfAllProducts);
+		for (int i = 0; i < numOfAllProducts; i++)
 		{
-			cout << "No products found.\n" << endl;
+			if (productID == allProducts[i]->getSerialNumber()) // Match
+			{
+				// Add the chosen product to customer's cart
+				addProductToProductsArray(allProducts[i], customer.getCartByPointer(), customer.getNumOfProductsInCart());
+				cout << endl << "The product " << allProducts[i]->getName() << " was added to your cart successfully!\n" << endl;
+			}
 		}
 	}
 }

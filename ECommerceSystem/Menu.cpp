@@ -13,6 +13,7 @@ void printLoginMenu()
 
 void printSellerMenu()
 {
+	// TODO: show seller's products and feedbacks
 	cout << "Press 1 to add a new product to your account." << endl;
 	cout << "Press 2 to search for a product." << endl;
 	cout << "Press 3 to view all the customers in the shop." << endl;
@@ -25,6 +26,7 @@ void printSellerMenu()
 
 void printCustomerMenu()
 {
+	// TODO: show customer's cart
 	cout << "Press 1 to search for a product." << endl;
 	cout << "Press 2 to add product to your cart." << endl;
 	cout << "Press 3 to checkout." << endl;

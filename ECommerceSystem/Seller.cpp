@@ -75,11 +75,6 @@ int Seller::getNumOfFeedbacks() const
 	return numOfFeedbacks;
 }
 
-Product** Seller::getProducts() const
-{
-	return products;
-}
-
 int& Seller::getNumOfProducts()
 {
 	return numOfProducts;

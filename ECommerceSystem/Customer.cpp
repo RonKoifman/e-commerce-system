@@ -19,16 +19,12 @@ Customer::~Customer() // D'tor
 	delete[] username;
 	delete[] password;
 
-	for (int i = 0; i < numOfProductsInCart; i++)
-	{
-		delete cart[i];
-	}
 	for (int i = 0; i < numOfOrders; i++)
 	{
 		delete orders[i];
 	}
 
-	delete[] cart;
+	delete[] cart; // The products pointers themselves already released at each of their seller d'tor
 	delete[] orders;
 }
 
@@ -76,12 +72,12 @@ Address Customer::getAddress() const
 	return address;
 }
 
-Product** Customer::getCart() const
+Product*** Customer::getCartByPointer()
 {
-	return cart;
+	return &cart;
 }
 
-int Customer::getNumOfProductsInCart() const
+int& Customer::getNumOfProductsInCart()
 {
 	return numOfProductsInCart;
 }
@@ -104,13 +100,13 @@ void Customer::show() const
 
 void Customer::showCart() const
 {
-	cout << "Your cart:" << endl;
 	if (numOfProductsInCart == 0)
 	{
 		cout << "No products in the cart." << endl;
 	}
 	else
 	{
+		cout << "Your cart:" << endl;
 		for (int i = 0; i < numOfProductsInCart; i++)
 		{
 			cart[i]->show(); cout << endl;

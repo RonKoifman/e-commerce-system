@@ -34,8 +34,8 @@ public:
 	char* getUsername() const;
 	char* getPassword() const;
 	Address getAddress() const;
-	Product** getCart() const;
-	int getNumOfProductsInCart() const;
+	Product*** getCartByPointer();
+	int& getNumOfProductsInCart();
 	Checkout** getOrders() const;
 	int getNumOfOrders() const;
 };

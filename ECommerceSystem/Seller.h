@@ -37,7 +37,6 @@ public:
 	Address getAddress() const;
 	Feedback** getFeedbacks() const;
 	int getNumOfFeedbacks() const;
-	Product** getProducts() const;
 	Product*** getProductsByPointer();
 	int& getNumOfProducts();
 };

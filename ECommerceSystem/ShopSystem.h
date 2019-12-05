@@ -47,7 +47,6 @@ public:
 	void showCustomers() const;
 	void showSellers() const;
 	void showAllProducts() const;
-	void showRequestedProducts(Product** requestedProducts, int numOfRequestedProducts) const;
 	bool showLoginMenu();
 	bool showSellerMenu(Seller& seller);
 	bool showCustomerMenu(Customer& seller);
@@ -59,7 +58,7 @@ public:
 	Seller* loginSeller(char* username, char* password);
 	Customer* loginCustomer(char* username, char* password);
 	void addProductToProductsArray(Product* newProduct, Product*** products, int& numOfProducts);
-	void searchProducts(Product*** requestedProducts, int& numOfRequestedProducts);
+	void searchProducts();
 	// Getters
 	const char* getName() const;
 	Seller** getSellers() const;

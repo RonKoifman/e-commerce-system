@@ -160,8 +160,7 @@ bool ShopSystem::showLoginMenu()
 
 bool ShopSystem::showSellerMenu(Seller& seller)
 {
-	int selection, numOfRequestedProducts = 0;
-	Product** requestedProducts = nullptr;
+	int selection;
 
 	printSellerMenu();
 	cin >> selection;
@@ -184,7 +183,7 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 		}
 		case SellerSearchProduct:
 		{
-			searchProducts(&requestedProducts, numOfRequestedProducts);
+			searchProducts();
 			break;
 		}
 		case SellerViewCustomers:
@@ -200,27 +199,21 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 		case SellerLogOut:
 		{
 			cout << "Bye bye " << seller.getUsername() << "... We hope to see you again soon!\n" << endl;
-			delete[] requestedProducts; // Free the requested products array
 			return true; // Logout seller
 		}
 		case SellerExit:
-		{
-			delete[] requestedProducts; // Free the requested products array
 			return false; // Exit from the application
-		}
 		default:
 			cout << "Please choose from one of the following options!\n" << endl;
 		}
 	}
 
-	delete[] requestedProducts; // Free the requested products array
 	return showSellerMenu(seller); // Repeatedly show menu
 }
 
 bool ShopSystem::showCustomerMenu(Customer& customer)
 {
-	int selection, numOfRequestedProducts = 0;
-	Product** requestedProducts = nullptr;
+	int selection;
 
 	printCustomerMenu();
 	cin >> selection;
@@ -236,7 +229,7 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		{
 		case CustomerSearchProduct:
 		{
-			searchProducts(&requestedProducts, numOfRequestedProducts);
+			searchProducts();
 			break;
 		}
 		case AddNewProductToCart:
@@ -268,20 +261,15 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		case CustomerLogOut:
 		{
 			cout << "Bye bye " << customer.getUsername() << "... We hope to see you again soon!\n" << endl;
-			delete[] requestedProducts; // Free the requested products array
 			return true; // Logout customer
 		}
 		case CustomerExit:
-		{
-			delete[] requestedProducts; // Free the requested products array
 			return false; // Exit from the application
-		}
 		default:
 			cout << "Please choose from one of the following options!\n" << endl;
 		}
 	}
 
-	delete[] requestedProducts; // Free the requested products array
 	return showCustomerMenu(customer); // Repeatedly show menu
 }
 
@@ -498,11 +486,12 @@ void ShopSystem::addProductToProductsArray(Product* newProduct, Product*** produ
 	*products = temp; // Update products array to temp
 }
 
-void ShopSystem::searchProducts(Product*** requestedProducts, int& numOfRequestedProducts)
+void ShopSystem::searchProducts()
 {
 	char nameOfProduct[MAX_CHARACTERS];
-	int selection, len = 0;
-
+	int selection, len = 0, numOfMatchingProducts = 0;
+	bool isFound = false;
+	
 	searchProductSelectionValidation(selection); // Selection validation
 
 	if ((SearchProductOptions)selection == AllProducts)
@@ -521,21 +510,21 @@ void ShopSystem::searchProducts(Product*** requestedProducts, int& numOfRequeste
 		{
 			if (strcmp(nameOfProduct, allProducts[i]->getName()) == 0) // Match
 			{
-				addProductToProductsArray(allProducts[i], requestedProducts, numOfRequestedProducts);
+				if (!isFound)
+				{
+					cout << "Products found:\n" << endl;
+					isFound = true;
+				}
+
+				cout << numOfMatchingProducts + 1 << "."; allProducts[i]->show();
+				cout << endl;
+				numOfMatchingProducts++;
 			}
 		}
 
-		showRequestedProducts(*requestedProducts, numOfRequestedProducts);
-	}
-}
-
-void ShopSystem::showRequestedProducts(Product** requestedProducts, int numOfRequestedProducts) const
-{
-	cout << numOfRequestedProducts << " products found.\n" << endl;
-
-	for (int i = 0; i < numOfRequestedProducts; i++) // Print matching products
-	{
-		cout << i + 1 << "."; requestedProducts[i]->show();
-		cout << endl;
+		if (numOfMatchingProducts == 0)
+		{
+			cout << "No products found.\n" << endl;
+		}
 	}
 }

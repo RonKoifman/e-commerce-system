@@ -434,23 +434,19 @@ void searchProductNameValidation(char* productName)
 	}
 }
 
-void addProductToCartValidation(unsigned int& productID, const int numOfAllProducts)
+bool addProductToCartValidation(unsigned int& productID, const int numOfAllProducts)
 {
-	bool isValid = false;
+	cout << "Please provide the serial number of wanted product to add to your cart: ";
+	cin >> productID;
 
-	while (!isValid)
+	// Check valid type and valid range of the serial number
+	if (cinTypeCheck() && (productID <= Product::uniqueID - 1 && productID >= Product::uniqueID - numOfAllProducts))
 	{
-		cout << "Please provide the serial number of wanted product to add to your cart: ";
-		cin >> productID;
-
-		// Check valid type and valid range of the serial number
-		if (cinTypeCheck() && (productID <= Product::uniqueID - 1 && productID >= Product::uniqueID - numOfAllProducts))
-		{
-			isValid = true;
-		}
-		else
-		{
-			cout << "Wrong serial number! Try again." << endl;
-		}
+		return true;
+	}
+	else
+	{
+		cout << "Serial number not found. Please search for an existing product and try again!\n" << endl;
+		return false;
 	}
 }

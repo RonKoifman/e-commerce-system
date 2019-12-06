@@ -23,7 +23,7 @@ public:
 	Product(const Product& other); // Copy C'tor
 	~Product(); // D'tor
 	void show() const;
-	friend void addProductToCartValidation(unsigned int& productID, const int numOfAllProducts);
+	friend bool addProductToCartValidation(unsigned int& productID, const int numOfAllProducts);
 	// Setters
 	void setName(char* name);
 	void setPrice(float price);

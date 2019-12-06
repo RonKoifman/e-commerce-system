@@ -234,7 +234,6 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		}
 		case AddNewProductToCart:
 		{
-			// add product to cart
 			addProductToCart(customer);
 			break;
 		}
@@ -418,7 +417,7 @@ Customer* ShopSystem::loginCustomer(char* username, char* password)
 
 	if (!(isValidUsername && isValidPassword)) // One of the inputs not valid
 	{
-		cout << "Wrong details. Login failed!\n" << endl;
+		cout << endl << "Wrong details. Login failed!\n" << endl;
 		return nullptr; // Customer not found
 	}
 
@@ -435,7 +434,7 @@ Customer* ShopSystem::loginCustomer(char* username, char* password)
 		}
 	}
 
-	cout << "Wrong details. Login failed!\n" << endl;
+	cout << endl << "Wrong details. Login failed!\n" << endl;
 	return nullptr; // Customer not found - login failed
 }
 
@@ -545,14 +544,16 @@ void ShopSystem::addProductToCart(Customer& customer)
 	}
 	else
 	{
-		addProductToCartValidation(productID, numOfAllProducts);
-		for (int i = 0; i < numOfAllProducts; i++)
+		if (addProductToCartValidation(productID, numOfAllProducts)) // Valid product ID
 		{
-			if (productID == allProducts[i]->getSerialNumber()) // Match
+			for (int i = 0; i < numOfAllProducts; i++)
 			{
-				// Add the chosen product to customer's cart
-				addProductToProductsArray(allProducts[i], customer.getCartByPointer(), customer.getNumOfProductsInCart());
-				cout << endl << "The product " << allProducts[i]->getName() << " was added to your cart successfully!\n" << endl;
+				if (productID == allProducts[i]->getSerialNumber()) // Match
+				{
+					// Add the chosen product to customer's cart
+					addProductToProductsArray(allProducts[i], customer.getCartByPointer(), customer.getNumOfProductsInCart());
+					cout << "The product " << allProducts[i]->getName() << " was added to your cart successfully!\n" << endl;
+				}
 			}
 		}
 	}

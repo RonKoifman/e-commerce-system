@@ -102,14 +102,14 @@ void Customer::showCart() const
 {
 	if (numOfProductsInCart == 0)
 	{
-		cout << "No products in the cart." << endl;
+		cout << "No products in the cart.\n" << endl;
 	}
 	else
 	{
-		cout << "Your cart:" << endl;
+		cout << "Your cart:\n" << endl;
 		for (int i = 0; i < numOfProductsInCart; i++)
 		{
-			cart[i]->show(); cout << endl;
+			cout << i + 1 << "."; cart[i]->show(); cout << endl;
 		}
 	}
 }

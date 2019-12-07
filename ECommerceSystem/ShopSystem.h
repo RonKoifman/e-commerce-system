@@ -28,13 +28,13 @@ public:
 	};
 	enum SellerOptions
 	{
-		AddNewProductToSeller = 1, SellerSearchProduct = 2, SellerViewCustomers = 3,
-		SellerViewSellers = 4, SellerLogOut = 5, SellerExit = 6
+		AddNewProductToSeller = 1, SellerSearchProduct = 2, ViewProducts = 3,
+		SellerViewCustomers = 4, SellerViewSellers = 5, SellerLogOut = 6, SellerExit = 7
 	};
 	enum CustomerOptions
 	{
-		CustomerSearchProduct = 1, AddNewProductToCart = 2, Checkout = 3, WriteFeedback = 4,
-		CustomerViewCustomers = 5, CustomerViewSellers = 6, CustomerLogOut = 7, CustomerExit = 8
+		CustomerSearchProduct = 1, AddNewProductToCart = 2, ViewCart = 3, Checkout = 4, WriteFeedback = 5,
+		CustomerViewCustomers = 6, CustomerViewSellers = 7, CustomerLogOut = 8, CustomerExit = 9
 	};
 	enum SearchProductOptions
 	{

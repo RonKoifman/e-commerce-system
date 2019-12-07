@@ -186,6 +186,12 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 			searchProducts();
 			break;
 		}
+		case ViewProducts:
+		{
+			seller.showProducts();
+			cout << endl;
+			break;
+		}
 		case SellerViewCustomers:
 		{
 			showCustomers();
@@ -235,6 +241,11 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		case AddNewProductToCart:
 		{
 			addProductToCart(customer);
+			break;
+		}
+		case ViewCart:
+		{
+			customer.showCart();
 			break;
 		}
 		case Checkout:
@@ -552,9 +563,10 @@ void ShopSystem::addProductToCart(Customer& customer)
 				{
 					// Add the chosen product to customer's cart
 					addProductToProductsArray(allProducts[i], customer.getCartByPointer(), customer.getNumOfProductsInCart());
-					cout << "The product " << allProducts[i]->getName() << " was added to your cart successfully!\n" << endl;
+					cout << "The product " << allProducts[i]->getName() << " added to cart successfully!\n" << endl;
 				}
 			}
 		}
 	}
 }
+

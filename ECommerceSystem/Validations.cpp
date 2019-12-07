@@ -436,7 +436,7 @@ void searchProductNameValidation(char* productName)
 
 bool addProductToCartValidation(unsigned int& productID, const int numOfAllProducts)
 {
-	cout << "Please provide the serial number of wanted product to add to your cart: ";
+	cout << "Please provide the serial number of wanted product to add to cart: ";
 	cin >> productID;
 
 	// Check valid type and valid range of the serial number

@@ -100,7 +100,7 @@ void Seller::showFeedbacks() const
 	{
 		for (int i = 0; i < numOfFeedbacks; i++)
 		{
-			cout << i + 1 << ". ";
+			cout << i + 1 << ".";
 			feedbacks[i]->show(); cout << endl;
 		}
 	}

@@ -493,9 +493,16 @@ void ShopSystem::addProductToCart(Customer& customer)
 			{
 				if (productID == allProducts[i]->getSerialNumber()) // Match
 				{
-					// Add the chosen product to customer's cart
-					addProductToProductsArray(allProducts[i], customer.getCartByPointer(), customer.getNumOfProductsInCart());
-					cout << "The product '" << allProducts[i]->getName() << "' added to cart successfully!\n" << endl;
+					if (!isProductExistsInCart(allProducts[i]->getName(), customer.getNumOfProductsInCart(), *customer.getCartByPointer()))
+					{
+						// Add the chosen product to customer's cart
+						addProductToProductsArray(allProducts[i], customer.getCartByPointer(), customer.getNumOfProductsInCart());
+						cout << "The product '" << allProducts[i]->getName() << "' added to cart successfully!\n" << endl;
+					}
+					else
+					{
+						cout << "You already added this product to your cart.\n" << endl;
+					}
 				}
 			}
 		}

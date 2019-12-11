@@ -377,6 +377,19 @@ bool isProductExists(char* productName, Seller& seller)
 	return false;
 }
 
+bool isProductExistsInCart(char* productName, int numOfProductsInCart, Product** cart)
+{
+	for (int i = 0; i < numOfProductsInCart; i++)
+	{
+		if (strcmp(productName, cart[i]->getName()) == 0) // Product already exists in cart
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void priceValidation(float& price)
 {
 	bool isValid = false;

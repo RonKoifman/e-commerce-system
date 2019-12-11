@@ -23,6 +23,7 @@ void buildingNumberValidation(int& buildingNumber);
 bool uniqueUsername(char* username, const ShopSystem& shop);
 void productNameValidation(char* productName, Seller& seller);
 bool isProductExists(char* productName, Seller& seller);
+bool isProductExistsInCart(char* productName, int numOfProductsInCart, Product** cart);
 void priceValidation(float& price);
 void categoryValidation(int& category);
 void searchProductSelectionValidation(int& selection);

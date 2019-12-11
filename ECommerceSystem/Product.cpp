@@ -99,7 +99,7 @@ Product* readProductData(Seller* seller)
 	int category;
 
 	cout << "Please fill in the following fields.\n" << endl;
-	productNameValidation(productName);
+	productNameValidation(productName, *seller);
 	priceValidation(price);
 	categoryValidation(category);
 

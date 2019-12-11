@@ -425,7 +425,7 @@ void ShopSystem::addProductToProductsArray(Product* newProduct, Product*** produ
 	temp[i] = newProduct; // Add the new product
 	numOfProducts++;
 
-	delete[] * products; // Free the current array
+	delete[] *products; // Free the current array
 	*products = temp; // Update products array to temp
 }
 
@@ -495,7 +495,7 @@ void ShopSystem::addProductToCart(Customer& customer)
 				{
 					// Add the chosen product to customer's cart
 					addProductToProductsArray(allProducts[i], customer.getCartByPointer(), customer.getNumOfProductsInCart());
-					cout << "The product " << allProducts[i]->getName() << " added to cart successfully!\n" << endl;
+					cout << "The product '" << allProducts[i]->getName() << "' added to cart successfully!\n" << endl;
 				}
 			}
 		}

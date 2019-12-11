@@ -1,15 +1,12 @@
 #include "ShopSystem.h"
 
 ShopSystem::ShopSystem(const char* name) // C'tor
-	: name(name)
+	: name(name), sellers(nullptr), customers(nullptr), allProducts(nullptr)
 {
 	// Initialize data members
 	numOfSellers = 0;
 	numOfCustomers = 0;
 	numOfAllProducts = 0;
-	sellers = nullptr;
-	customers = nullptr;
-	allProducts = nullptr;
 }
 
 ShopSystem::~ShopSystem() // D'tor
@@ -149,6 +146,16 @@ bool ShopSystem::showLoginMenu()
 		}
 		break;
 	}
+	case ViewCustomers:
+	{
+		showCustomers();
+		break;
+	}
+	case ViewSellers:
+	{
+		showSellers();
+		break;
+	}
 	case Exit:
 		return false; // Exit from the application
 	default: // Invalid option
@@ -192,14 +199,10 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 			cout << endl;
 			break;
 		}
-		case SellerViewCustomers:
+		case ViewFeedbacks:
 		{
-			showCustomers();
-			break;
-		}
-		case SellerViewSellers:
-		{
-			showSellers();
+			seller.showFeedbacks();
+			cout << endl;
 			break;
 		}
 		case SellerLogOut:
@@ -257,16 +260,6 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		case WriteFeedback:
 		{
 			// write feedback
-			break;
-		}
-		case CustomerViewCustomers:
-		{
-			showCustomers();
-			break;
-		}
-		case CustomerViewSellers:
-		{
-			showSellers();
 			break;
 		}
 		case CustomerLogOut:
@@ -374,7 +367,7 @@ Product* ShopSystem::readProductData(Seller* seller)
 	productNameValidation(productName);
 	priceValidation(price);
 	categoryValidation(category);
-	
+
 	cout << endl << "Product added successfully!\n" << endl;
 	return new Product(productName, price, category, seller);
 }
@@ -493,7 +486,7 @@ void ShopSystem::addProductToProductsArray(Product* newProduct, Product*** produ
 	temp[i] = newProduct; // Add the new product
 	numOfProducts++;
 
-	delete[] *products; // Free the current array
+	delete[] * products; // Free the current array
 	*products = temp; // Update products array to temp
 }
 
@@ -502,7 +495,7 @@ void ShopSystem::searchProducts()
 	char productName[MAX_CHARACTERS];
 	int selection, numOfMatchingProducts = 0;
 	bool isFound = false;
-	
+
 	if (numOfAllProducts == 0) // No products in the shop
 	{
 		cout << "There are no products in the shop yet.\n" << endl;
@@ -569,4 +562,3 @@ void ShopSystem::addProductToCart(Customer& customer)
 		}
 	}
 }
-

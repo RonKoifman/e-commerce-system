@@ -9,7 +9,7 @@ Seller::Seller(char* username, char* password, Address address) // C'tor
 	// Initialize data members
 	numOfProducts = 0;
 	numOfFeedbacks = 0;
-	products = nullptr; 
+	products = nullptr;
 	feedbacks = nullptr;
 }
 

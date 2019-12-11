@@ -24,17 +24,17 @@ public:
 	enum LoginOptions
 	{
 		SignupNewSeller = 1, SignupNewCustomer = 2, LoginSeller = 3,
-		LoginCustomer = 4, Exit = 5
+		LoginCustomer = 4, ViewCustomers = 5, ViewSellers = 6, Exit = 7
 	};
 	enum SellerOptions
 	{
-		AddNewProductToSeller = 1, SellerSearchProduct = 2, ViewProducts = 3,
-		SellerViewCustomers = 4, SellerViewSellers = 5, SellerLogOut = 6, SellerExit = 7
+		AddNewProductToSeller = 1, SellerSearchProduct = 2, ViewProducts = 3, ViewFeedbacks = 4,
+		SellerLogOut = 5, SellerExit = 6
 	};
 	enum CustomerOptions
 	{
-		CustomerSearchProduct = 1, AddNewProductToCart = 2, ViewCart = 3, Checkout = 4, WriteFeedback = 5,
-		CustomerViewCustomers = 6, CustomerViewSellers = 7, CustomerLogOut = 8, CustomerExit = 9
+		CustomerSearchProduct = 1, AddNewProductToCart = 2, ViewCart = 3, Checkout = 4,
+		WriteFeedback = 5, CustomerLogOut = 6, CustomerExit = 7
 	};
 	enum SearchProductOptions
 	{

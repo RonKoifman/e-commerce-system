@@ -2,31 +2,17 @@
 #include "Checkout.h"
 
 Checkout::Checkout(Customer* customer) // C'tor
+	: customer(customer), sellers(nullptr), chosenProducts(nullptr)
 {
 	// Initialize data members
-	numOfChosenProducts = 0;
-	totalPrice = 0;
-	payment = 0;
-	numOfSellers = 0;
-	sellers = nullptr;
-	chosenProducts = nullptr;
-
-	this->customer = customer;
+	numOfChosenProducts = numOfSellers = 0;
+	totalPrice = payment = 0;
 }
 
 Checkout::~Checkout() // D'tor
 {
-	for (int i = 0; i < numOfChosenProducts; i++)
-	{
-		delete chosenProducts[i];
-	}
-	for (int i = 0; i < numOfSellers; i++)
-	{
-		delete sellers[i];
-	}
-
-	delete[] chosenProducts;
-	delete[] sellers;
+	delete[] chosenProducts; // The products pointers themselves will be released at each of their seller d'tor
+	delete[] sellers; // The seller pointers themselves will be released at the shop system d'tor
 }
 
 void Checkout::setNumOfChosenProducts(int numOfChosenProducts)
@@ -93,3 +79,4 @@ void Checkout::show() const
 	}
 	cout << "Total price: " << totalPrice << endl;
 }
+

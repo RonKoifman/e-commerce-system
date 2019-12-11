@@ -4,7 +4,6 @@
 #include "OutResources.h"
 #include "Product.h"
 #include "Seller.h"
-#include "Customer.h"
 
 class Customer;
 

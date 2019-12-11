@@ -1,15 +1,10 @@
 #include "ShopSystem.h"
 
 ShopSystem::ShopSystem(const char* name) // C'tor
-	: name(name)
+	: name(name), sellers(nullptr), customers(nullptr), allProducts(nullptr)
 {
 	// Initialize data members
-	numOfSellers = 0;
-	numOfCustomers = 0;
-	numOfAllProducts = 0;
-	sellers = nullptr;
-	customers = nullptr;
-	allProducts = nullptr;
+	numOfSellers = numOfCustomers = numOfAllProducts = 0;
 }
 
 ShopSystem::~ShopSystem() // D'tor
@@ -103,7 +98,7 @@ bool ShopSystem::showLoginMenu()
 	{
 	case SignupNewSeller:
 	{
-		Seller* newSeller = readSellerData();
+		Seller* newSeller = readSellerData(*this);
 		addSeller(newSeller);
 		cout << "Registration completed successfully!\n" << endl;
 		if (!showSellerMenu(*newSeller)) // Repeatedly show seller menu until he asks to exit
@@ -114,7 +109,7 @@ bool ShopSystem::showLoginMenu()
 	}
 	case SignupNewCustomer:
 	{
-		Customer* newCustomer = readCustomerData();
+		Customer* newCustomer = readCustomerData(*this);
 		addCustomer(newCustomer);
 		cout << "Registration completed successfully!\n" << endl;
 		if (!showCustomerMenu(*newCustomer)) // Repeatedly show customer menu until he asks to exit
@@ -147,6 +142,16 @@ bool ShopSystem::showLoginMenu()
 				return false; // Exit from the application
 			}
 		}
+		break;
+	}
+	case ViewCustomers:
+	{
+		showCustomers();
+		break;
+	}
+	case ViewSellers:
+	{
+		showSellers();
 		break;
 	}
 	case Exit:
@@ -186,14 +191,16 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 			searchProducts();
 			break;
 		}
-		case SellerViewCustomers:
+		case ViewProducts:
 		{
-			showCustomers();
+			seller.showProducts();
+			cout << endl;
 			break;
 		}
-		case SellerViewSellers:
+		case ViewFeedbacks:
 		{
-			showSellers();
+			seller.showFeedbacks();
+			cout << endl;
 			break;
 		}
 		case SellerLogOut:
@@ -237,6 +244,11 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 			addProductToCart(customer);
 			break;
 		}
+		case ViewCart:
+		{
+			customer.showCart();
+			break;
+		}
 		case Checkout:
 		{
 			// checkout 
@@ -246,16 +258,6 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		case WriteFeedback:
 		{
 			// write feedback
-			break;
-		}
-		case CustomerViewCustomers:
-		{
-			showCustomers();
-			break;
-		}
-		case CustomerViewSellers:
-		{
-			showSellers();
 			break;
 		}
 		case CustomerLogOut:
@@ -271,28 +273,6 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 	}
 
 	return showCustomerMenu(customer); // Repeatedly show menu
-}
-
-Seller* ShopSystem::readSellerData()
-{
-	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
-	char country[MAX_CHARACTERS], city[MAX_CHARACTERS], street[MAX_CHARACTERS];
-	int buildingNumber;
-
-	cout << "Thanks for joining in, new seller! You are on the way of getting rich!" << endl;
-	cout << "We are using an universal and decentralized authentication." << endl;
-	cout << "Please fill in the following fields:\n" << endl;
-
-	usernameValidation(username, *this);
-	passwordValidation(password);
-	countryValidation(country);
-	cityValidation(city);
-	streetValidation(street);
-	buildingNumberValidation(buildingNumber);
-	cout << endl;
-
-	Address address(country, city, street, buildingNumber);
-	return new Seller(username, password, address);
 }
 
 void ShopSystem::addSeller(Seller* seller)
@@ -313,28 +293,6 @@ void ShopSystem::addSeller(Seller* seller)
 	sellers = temp; // Update sellers array to temp
 }
 
-Customer* ShopSystem::readCustomerData()
-{
-	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
-	char country[MAX_CHARACTERS], city[MAX_CHARACTERS], street[MAX_CHARACTERS];
-	int buildingNumber;
-
-	cout << "Thanks for joining in, new customer! Let's get you a good deal!" << endl;
-	cout << "We are using an universal and decentralized authentication." << endl;
-	cout << "Please fill in the following fields:\n" << endl;
-
-	usernameValidation(username, *this);
-	passwordValidation(password);
-	countryValidation(country);
-	cityValidation(city);
-	streetValidation(street);
-	buildingNumberValidation(buildingNumber);
-	cout << endl;
-
-	Address address(country, city, street, buildingNumber);
-	return new Customer(username, password, address);
-}
-
 void ShopSystem::addCustomer(Customer* customer)
 {
 	int i;
@@ -351,21 +309,6 @@ void ShopSystem::addCustomer(Customer* customer)
 
 	delete[] customers; // Free the current array
 	customers = temp; // Update customers array to temp
-}
-
-Product* ShopSystem::readProductData(Seller* seller)
-{
-	char productName[MAX_CHARACTERS];
-	float price;
-	int category;
-
-	cout << "Please fill in the following fields.\n" << endl;
-	productNameValidation(productName);
-	priceValidation(price);
-	categoryValidation(category);
-	
-	cout << endl << "Product added successfully!\n" << endl;
-	return new Product(productName, price, category, seller);
 }
 
 Seller* ShopSystem::loginSeller(char* username, char* password)
@@ -491,7 +434,7 @@ void ShopSystem::searchProducts()
 	char productName[MAX_CHARACTERS];
 	int selection, numOfMatchingProducts = 0;
 	bool isFound = false;
-	
+
 	if (numOfAllProducts == 0) // No products in the shop
 	{
 		cout << "There are no products in the shop yet.\n" << endl;
@@ -550,9 +493,17 @@ void ShopSystem::addProductToCart(Customer& customer)
 			{
 				if (productID == allProducts[i]->getSerialNumber()) // Match
 				{
-					// Add the chosen product to customer's cart
-					addProductToProductsArray(allProducts[i], customer.getCartByPointer(), customer.getNumOfProductsInCart());
-					cout << "The product " << allProducts[i]->getName() << " was added to your cart successfully!\n" << endl;
+					if (!isProductExistsInCart(allProducts[i]->getName(), customer.getNumOfProductsInCart(), *customer.getCartByPointer()))
+					{
+						// Add the chosen product to customer's cart
+						addProductToProductsArray(allProducts[i], customer.getCartByPointer(), customer.getNumOfProductsInCart());
+						cout << "The product '" << allProducts[i]->getName() << "' added to cart successfully!\n" << endl;
+					}
+					else
+					{
+						cout << "You already added this product to your cart.\n" << endl;
+					}
+					return;
 				}
 			}
 		}

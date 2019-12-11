@@ -24,17 +24,17 @@ public:
 	enum LoginOptions
 	{
 		SignupNewSeller = 1, SignupNewCustomer = 2, LoginSeller = 3,
-		LoginCustomer = 4, Exit = 5
+		LoginCustomer = 4, ViewCustomers = 5, ViewSellers = 6, Exit = 7
 	};
 	enum SellerOptions
 	{
-		AddNewProductToSeller = 1, SellerSearchProduct = 2, SellerViewCustomers = 3,
-		SellerViewSellers = 4, SellerLogOut = 5, SellerExit = 6
+		AddNewProductToSeller = 1, SellerSearchProduct = 2, ViewProducts = 3, ViewFeedbacks = 4,
+		SellerLogOut = 5, SellerExit = 6
 	};
 	enum CustomerOptions
 	{
-		CustomerSearchProduct = 1, AddNewProductToCart = 2, Checkout = 3, WriteFeedback = 4,
-		CustomerViewCustomers = 5, CustomerViewSellers = 6, CustomerLogOut = 7, CustomerExit = 8
+		CustomerSearchProduct = 1, AddNewProductToCart = 2, ViewCart = 3, Checkout = 4,
+		WriteFeedback = 5, CustomerLogOut = 6, CustomerExit = 7
 	};
 	enum SearchProductOptions
 	{
@@ -50,11 +50,8 @@ public:
 	bool showLoginMenu();
 	bool showSellerMenu(Seller& seller);
 	bool showCustomerMenu(Customer& seller);
-	Seller* readSellerData();
 	void addSeller(Seller* seller);
-	Customer* readCustomerData();
 	void addCustomer(Customer* customer);
-	Product* readProductData(Seller* seller);
 	Seller* loginSeller(char* username, char* password);
 	Customer* loginCustomer(char* username, char* password);
 	void addProductToProductsArray(Product* newProduct, Product*** products, int& numOfProducts);
@@ -68,6 +65,10 @@ public:
 	int getNumOfCustomers() const;
 	Product** getAllProducts() const;
 	int getNumOfAllProducts() const;
+	// Friend functions
+	friend Customer* readCustomerData(const ShopSystem& shop);
+	friend Seller* readSellerData(const ShopSystem& shop);
+	friend Product* readProductData(Seller* seller);
 };
 
 #endif // __SHOP_SYSTEM_H

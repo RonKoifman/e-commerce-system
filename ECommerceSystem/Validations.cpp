@@ -326,7 +326,7 @@ bool uniqueUsername(char* username, const ShopSystem& shop)
 	return true;
 }
 
-void productNameValidation(char* productName)
+void productNameValidation(char* productName, Seller& seller)
 {
 	bool isValid = false;
 	int len = 0;
@@ -340,7 +340,14 @@ void productNameValidation(char* productName)
 		{
 			if (checkLettersDigitsAndSpace(productName))
 			{
-				isValid = true;
+				if (!isProductExists(productName, seller))
+				{
+					isValid = true;
+				}
+				else
+				{
+					cout << "You already added this product. Try again!" << endl;
+				}
 			}
 			else
 			{
@@ -352,6 +359,35 @@ void productNameValidation(char* productName)
 			cout << "Invalid product name length. Try again!" << endl;
 		}
 	}
+}
+
+bool isProductExists(char* productName, Seller& seller)
+{
+	int numOfProducts = seller.getNumOfProducts();
+	Product** products = *(seller.getProductsByPointer());
+
+	for (int i = 0; i < numOfProducts; i++)
+	{
+		if (strcmp(productName, products[i]->getName()) == 0) // Product already exists with its seller
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool isProductExistsInCart(char* productName, int numOfProductsInCart, Product** cart)
+{
+	for (int i = 0; i < numOfProductsInCart; i++)
+	{
+		if (strcmp(productName, cart[i]->getName()) == 0) // Product already exists in cart
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void priceValidation(float& price)
@@ -436,7 +472,7 @@ void searchProductNameValidation(char* productName)
 
 bool addProductToCartValidation(unsigned int& productID, const int numOfAllProducts)
 {
-	cout << "Please provide the serial number of wanted product to add to your cart: ";
+	cout << "Please provide the serial number of wanted product to add to cart: ";
 	cin >> productID;
 
 	// Check valid type and valid range of the serial number

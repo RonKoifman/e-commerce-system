@@ -39,6 +39,8 @@ public:
 	int getNumOfFeedbacks() const;
 	Product*** getProductsByPointer();
 	int& getNumOfProducts();
+	// Friend functions
+	friend Product* readProductData(Seller* seller);
 };
 
 #endif // __SELLER_H

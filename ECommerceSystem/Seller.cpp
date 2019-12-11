@@ -1,16 +1,13 @@
 #include "Seller.h"
 
 Seller::Seller(char* username, char* password, Address address) // C'tor
-	: username(nullptr), password(nullptr), address(address)
+	: username(nullptr), password(nullptr), address(address), products(nullptr), feedbacks(nullptr)
 {
 	setUsername(username);
 	setPassword(password);
 
 	// Initialize data members
-	numOfProducts = 0;
-	numOfFeedbacks = 0;
-	products = nullptr; 
-	feedbacks = nullptr;
+	numOfProducts = numOfFeedbacks = 0;
 }
 
 Seller::~Seller() // D'tor
@@ -100,7 +97,7 @@ void Seller::showFeedbacks() const
 	{
 		for (int i = 0; i < numOfFeedbacks; i++)
 		{
-			cout << i + 1 << ". ";
+			cout << i + 1 << ".";
 			feedbacks[i]->show(); cout << endl;
 		}
 	}
@@ -128,4 +125,26 @@ void Seller::showProducts() const
 Product*** Seller::getProductsByPointer()
 {
 	return &products;
+}
+
+Seller* readSellerData(const ShopSystem& shop)
+{
+	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
+	char country[MAX_CHARACTERS], city[MAX_CHARACTERS], street[MAX_CHARACTERS];
+	int buildingNumber;
+
+	cout << "Thanks for joining in, new seller! You are on the way of getting rich!" << endl;
+	cout << "We are using an universal and decentralized authentication." << endl;
+	cout << "Please fill in the following fields:\n" << endl;
+
+	usernameValidation(username, shop);
+	passwordValidation(password);
+	countryValidation(country);
+	cityValidation(city);
+	streetValidation(street);
+	buildingNumberValidation(buildingNumber);
+	cout << endl;
+
+	Address address(country, city, street, buildingNumber);
+	return new Seller(username, password, address);
 }

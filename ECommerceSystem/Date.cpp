@@ -1,10 +1,8 @@
 #include "Date.h"
 
 Date::Date(int day, int month, int year) // C'tor
+	: day(day), month(month), year(year)
 {
-	setDay(day);
-	setMonth(month);
-	setYear(year);
 }
 
 void Date::setDay(int day)

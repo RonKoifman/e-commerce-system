@@ -340,13 +340,13 @@ void productNameValidation(char* productName, Seller& seller)
 		{
 			if (checkLettersDigitsAndSpace(productName))
 			{
-				if (!isProductExists(productName, seller))
+				if (!isProductExists(productName, *seller.getProductsByPointer(), seller.getNumOfProducts()))
 				{
 					isValid = true;
 				}
 				else
 				{
-					cout << "You already added this product. Try again!" << endl;
+					cout << "You already added this product." << endl;
 				}
 			}
 			else
@@ -361,27 +361,11 @@ void productNameValidation(char* productName, Seller& seller)
 	}
 }
 
-bool isProductExists(char* productName, Seller& seller)
+bool isProductExists(char* productName, Product** products, int numOfProducts)
 {
-	int numOfProducts = seller.getNumOfProducts();
-	Product** products = *(seller.getProductsByPointer());
-
 	for (int i = 0; i < numOfProducts; i++)
 	{
-		if (strcmp(productName, products[i]->getName()) == 0) // Product already exists with its seller
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool isProductExistsInCart(char* productName, int numOfProductsInCart, Product** cart)
-{
-	for (int i = 0; i < numOfProductsInCart; i++)
-	{
-		if (strcmp(productName, cart[i]->getName()) == 0) // Product already exists in cart
+		if (strcmp(productName, products[i]->getName()) == 0) // Product already exists
 		{
 			return true;
 		}
@@ -485,4 +469,63 @@ bool addProductToCartValidation(unsigned int& productID, const int numOfAllProdu
 		cout << "Serial number not found. Please search for an existing product and try again!\n" << endl;
 		return false;
 	}
+}
+
+void numOfCheckoutProductsValidation(int& numOfChosenProducts, const int numOfProductsInCart)
+{
+	bool isValidNumOfProducts = false;
+
+	while (!isValidNumOfProducts)
+	{
+		cout << "Please enter the number of products for payment (at least one): ";
+		cin >> numOfChosenProducts;
+		if (!cinTypeCheck() || !(1 <= numOfChosenProducts && numOfChosenProducts <= numOfProductsInCart))
+		{
+			cout << "Invalid number. Try again!" << endl;
+		}
+		else
+		{
+			isValidNumOfProducts = true;
+		}
+	}
+}
+
+void indexOfCheckoutProductValidation(int& index, const int i, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts)
+{
+	bool isValidIndex = false;
+
+	while (!isValidIndex)
+	{
+		cout << "Index of product number " << i + 1 << ": ";
+		cin >> index;
+		if (!cinTypeCheck() || !(1 <= index && index <= numOfProductsInCart))
+		{
+			cout << "Invalid index. Try again!" << endl;
+		}
+		else
+		{
+			Product* product = cart[index - 1];
+			if (!isProductExists(product->getName(), chosenProducts, i))
+			{
+				isValidIndex = true;
+			}
+			else
+			{
+				cout << "You already added this product. Try again!" << endl;
+			}
+		}
+	}
+}
+
+bool isSellerExists(Seller* seller, Seller** sellers, int numOfSellers)
+{
+	for (int i = 0; i < numOfSellers; i++)
+	{
+		if (sellers[i] == seller)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

@@ -1,12 +1,12 @@
 #include "Customer.h"
 #include "Checkout.h"
 
-Checkout::Checkout(Customer* customer) // C'tor
-	: customer(customer), sellers(nullptr), chosenProducts(nullptr)
+Checkout::Checkout(Customer* customer, Product** chosenProducts, int numOfChosenProducts, Seller** sellers, int numOfSellers) // C'tor
+	: customer(customer), sellers(nullptr), chosenProducts(nullptr), numOfChosenProducts(numOfChosenProducts), numOfSellers(numOfSellers)
 {
-	// Initialize data members
-	numOfChosenProducts = numOfSellers = 0;
-	totalPrice = payment = 0;
+	setChosenProducts(chosenProducts);
+	setSellers(sellers);
+	calculateTotalPrice();
 }
 
 Checkout::~Checkout() // D'tor
@@ -25,17 +25,31 @@ void Checkout::setTotalPrice(float totalPrice)
 	this->totalPrice = totalPrice;
 }
 
-void Checkout::setPayment(float payment)
-{
-	this->payment = payment;
-}
-
 void Checkout::setNumOfSellers(int numOfSellers)
 {
 	this->numOfSellers = numOfSellers;
 }
 
-Product** Checkout::getChosenProducts() const
+void Checkout::setSellers(Seller** sellers)
+{
+	delete[] this->sellers; // Delete previous sellers if existed
+	this->sellers = new Seller*[numOfSellers];
+	for (int i = 0; i < numOfSellers; i++)
+	{
+		this->sellers[i] = sellers[i];
+	}
+}
+void Checkout::setChosenProducts(Product** chosenProducts)
+{
+	delete[] this->chosenProducts; // Delete previous products if existed
+	this->chosenProducts = new Product*[numOfChosenProducts];
+	for (int i = 0; i < numOfChosenProducts; i++)
+	{
+		this->chosenProducts[i] = chosenProducts[i];
+	}
+}
+
+Product** Checkout::getChosenProducts()
 {
 	return chosenProducts;
 }
@@ -50,12 +64,7 @@ float Checkout::getTotalPrice() const
 	return totalPrice;
 }
 
-float Checkout::getPayment()
-{
-	return payment;
-}
-
-Seller** Checkout::getSellers() const
+Seller** Checkout::getSellers()
 {
 	return sellers;
 }
@@ -65,18 +74,26 @@ int Checkout::getNumOfSellers() const
 	return numOfSellers;
 }
 
-Customer* Checkout::getCustomer() const
+Customer* Checkout::getCustomer()
 {
 	return customer;
 }
 
 void Checkout::show() const
 {
-	cout << "Chosen products:" << endl;
+	cout << "Chosen products:\n" << endl;
 	for (int i = 0; i < numOfChosenProducts; i++)
 	{
-		chosenProducts[i]->show(); cout << endl;
+		cout << i + 1 << "."; chosenProducts[i]->show(); cout << endl;
 	}
-	cout << "Total price: " << totalPrice << endl;
 }
 
+void Checkout::calculateTotalPrice()
+{
+	totalPrice = 0;
+
+	for (int i = 0; i < numOfChosenProducts; i++)
+	{
+		totalPrice += chosenProducts[i]->getPrice();
+	}
+}

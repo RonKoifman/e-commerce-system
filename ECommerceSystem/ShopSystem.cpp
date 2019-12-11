@@ -99,7 +99,7 @@ bool ShopSystem::showLoginMenu()
 	case SignupNewSeller:
 	{
 		Seller* newSeller = readSellerData(*this);
-		addSeller(newSeller);
+		addSeller(newSeller, &sellers, numOfSellers);
 		cout << "Registration completed successfully!\n" << endl;
 		if (!showSellerMenu(*newSeller)) // Repeatedly show seller menu until he asks to exit
 		{
@@ -249,10 +249,9 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 			customer.showCart();
 			break;
 		}
-		case Checkout:
+		case CheckoutAndPlaceOrder:
 		{
-			// checkout 
-			// inside checkout - definition of place order...
+			checkout(&customer);
 			break;
 		}
 		case WriteFeedback:
@@ -275,7 +274,7 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 	return showCustomerMenu(customer); // Repeatedly show menu
 }
 
-void ShopSystem::addSeller(Seller* seller)
+void ShopSystem::addSeller(Seller* seller, Seller*** sellers, int& numOfSellers)
 {
 	int i;
 
@@ -284,13 +283,13 @@ void ShopSystem::addSeller(Seller* seller)
 	// Move the pointers from the current array to temp
 	for (i = 0; i < numOfSellers; i++)
 	{
-		temp[i] = sellers[i];
+		temp[i] = (*sellers)[i];
 	}
 	temp[i] = seller; // Add the new seller
 	numOfSellers++;
 
-	delete[] sellers; // Free the current array
-	sellers = temp; // Update sellers array to temp
+	delete[] *sellers; // Free the current array
+	*sellers = temp; // Update sellers array to temp
 }
 
 void ShopSystem::addCustomer(Customer* customer)
@@ -493,7 +492,7 @@ void ShopSystem::addProductToCart(Customer& customer)
 			{
 				if (productID == allProducts[i]->getSerialNumber()) // Match
 				{
-					if (!isProductExistsInCart(allProducts[i]->getName(), customer.getNumOfProductsInCart(), *customer.getCartByPointer()))
+					if (!isProductExists(allProducts[i]->getName(), *customer.getCartByPointer(), customer.getNumOfProductsInCart()))
 					{
 						// Add the chosen product to customer's cart
 						addProductToProductsArray(allProducts[i], customer.getCartByPointer(), customer.getNumOfProductsInCart());
@@ -508,4 +507,77 @@ void ShopSystem::addProductToCart(Customer& customer)
 			}
 		}
 	}
+}
+
+void ShopSystem::checkout(Customer* customer)
+{
+	Product** chosenProducts;
+	Seller** productsSellers = nullptr;
+	int numOfChosenProducts = 0, numOfProductsSellers = 0;
+
+	if (customer->getNumOfProductsInCart() == 0) // No products in cart
+	{
+		cout << "Please add products to your cart before checkout.\n" << endl;
+	}
+	else
+	{
+		customer->showCart();
+		numOfCheckoutProductsValidation(numOfChosenProducts, customer->getNumOfProductsInCart());
+		chosenProducts = new Product*[numOfChosenProducts]; // Allocate chosen products pointers array
+
+		cout << endl << "Please enter the index of each chosen product.\n" << endl;
+		for (int i = 0, index = 0; i < numOfChosenProducts; i++)
+		{
+			indexOfCheckoutProductValidation(index, i, *customer->getCartByPointer(), customer->getNumOfProductsInCart(), chosenProducts, numOfChosenProducts);
+			Product* product = (*customer->getCartByPointer())[index - 1];
+			chosenProducts[i] = product; // Add product to the array
+
+			Seller* seller = product->getSeller();
+			if (!isSellerExists(seller, sellers, numOfProductsSellers))
+			{
+				addSeller(seller, &productsSellers, numOfProductsSellers); // Add seller to the array
+			}
+		}
+
+		Checkout newCheckout(customer, chosenProducts, numOfChosenProducts, productsSellers, numOfProductsSellers);
+		cout << endl; newCheckout.show();
+		placeOrder(newCheckout);
+	}
+}
+
+void ShopSystem::placeOrder(Checkout& checkout)
+{
+	bool isPayed = false;
+	float payment, totalPrice = checkout.getTotalPrice(), res = 0;
+
+	cout << "The total price of the order is: $" << totalPrice << endl;
+	
+	while (!isPayed)
+	{
+		cout << "Please enter the amount to pay: ";
+		cin >> payment;
+		res += payment;
+		cout << "Payment received: $" << res << endl;
+
+		if (!cinTypeCheck())
+		{
+			cout << "Invalid amount. Try again!" << endl;
+		}
+		else if (res < totalPrice)
+		{
+			cout << "Please add more $" << totalPrice - res << " to complete the order." << endl;
+		}
+		else if (res > totalPrice)
+		{
+			cout << "\nOrder completed successfully! Your change is $" << res - totalPrice << "." << endl;
+			isPayed = true;
+		}
+		else
+		{
+			cout << "\nOrder completed successfully!" << endl;
+			isPayed = true;
+		}
+	}
+
+	cout << "Thanks for ordering from " << ShopSystem::name << "!\n" << endl;
 }

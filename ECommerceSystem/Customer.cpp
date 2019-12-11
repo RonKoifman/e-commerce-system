@@ -16,13 +16,9 @@ Customer::~Customer() // D'tor
 	delete[] username;
 	delete[] password;
 
-	for (int i = 0; i < numOfOrders; i++)
-	{
-		delete orders[i];
-	}
-
-	delete[] cart; // The products pointers themselves already released at each of their seller d'tor
-	delete[] orders;
+	// The products pointers themselves already released at each of their seller d'tor
+	delete[] cart;
+	delete[] orders; 
 }
 
 void Customer::setUsername(char* username)

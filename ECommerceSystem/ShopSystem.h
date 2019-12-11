@@ -7,6 +7,7 @@
 #include "Customer.h"
 #include "Seller.h"
 #include "Product.h"
+#include "Checkout.h"
 
 class ShopSystem
 {
@@ -33,7 +34,7 @@ public:
 	};
 	enum CustomerOptions
 	{
-		CustomerSearchProduct = 1, AddNewProductToCart = 2, ViewCart = 3, Checkout = 4,
+		CustomerSearchProduct = 1, AddNewProductToCart = 2, ViewCart = 3, CheckoutAndPlaceOrder = 4,
 		WriteFeedback = 5, CustomerLogOut = 6, CustomerExit = 7
 	};
 	enum SearchProductOptions
@@ -50,7 +51,7 @@ public:
 	bool showLoginMenu();
 	bool showSellerMenu(Seller& seller);
 	bool showCustomerMenu(Customer& seller);
-	void addSeller(Seller* seller);
+	void addSeller(Seller* seller, Seller*** sellers, int& numOfSellers);
 	void addCustomer(Customer* customer);
 	Seller* loginSeller(char* username, char* password);
 	Customer* loginCustomer(char* username, char* password);
@@ -65,6 +66,8 @@ public:
 	int getNumOfCustomers() const;
 	Product** getAllProducts() const;
 	int getNumOfAllProducts() const;
+	void checkout(Customer* customer);
+	void placeOrder(Checkout& checkout);
 	// Friend functions
 	friend Customer* readCustomerData(const ShopSystem& shop);
 	friend Seller* readSellerData(const ShopSystem& shop);

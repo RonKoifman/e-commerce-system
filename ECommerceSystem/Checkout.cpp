@@ -2,16 +2,11 @@
 #include "Checkout.h"
 
 Checkout::Checkout(Customer* customer) // C'tor
+	: customer(customer), sellers(nullptr), chosenProducts(nullptr)
 {
 	// Initialize data members
-	numOfChosenProducts = 0;
-	totalPrice = 0;
-	payment = 0;
-	numOfSellers = 0;
-	sellers = nullptr;
-	chosenProducts = nullptr;
-
-	this->customer = customer;
+	numOfChosenProducts = numOfSellers = 0;
+	totalPrice = payment = 0;
 }
 
 Checkout::~Checkout() // D'tor

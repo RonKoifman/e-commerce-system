@@ -50,11 +50,8 @@ public:
 	bool showLoginMenu();
 	bool showSellerMenu(Seller& seller);
 	bool showCustomerMenu(Customer& seller);
-	Seller* readSellerData();
 	void addSeller(Seller* seller);
-	Customer* readCustomerData();
 	void addCustomer(Customer* customer);
-	Product* readProductData(Seller* seller);
 	Seller* loginSeller(char* username, char* password);
 	Customer* loginCustomer(char* username, char* password);
 	void addProductToProductsArray(Product* newProduct, Product*** products, int& numOfProducts);
@@ -68,6 +65,10 @@ public:
 	int getNumOfCustomers() const;
 	Product** getAllProducts() const;
 	int getNumOfAllProducts() const;
+	// Friend functions
+	friend Customer* readCustomerData(const ShopSystem& shop);
+	friend Seller* readSellerData(const ShopSystem& shop);
+	friend Product* readProductData(Seller* seller);
 };
 
 #endif // __SHOP_SYSTEM_H

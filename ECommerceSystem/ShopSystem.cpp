@@ -4,9 +4,7 @@ ShopSystem::ShopSystem(const char* name) // C'tor
 	: name(name), sellers(nullptr), customers(nullptr), allProducts(nullptr)
 {
 	// Initialize data members
-	numOfSellers = 0;
-	numOfCustomers = 0;
-	numOfAllProducts = 0;
+	numOfSellers = numOfCustomers = numOfAllProducts = 0;
 }
 
 ShopSystem::~ShopSystem() // D'tor
@@ -100,7 +98,7 @@ bool ShopSystem::showLoginMenu()
 	{
 	case SignupNewSeller:
 	{
-		Seller* newSeller = readSellerData();
+		Seller* newSeller = readSellerData(*this);
 		addSeller(newSeller);
 		cout << "Registration completed successfully!\n" << endl;
 		if (!showSellerMenu(*newSeller)) // Repeatedly show seller menu until he asks to exit
@@ -111,7 +109,7 @@ bool ShopSystem::showLoginMenu()
 	}
 	case SignupNewCustomer:
 	{
-		Customer* newCustomer = readCustomerData();
+		Customer* newCustomer = readCustomerData(*this);
 		addCustomer(newCustomer);
 		cout << "Registration completed successfully!\n" << endl;
 		if (!showCustomerMenu(*newCustomer)) // Repeatedly show customer menu until he asks to exit
@@ -277,28 +275,6 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 	return showCustomerMenu(customer); // Repeatedly show menu
 }
 
-Seller* ShopSystem::readSellerData()
-{
-	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
-	char country[MAX_CHARACTERS], city[MAX_CHARACTERS], street[MAX_CHARACTERS];
-	int buildingNumber;
-
-	cout << "Thanks for joining in, new seller! You are on the way of getting rich!" << endl;
-	cout << "We are using an universal and decentralized authentication." << endl;
-	cout << "Please fill in the following fields:\n" << endl;
-
-	usernameValidation(username, *this);
-	passwordValidation(password);
-	countryValidation(country);
-	cityValidation(city);
-	streetValidation(street);
-	buildingNumberValidation(buildingNumber);
-	cout << endl;
-
-	Address address(country, city, street, buildingNumber);
-	return new Seller(username, password, address);
-}
-
 void ShopSystem::addSeller(Seller* seller)
 {
 	int i;
@@ -317,28 +293,6 @@ void ShopSystem::addSeller(Seller* seller)
 	sellers = temp; // Update sellers array to temp
 }
 
-Customer* ShopSystem::readCustomerData()
-{
-	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
-	char country[MAX_CHARACTERS], city[MAX_CHARACTERS], street[MAX_CHARACTERS];
-	int buildingNumber;
-
-	cout << "Thanks for joining in, new customer! Let's get you a good deal!" << endl;
-	cout << "We are using an universal and decentralized authentication." << endl;
-	cout << "Please fill in the following fields:\n" << endl;
-
-	usernameValidation(username, *this);
-	passwordValidation(password);
-	countryValidation(country);
-	cityValidation(city);
-	streetValidation(street);
-	buildingNumberValidation(buildingNumber);
-	cout << endl;
-
-	Address address(country, city, street, buildingNumber);
-	return new Customer(username, password, address);
-}
-
 void ShopSystem::addCustomer(Customer* customer)
 {
 	int i;
@@ -355,21 +309,6 @@ void ShopSystem::addCustomer(Customer* customer)
 
 	delete[] customers; // Free the current array
 	customers = temp; // Update customers array to temp
-}
-
-Product* ShopSystem::readProductData(Seller* seller)
-{
-	char productName[MAX_CHARACTERS];
-	float price;
-	int category;
-
-	cout << "Please fill in the following fields.\n" << endl;
-	productNameValidation(productName);
-	priceValidation(price);
-	categoryValidation(category);
-
-	cout << endl << "Product added successfully!\n" << endl;
-	return new Product(productName, price, category, seller);
 }
 
 Seller* ShopSystem::loginSeller(char* username, char* password)

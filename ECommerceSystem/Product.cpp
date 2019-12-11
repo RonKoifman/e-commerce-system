@@ -4,21 +4,17 @@
 unsigned int Product::uniqueID = 1000; // Generate unique id for each serial number of a product
 
 Product::Product(char* name, float price, int category, Seller* seller) // C'tor
-	: name(nullptr), serialNumber(uniqueID++)
+	: name(nullptr), serialNumber(uniqueID++), seller(seller), price(price)
 {
 	setName(name);
-	setPrice(price);
 	setCategory((Category)category);
-	this->seller = seller;
 }
 
 Product::Product(const Product& other) // Copy C'tor
-	: name(nullptr), serialNumber(other.serialNumber)
+	: name(nullptr), serialNumber(other.serialNumber), seller(other.seller), price(other.price)
 {
 	setName(other.name);
-	setPrice(other.price);
 	setCategory(other.category);
-	this->seller = other.seller;
 }
 
 Product::~Product() // D'tor
@@ -94,4 +90,19 @@ void Product::showCategory() const
 		cout << "Office" << endl;
 		break;
 	}
+}
+
+Product* readProductData(Seller* seller)
+{
+	char productName[MAX_CHARACTERS];
+	float price;
+	int category;
+
+	cout << "Please fill in the following fields.\n" << endl;
+	productNameValidation(productName);
+	priceValidation(price);
+	categoryValidation(category);
+
+	cout << endl << "Product added successfully!\n" << endl;
+	return new Product(productName, price, category, seller);
 }

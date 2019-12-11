@@ -2,16 +2,13 @@
 #include "Customer.h"
 
 Customer::Customer(char* username, char* password, Address address) // C'tor
-	: username(nullptr), password(nullptr), address(address)
+	: username(nullptr), password(nullptr), cart(nullptr), orders(nullptr), address(address)
 {
 	setUsername(username);
 	setPassword(password);
 
 	// Initialize data members
-	numOfProductsInCart = 0;
-	numOfOrders = 0;
-	cart = nullptr;
-	orders = nullptr;
+	numOfProductsInCart = numOfOrders = 0;
 }
 
 Customer::~Customer() // D'tor
@@ -112,4 +109,26 @@ void Customer::showCart() const
 			cout << i + 1 << "."; cart[i]->show(); cout << endl;
 		}
 	}
+}
+
+Customer* readCustomerData(const ShopSystem& shop)
+{
+	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
+	char country[MAX_CHARACTERS], city[MAX_CHARACTERS], street[MAX_CHARACTERS];
+	int buildingNumber;
+
+	cout << "Thanks for joining in, new customer! Let's get you a good deal!" << endl;
+	cout << "We are using an universal and decentralized authentication." << endl;
+	cout << "Please fill in the following fields:\n" << endl;
+
+	usernameValidation(username, shop);
+	passwordValidation(password);
+	countryValidation(country);
+	cityValidation(city);
+	streetValidation(street);
+	buildingNumberValidation(buildingNumber);
+	cout << endl;
+
+	Address address(country, city, street, buildingNumber);
+	return new Customer(username, password, address);
 }

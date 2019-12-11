@@ -1,18 +1,14 @@
 #include "Feedback.h"
 
 Feedback::Feedback(Customer* customer, Product* product, Date date, char* text) // C'tor
-	: text(nullptr), date(date)
+	: text(nullptr), date(date), customer(customer), product(product)
 {
-	this->customer = customer;
-	this->product = product;
 	setText(text);
 }
 
 Feedback::Feedback(const Feedback& other) // Copy C'tor
-	: text(nullptr), date(other.date)
+	: text(nullptr), date(other.date), customer(other.customer), product(other.product)
 {
-	this->customer = other.customer;
-	this->product = other.product;
 	setText(other.text);
 }
 

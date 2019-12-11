@@ -503,6 +503,7 @@ void ShopSystem::addProductToCart(Customer& customer)
 					{
 						cout << "You already added this product to your cart.\n" << endl;
 					}
+					return;
 				}
 			}
 		}

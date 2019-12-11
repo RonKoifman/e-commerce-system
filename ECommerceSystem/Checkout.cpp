@@ -11,17 +11,8 @@ Checkout::Checkout(Customer* customer) // C'tor
 
 Checkout::~Checkout() // D'tor
 {
-	for (int i = 0; i < numOfChosenProducts; i++)
-	{
-		delete chosenProducts[i];
-	}
-	for (int i = 0; i < numOfSellers; i++)
-	{
-		delete sellers[i];
-	}
-
-	delete[] chosenProducts;
-	delete[] sellers;
+	delete[] chosenProducts; // The products pointers themselves will be released at each of their seller d'tor
+	delete[] sellers; // The seller pointers themselves will be released at the shop system d'tor
 }
 
 void Checkout::setNumOfChosenProducts(int numOfChosenProducts)
@@ -88,3 +79,4 @@ void Checkout::show() const
 	}
 	cout << "Total price: " << totalPrice << endl;
 }
+

@@ -88,6 +88,26 @@ void Checkout::show() const
 	}
 }
 
+void Checkout::showSellers() const
+{
+	int i;
+	cout << "\tSellers names: " << sellers[0]->getUsername();
+	for (i = 1; i < numOfSellers; i++) {
+		cout << ", " << sellers[i]->getUsername();
+	}
+	cout << endl;
+}
+
+void Checkout::showProductsNames() const
+{
+	int i;
+	cout << "\tProducts names: " << chosenProducts[0]->getName();
+	for (i = 1; i < numOfChosenProducts; i++) {
+		cout << ", " << chosenProducts[i]->getName();
+	}
+	cout << endl;
+}
+
 void Checkout::calculateTotalPrice()
 {
 	totalPrice = 0;

@@ -24,6 +24,7 @@ public:
 	~Customer(); // D'tor
 	void show() const;
 	void showCart() const;
+	void showOrders() const;
 	// Setters
 	void setUsername(char* username);
 	void setPassword(char* password);

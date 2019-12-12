@@ -107,6 +107,25 @@ void Customer::showCart() const
 	}
 }
 
+void Customer::showOrders() const
+{
+	if(numOfOrders == 0)
+	{
+		cout << "No products in the cart.\n" << endl;
+	}
+	else
+	{
+	cout << "Your order:\n" << endl;
+	for (int i = 0; i < numOfOrders; i++)
+	{
+		cout << i + 1 << ". \t";
+		orders[i]->showProductsNames();
+		cout << "\tPrice: " << orders[i]->getTotalPrice() << endl;
+		orders[i]->showSellers();
+	}
+	}
+}
+
 Customer* readCustomerData(const ShopSystem& shop)
 {
 	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];

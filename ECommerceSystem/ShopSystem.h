@@ -8,6 +8,7 @@
 #include "Seller.h"
 #include "Product.h"
 #include "Checkout.h"
+#include "Date.h"
 
 class ShopSystem
 {
@@ -68,6 +69,9 @@ public:
 	int getNumOfAllProducts() const;
 	void checkout(Customer* customer);
 	void placeOrder(Checkout& checkout);
+	void writeFeedback(Customer& customer);
+	Date readDate();
+	void getTextForFeedback(char *text);
 	// Friend functions
 	friend Customer* readCustomerData(const ShopSystem& shop);
 	friend Seller* readSellerData(const ShopSystem& shop);

@@ -22,6 +22,8 @@ public:
 	Checkout(const Checkout& other) = delete; // Disable copy c'tor
 	~Checkout(); // D'tor
 	void show() const;
+	void showSellers() const;
+	void showProductsNames() const;
 	void calculateTotalPrice();
 	// Setters
 	void setNumOfChosenProducts(int numOfChosenProducts);

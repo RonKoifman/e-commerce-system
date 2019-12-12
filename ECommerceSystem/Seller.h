@@ -36,6 +36,7 @@ public:
 	char* getPassword() const;
 	Address getAddress() const;
 	Feedback** getFeedbacks() const;
+	void addFeedback(Customer* customer, Product* product, Date& date, char* text);
 	int getNumOfFeedbacks() const;
 	Product*** getProductsByPointer();
 	int& getNumOfProducts();

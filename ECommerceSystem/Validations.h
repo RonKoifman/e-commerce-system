@@ -31,5 +31,6 @@ bool addProductToCartValidation(unsigned int& productID, const int numOfAllProdu
 void numOfCheckoutProductsValidation(int& numOfChosenProducts, const int numOfProductsInCart);
 void indexOfCheckoutProductValidation(int& index, const int i, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts);
 bool isSellerExists(Seller* seller, Seller** sellers, int numOfSellers);
+bool dateValidation(int day, int month, int year);
 
 #endif // __VALIDATIONS_

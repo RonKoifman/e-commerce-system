@@ -529,7 +529,6 @@ bool isSellerExists(Seller* seller, Seller** sellers, int numOfSellers)
 	return false;
 }
 
-<<<<<<< HEAD
 void dateValidation(int& day, int& month, int& year)
 {
 	cout << "Please enter the day: ";
@@ -559,22 +558,3 @@ void dateValidation(int& day, int& month, int& year)
 		cin >> year;
 	}
 }
-=======
-bool dateValidation(int day, int month, int year)
-{
-	bool res = true;
-	if (day < 1 || day > 31) {
-		cout << "Day should be between 1 to 31!" << endl;
-		res = false;
-	}
-	else if (month < 1 || month > 12) {
-		cout << "Month should be between 1 to 12!" << endl;
-		res = false;
-	}
-	else if (year < 2000 || year > 2020) {
-		cout << "PiedPiper Shop only exists since year 2000 and will be closed in the year 2020 due to cash overflow." << endl;
-		res = false;
-	}
-	return res;
-}
->>>>>>> 0fd21c783a2960f3cb4b019d6a5e9e2acc3fa3f2

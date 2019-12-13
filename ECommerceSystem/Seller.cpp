@@ -67,25 +67,6 @@ Feedback** Seller::getFeedbacks() const
 	return feedbacks;
 }
 
-void Seller::addFeedback(Customer* customer, Product* product, Date& date, char* text)
-{
-	int i;
-	Feedback *newFeedback = new Feedback(customer, product, date, text);
-
-	Feedback** temp = new Feedback*[numOfFeedbacks + 1]; // Create bigger array to add the new product
-
-	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfFeedbacks; i++)
-	{
-		temp[i] = feedbacks[i];
-	}
-	temp[i] = newFeedback; // Add the new product
-	numOfFeedbacks++;
-
-	delete[] feedbacks; // Free the current array
-	feedbacks = temp; // Update products array to temp
-}
-
 int Seller::getNumOfFeedbacks() const
 {
 	return numOfFeedbacks;

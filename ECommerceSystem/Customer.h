@@ -25,12 +25,9 @@ public:
 	void show() const;
 	void showCart() const;
 	void showOrders() const;
-<<<<<<< HEAD
 	void addProductToCart(Product* newProduct);
 	void addOrder(Checkout* newOrder);
 	void initCart();
-=======
->>>>>>> 0fd21c783a2960f3cb4b019d6a5e9e2acc3fa3f2
 	// Setters
 	void setUsername(char* username);
 	void setPassword(char* password);

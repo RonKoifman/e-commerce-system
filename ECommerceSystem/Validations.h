@@ -8,7 +8,7 @@ class ShopSystem;
 #include "Product.h"
 
 void cleanBuffer();
-bool getInput(char* str, int& len);
+bool getInput(char* str, int& len, const int maxLen);
 bool cinTypeCheck();
 void usernameValidation(char* username, const ShopSystem& shop);
 void passwordValidation(char* password);
@@ -28,8 +28,8 @@ void categoryValidation(int& category);
 void searchProductSelectionValidation(int& selection);
 void searchProductNameValidation(char* productName);
 bool addProductToCartValidation(unsigned int& productID, const int numOfAllProducts);
-void numOfCheckoutProductsValidation(int& numOfChosenProducts, const int numOfProductsInCart);
-void indexOfCheckoutProductValidation(int& index, const int i, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts);
+Product* indexOfCheckoutProductValidation(int& index, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts);
 bool isSellerExists(Seller* seller, Seller** sellers, int numOfSellers);
+void dateValidation(int& day, int& month, int& year);
 
 #endif // __VALIDATIONS_

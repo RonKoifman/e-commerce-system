@@ -51,8 +51,8 @@ char* Feedback::getText() const
 
 void Feedback::show() const
 {
-	cout << "Customer: " << customer->getUsername() << endl;
-	cout << "Name of the product: " << product->getName() << endl;
-	cout << "Date: "; date.show();
-	cout << "Text: " << text << endl;
+	cout << "\tCustomer: " << customer->getUsername() << endl;
+	cout << "\tName of the product: " << product->getName() << endl;
+	cout << "\tDate: "; date.show();
+	cout << "\tText: " << text << endl;
 }

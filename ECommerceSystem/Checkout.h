@@ -18,24 +18,24 @@ private:
 	Customer* customer;
 
 public:
-	Checkout(Customer* customer, Product** chosenProducts, int numOfChosenProducts, Seller** sellers, int numOfSellers); // C'tor
+	Checkout(Customer* customer); // C'tor
 	Checkout(const Checkout& other) = delete; // Disable copy c'tor
 	~Checkout(); // D'tor
 	void show() const;
+	void showSellers() const;
+	void showProductsNames() const;
 	void calculateTotalPrice();
-	// Setters
-	void setNumOfChosenProducts(int numOfChosenProducts);
-	void setTotalPrice(float totalPrice);
-	void setNumOfSellers(int numOfSellers);
-	void setSellers(Seller** sellers);
-	void setChosenProducts(Product** chosenProducts);
+	void addChosenProduct(Product* newProduct);
+	void addSeller(Seller* seller);
+	void createNewOrder();
+	void placeOrder() const;
 	// Getters
-	Product** getChosenProducts();
+	Product** getChosenProducts() const;
 	int getNumOfChosenProducts() const;
 	float getTotalPrice() const;
 	int getNumOfSellers() const;
-	Customer* getCustomer();
-	Seller** getSellers();
+	Customer* getCustomer() const;
+	Seller** getSellers() const;
 };
 
 #endif // __CHECKOUT_H

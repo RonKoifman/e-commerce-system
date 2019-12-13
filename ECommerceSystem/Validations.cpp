@@ -10,13 +10,13 @@ void cleanBuffer()
 	} while (ch != EOF && ch != '\n');
 }
 
-bool getInput(char* str, int& len)
+bool getInput(char* str, int& len, const int maxLen)
 {
 	int i = 0;
 	char ch = ' ';
 
 	// Get input from buffer
-	while (i < MAX_CHARACTERS - 1 && ch != '\n')
+	while (i < maxLen - 1 && ch != '\n')
 	{
 		ch = getchar();
 		if (ch != '\n')
@@ -28,7 +28,7 @@ bool getInput(char* str, int& len)
 	len = i;
 
 	// Invalid string length or an empty string
-	if (len == MAX_CHARACTERS - 1 || len == 0)
+	if (len == maxLen - 1 || len == 0)
 	{
 		if (len > 0)
 		{
@@ -150,7 +150,7 @@ void usernameValidation(char* username, const ShopSystem& shop)
 	{
 		cout << "Username (maximum 20 characters, letters and digits only): ";
 
-		if (getInput(username, len))
+		if (getInput(username, len, MAX_CHARACTERS))
 		{
 			if (checkLettersAndDigits(username))
 			{
@@ -177,7 +177,7 @@ void passwordValidation(char* password)
 	{
 		cout << "Password (between 6-20 characters): ";
 
-		if (getInput(password, len))
+		if (getInput(password, len, MAX_CHARACTERS))
 		{
 			if (strlen(password) >= MIN_CHARACTERS_PASSWORD) 
 			{
@@ -207,7 +207,7 @@ void countryValidation(char* country)
 	{
 		cout << "Country (maximum 20 characters, letters and space only): ";
 
-		if (getInput(country, len))
+		if (getInput(country, len, MAX_CHARACTERS))
 		{
 			if (checkLetters(country))
 			{
@@ -234,7 +234,7 @@ void cityValidation(char *city)
 	{
 		cout << "City (maximum 20 characters, letters and space only): ";
 
-		if (getInput(city, len))
+		if (getInput(city, len, MAX_CHARACTERS))
 		{
 			if (checkLetters(city))
 			{
@@ -261,7 +261,7 @@ void streetValidation(char *street)
 	{
 		cout << "Street (maximum 20 characters, letters and space only): ";
 
-		if (getInput(street, len))
+		if (getInput(street, len, MAX_CHARACTERS))
 		{
 			if (checkLetters(street))
 			{
@@ -336,11 +336,11 @@ void productNameValidation(char* productName, Seller& seller)
 	{
 		cout << "Product name (maximum 20 characters, letters digits and space only): ";
 
-		if (getInput(productName, len))
+		if (getInput(productName, len, MAX_CHARACTERS))
 		{
 			if (checkLettersDigitsAndSpace(productName))
 			{
-				if (!isProductExists(productName, *seller.getProductsByPointer(), seller.getNumOfProducts()))
+				if (!isProductExists(productName, seller.getProducts(), seller.getNumOfProducts()))
 				{
 					isValid = true;
 				}
@@ -447,7 +447,7 @@ void searchProductNameValidation(char* productName)
 	{
 		cout << "Product to search: ";
 
-		if (!getInput(productName, len))
+		if (!getInput(productName, len, MAX_CHARACTERS))
 		{
 			cout << "Invalid product name length. Try again!" << endl;
 		}
@@ -471,50 +471,49 @@ bool addProductToCartValidation(unsigned int& productID, const int numOfAllProdu
 	}
 }
 
-void numOfCheckoutProductsValidation(int& numOfChosenProducts, const int numOfProductsInCart)
-{
-	bool isValidNumOfProducts = false;
-
-	while (!isValidNumOfProducts)
-	{
-		cout << "Please enter the number of products for payment (at least one): ";
-		cin >> numOfChosenProducts;
-		if (!cinTypeCheck() || !(1 <= numOfChosenProducts && numOfChosenProducts <= numOfProductsInCart))
-		{
-			cout << "Invalid number. Try again!" << endl;
-		}
-		else
-		{
-			isValidNumOfProducts = true;
-		}
-	}
-}
-
-void indexOfCheckoutProductValidation(int& index, const int i, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts)
+Product* indexOfCheckoutProductValidation(int& index, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts)
 {
 	bool isValidIndex = false;
+	Product* product;
 
 	while (!isValidIndex)
 	{
-		cout << "Index of product number " << i + 1 << ": ";
+		cout << "Chosen product index: ";
 		cin >> index;
+
 		if (!cinTypeCheck() || !(1 <= index && index <= numOfProductsInCart))
 		{
-			cout << "Invalid index. Try again!" << endl;
+			if (index == -1)
+			{
+				if (numOfChosenProducts == 0)
+				{
+					cout << "Please add at least one product to order." << endl;
+				}
+				else
+				{
+					return nullptr;
+				}
+			}
+			else
+			{
+				cout << "Invalid index. Try again!" << endl;
+			}
 		}
 		else
 		{
-			Product* product = cart[index - 1];
-			if (!isProductExists(product->getName(), chosenProducts, i))
+			product = cart[index - 1];
+			if (!isProductExists(product->getName(), chosenProducts, numOfChosenProducts))
 			{
 				isValidIndex = true;
 			}
 			else
 			{
-				cout << "You already added this product. Try again!" << endl;
+				cout << "You already added this product." << endl;
 			}
 		}
 	}
+
+	return product;
 }
 
 bool isSellerExists(Seller* seller, Seller** sellers, int numOfSellers)
@@ -528,4 +527,34 @@ bool isSellerExists(Seller* seller, Seller** sellers, int numOfSellers)
 	}
 
 	return false;
+}
+
+void dateValidation(int& day, int& month, int& year)
+{
+	cout << "Please enter the day: ";
+	cin >> day;
+	while (!cinTypeCheck() || !(1 <= day && day <= 31))
+	{
+		cout << "Invalid day. Try again!" << endl;
+		cout << "Please enter the day: ";
+		cin >> day;
+	}
+	
+	cout << "Please enter the month: ";
+	cin >> month;
+	while (!cinTypeCheck() || !(1 <= month && month <= 12))
+	{
+		cout << "Invalid month. Try again!" << endl;
+		cout << "Please enter the month: ";
+		cin >> month;
+	}
+
+	cout << "Please enter the year: ";
+	cin >> year;
+	while (!cinTypeCheck() || !(2000 <= year && year <= 2020))
+	{
+		cout << "Invalid year. Pied Piper Shop only exists since year 2000 and will be closed in the year 2020 due to cash overflow. Try again!" << endl;
+		cout << "Please enter the year: ";
+		cin >> year;
+	}
 }

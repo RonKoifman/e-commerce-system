@@ -27,6 +27,8 @@ public:
 	void show() const;
 	void showFeedbacks() const;
 	void showProducts() const;
+	void addProduct(Product* newProduct);
+	void addFeedback(Feedback* newFeedback);
 	// Setters
 	void setUsername(char* username);
 	void setPassword(char* password);
@@ -37,8 +39,8 @@ public:
 	Address getAddress() const;
 	Feedback** getFeedbacks() const;
 	int getNumOfFeedbacks() const;
-	Product*** getProductsByPointer();
-	int& getNumOfProducts();
+	Product** getProducts() const;
+	int getNumOfProducts() const;
 	// Friend functions
 	friend Product* readProductData(Seller* seller);
 };

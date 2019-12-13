@@ -24,6 +24,10 @@ public:
 	~Customer(); // D'tor
 	void show() const;
 	void showCart() const;
+	void showOrders() const;
+	void addProductToCart(Product* newProduct);
+	void addOrder(Checkout* newOrder);
+	void initCart();
 	// Setters
 	void setUsername(char* username);
 	void setPassword(char* password);
@@ -34,8 +38,8 @@ public:
 	char* getUsername() const;
 	char* getPassword() const;
 	Address getAddress() const;
-	Product*** getCartByPointer();
-	int& getNumOfProductsInCart();
+	Product** getCart() const;
+	int getNumOfProductsInCart() const;
 	Checkout** getOrders() const;
 	int getNumOfOrders() const;
 };

@@ -28,6 +28,36 @@ const char* ShopSystem::getName() const
 	return name;
 }
 
+Seller** ShopSystem::getSellers() const
+{
+	return sellers;
+}
+
+Customer** ShopSystem::getCustomers() const
+{
+	return customers;
+}
+
+int ShopSystem::getNumOfSellers() const
+{
+	return numOfSellers;
+}
+
+int ShopSystem::getNumOfCustomers() const
+{
+	return numOfCustomers;
+}
+
+Product** ShopSystem::getAllProducts() const
+{
+	return allProducts;
+}
+
+int ShopSystem::getNumOfAllProducts() const
+{
+	return numOfAllProducts;
+}
+
 void ShopSystem::showCustomers() const
 {
 	if (numOfCustomers == 0)
@@ -99,7 +129,7 @@ bool ShopSystem::showLoginMenu()
 	case SignupNewSeller:
 	{
 		Seller* newSeller = readSellerData(*this);
-		addSeller(newSeller, &sellers, numOfSellers);
+		addSeller(newSeller);
 		cout << "Registration completed successfully!\n" << endl;
 		if (!showSellerMenu(*newSeller)) // Repeatedly show seller menu until he asks to exit
 		{
@@ -182,8 +212,8 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 		case AddNewProductToSeller:
 		{
 			Product* newProduct = readProductData(&seller);
-			addProductToProductsArray(newProduct, seller.getProductsByPointer(), seller.getNumOfProducts()); // Add the new product to its seller
-			addProductToProductsArray(newProduct, &allProducts, numOfAllProducts); // Add the new product to the general products array
+			seller.addProduct(newProduct); // Add the new product to its seller
+			this->addProduct(newProduct); // Add the new product to the general products array
 			break;
 		}
 		case SellerSearchProduct:
@@ -256,7 +286,7 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		}
 		case WriteFeedback:
 		{
-			// write feedback
+			writeFeedback(customer);
 			break;
 		}
 		case CustomerLogOut:
@@ -274,7 +304,7 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 	return showCustomerMenu(customer); // Repeatedly show menu
 }
 
-void ShopSystem::addSeller(Seller* seller, Seller*** sellers, int& numOfSellers)
+void ShopSystem::addSeller(Seller* seller)
 {
 	int i;
 
@@ -283,13 +313,31 @@ void ShopSystem::addSeller(Seller* seller, Seller*** sellers, int& numOfSellers)
 	// Move the pointers from the current array to temp
 	for (i = 0; i < numOfSellers; i++)
 	{
-		temp[i] = (*sellers)[i];
+		temp[i] = sellers[i];
 	}
 	temp[i] = seller; // Add the new seller
 	numOfSellers++;
 
-	delete[] *sellers; // Free the current array
-	*sellers = temp; // Update sellers array to temp
+	delete[] sellers; // Free the current array
+	sellers = temp; // Update sellers array to temp
+}
+
+void ShopSystem::addProduct(Product* newProduct)
+{
+	int i;
+
+	Product** temp = new Product*[numOfAllProducts + 1]; // Create bigger array to add the new product
+
+	// Move the pointers from the current array to temp
+	for (i = 0; i < numOfAllProducts; i++)
+	{
+		temp[i] = allProducts[i];
+	}
+	temp[i] = newProduct; // Add the new product
+	numOfAllProducts++;
+
+	delete[] allProducts; // Free the current array
+	allProducts = temp; // Update products array to temp
 }
 
 void ShopSystem::addCustomer(Customer* customer)
@@ -318,9 +366,9 @@ Seller* ShopSystem::loginSeller(char* username, char* password)
 	cout << "Please Login with your credentials.\n" << endl;
 	cleanBuffer();
 	cout << "Username: ";
-	isValidUsername = getInput(username, len);
+	isValidUsername = getInput(username, len, MAX_CHARACTERS);
 	cout << "Password: ";
-	isValidPassword = getInput(password, len);
+	isValidPassword = getInput(password, len, MAX_CHARACTERS);
 
 	if (!(isValidUsername && isValidPassword)) // One of the inputs not valid
 	{
@@ -353,9 +401,9 @@ Customer* ShopSystem::loginCustomer(char* username, char* password)
 	cout << "Please Login with your credentials.\n" << endl;
 	cleanBuffer();
 	cout << "Username: ";
-	isValidUsername = getInput(username, len);
+	isValidUsername = getInput(username, len, MAX_CHARACTERS);
 	cout << "Password: ";
-	isValidPassword = getInput(password, len);
+	isValidPassword = getInput(password, len, MAX_CHARACTERS);
 
 	if (!(isValidUsername && isValidPassword)) // One of the inputs not valid
 	{
@@ -378,54 +426,6 @@ Customer* ShopSystem::loginCustomer(char* username, char* password)
 
 	cout << endl << "Wrong details. Login failed!\n" << endl;
 	return nullptr; // Customer not found - login failed
-}
-
-Seller** ShopSystem::getSellers() const
-{
-	return sellers;
-}
-
-Customer** ShopSystem::getCustomers() const
-{
-	return customers;
-}
-
-int ShopSystem::getNumOfSellers() const
-{
-	return numOfSellers;
-}
-
-int ShopSystem::getNumOfCustomers() const
-{
-	return numOfCustomers;
-}
-
-Product** ShopSystem::getAllProducts() const
-{
-	return allProducts;
-}
-
-int ShopSystem::getNumOfAllProducts() const
-{
-	return numOfAllProducts;
-}
-
-void ShopSystem::addProductToProductsArray(Product* newProduct, Product*** products, int& numOfProducts)
-{
-	int i;
-
-	Product** temp = new Product*[numOfProducts + 1]; // Create bigger array to add the new product
-
-	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfProducts; i++)
-	{
-		temp[i] = (*products)[i];
-	}
-	temp[i] = newProduct; // Add the new product
-	numOfProducts++;
-
-	delete[] *products; // Free the current array
-	*products = temp; // Update products array to temp
 }
 
 void ShopSystem::searchProducts()
@@ -492,10 +492,10 @@ void ShopSystem::addProductToCart(Customer& customer)
 			{
 				if (productID == allProducts[i]->getSerialNumber()) // Match
 				{
-					if (!isProductExists(allProducts[i]->getName(), *customer.getCartByPointer(), customer.getNumOfProductsInCart()))
+					if (!isProductExists(allProducts[i]->getName(), customer.getCart(), customer.getNumOfProductsInCart()))
 					{
 						// Add the chosen product to customer's cart
-						addProductToProductsArray(allProducts[i], customer.getCartByPointer(), customer.getNumOfProductsInCart());
+						customer.addProductToCart(allProducts[i]);
 						cout << "The product '" << allProducts[i]->getName() << "' added to cart successfully!\n" << endl;
 					}
 					else
@@ -511,73 +511,84 @@ void ShopSystem::addProductToCart(Customer& customer)
 
 void ShopSystem::checkout(Customer* customer)
 {
-	Product** chosenProducts;
-	Seller** productsSellers = nullptr;
-	int numOfChosenProducts = 0, numOfProductsSellers = 0;
-
 	if (customer->getNumOfProductsInCart() == 0) // No products in cart
 	{
 		cout << "Please add products to your cart before checkout.\n" << endl;
 	}
 	else
 	{
-		customer->showCart();
-		numOfCheckoutProductsValidation(numOfChosenProducts, customer->getNumOfProductsInCart());
-		chosenProducts = new Product*[numOfChosenProducts]; // Allocate chosen products pointers array
+		Checkout* order = new Checkout(customer);
+		order->createNewOrder();
+		order->placeOrder();
 
-		cout << endl << "Please enter the index of each chosen product.\n" << endl;
-		for (int i = 0, index = 0; i < numOfChosenProducts; i++)
-		{
-			indexOfCheckoutProductValidation(index, i, *customer->getCartByPointer(), customer->getNumOfProductsInCart(), chosenProducts, numOfChosenProducts);
-			Product* product = (*customer->getCartByPointer())[index - 1];
-			chosenProducts[i] = product; // Add product to the array
-
-			Seller* seller = product->getSeller();
-			if (!isSellerExists(seller, sellers, numOfProductsSellers))
-			{
-				addSeller(seller, &productsSellers, numOfProductsSellers); // Add seller to the array
-			}
-		}
-
-		Checkout newCheckout(customer, chosenProducts, numOfChosenProducts, productsSellers, numOfProductsSellers);
-		cout << endl; newCheckout.show();
-		placeOrder(newCheckout);
+		customer->initCart(); // Initialize customer cart
+		customer->addOrder(order); // Add the new order to customer orders
 	}
 }
 
-void ShopSystem::placeOrder(Checkout& checkout)
+Date ShopSystem::readDate()
 {
-	bool isPayed = false;
-	float payment, totalPrice = checkout.getTotalPrice(), res = 0;
+	int day, month, year;
 
-	cout << "The total price of the order is: $" << totalPrice << endl;
-	
-	while (!isPayed)
+	cout << endl << "Fill in the date details.\n" << endl;
+	dateValidation(day, month, year);
+	return Date(day, month, year);
+}
+
+void ShopSystem::getTextForFeedback(char* text)
+{
+	int len = 0;
+	bool isValid;
+
+	cleanBuffer();
+	do
 	{
-		cout << "Please enter the amount to pay: ";
-		cin >> payment;
-		res += payment;
-		cout << "Payment received: $" << res << endl;
+		cout << endl << "Please write your feedback here (up to 90 characters):" << endl;
+		isValid = getInput(text, len, MAX_FEEDBACK_LENGTH);
+		if (!isValid)
+		{
+			cout << "Invalid input length. Please write again!" << endl;
+		}
+	} while (!isValid);
+}
 
-		if (!cinTypeCheck())
+void ShopSystem::writeFeedback(Customer& customer)
+{
+	int index, numOfOrders = customer.getNumOfOrders();
+	Checkout** orders = customer.getOrders();
+
+	if (numOfOrders == 0)
+	{
+		cout << "You have 0 orders made. make an order so you could leave a feedback.\n" << endl;
+	}
+	else 
+	{
+		customer.showOrders();
+		cout << endl << "Choose the index of the order you wish to make the feedback about: ";
+		cin >> index;
+		if (!cinTypeCheck() || !(1 <= index && index <= numOfOrders)) 
 		{
-			cout << "Invalid amount. Try again!" << endl;
+			cout << "You don't have such order.\n" << endl;
 		}
-		else if (res < totalPrice)
+		else 
 		{
-			cout << "Please add more $" << totalPrice - res << " to complete the order." << endl;
-		}
-		else if (res > totalPrice)
-		{
-			cout << "\nOrder completed successfully! Your change is $" << res - totalPrice << "." << endl;
-			isPayed = true;
-		}
-		else
-		{
-			cout << "\nOrder completed successfully!" << endl;
-			isPayed = true;
+			Checkout* selectedOrder = orders[index - 1];
+			Product** products = selectedOrder->getChosenProducts();
+			selectedOrder->show();
+			cout << "Pick the index of a product to write its seller the feedback: ";
+			cin >> index;
+			if (!cinTypeCheck() || !(1 <= index && index <= selectedOrder->getNumOfChosenProducts()))
+			{
+				cout << "You don't have such product in this order.\n" << endl;
+			}
+			else 
+			{
+				Product* chosenProuct = products[index - 1];
+				char text[MAX_FEEDBACK_LENGTH];
+				getTextForFeedback(text);
+				chosenProuct->getSeller()->addFeedback(new Feedback(&customer, products[index - 1], readDate(), text)); // Add the feedback to its seller
+				cout << endl << "Your feedback to " << chosenProuct->getSeller()->getUsername() << " added successfully!\n" << endl;
+			}
 		}
 	}
-
-	cout << "Thanks for ordering from " << ShopSystem::name << "!\n" << endl;
 }

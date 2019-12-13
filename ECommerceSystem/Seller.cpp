@@ -72,7 +72,7 @@ int Seller::getNumOfFeedbacks() const
 	return numOfFeedbacks;
 }
 
-int& Seller::getNumOfProducts()
+int Seller::getNumOfProducts() const
 {
 	return numOfProducts;
 }
@@ -95,10 +95,11 @@ void Seller::showFeedbacks() const
 	}
 	else
 	{
+		cout << endl;
 		for (int i = 0; i < numOfFeedbacks; i++)
 		{
 			cout << i + 1 << ".";
-			feedbacks[i]->show(); cout << endl;
+			feedbacks[i]->show();
 		}
 	}
 }
@@ -122,9 +123,9 @@ void Seller::showProducts() const
 	}
 }
 
-Product*** Seller::getProductsByPointer()
+Product** Seller::getProducts() const
 {
-	return &products;
+	return products;
 }
 
 Seller* readSellerData(const ShopSystem& shop)
@@ -147,4 +148,40 @@ Seller* readSellerData(const ShopSystem& shop)
 
 	Address address(country, city, street, buildingNumber);
 	return new Seller(username, password, address);
+}
+
+void Seller::addProduct(Product* newProduct)
+{
+	int i;
+
+	Product** temp = new Product*[numOfProducts + 1]; // Create bigger array to add the new product
+
+	// Move the pointers from the current array to temp
+	for (i = 0; i < numOfProducts; i++)
+	{
+		temp[i] = products[i];
+	}
+	temp[i] = newProduct; // Add the new product
+	numOfProducts++;
+
+	delete[] products; // Free the current array
+	products = temp; // Update products array to temp
+}
+
+void Seller::addFeedback(Feedback* newFeedback)
+{
+	int i;
+
+	Feedback** temp = new Feedback*[numOfFeedbacks + 1]; // Create bigger array to add the new feedback
+
+	// Move the pointers from the current array to temp
+	for (i = 0; i < numOfFeedbacks; i++)
+	{
+		temp[i] = feedbacks[i];
+	}
+	temp[i] = newFeedback; // Add the new feedback
+	numOfFeedbacks++;
+
+	delete[] feedbacks; // Free the current array
+	feedbacks = temp; // Update feedbacks array to temp
 }

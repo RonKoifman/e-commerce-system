@@ -51,13 +51,17 @@ public:
 	bool showLoginMenu();
 	bool showSellerMenu(Seller& seller);
 	bool showCustomerMenu(Customer& seller);
-	void addSeller(Seller* seller, Seller*** sellers, int& numOfSellers);
+	void addSeller(Seller* seller);
 	void addCustomer(Customer* customer);
+	void addProduct(Product* newProduct);
 	Seller* loginSeller(char* username, char* password);
 	Customer* loginCustomer(char* username, char* password);
-	void addProductToProductsArray(Product* newProduct, Product*** products, int& numOfProducts);
 	void searchProducts();
 	void addProductToCart(Customer& customer);
+	void checkout(Customer* customer);
+	Date readDate();
+	void getTextForFeedback(char* text);
+	void writeFeedback(Customer& customer);
 	// Getters
 	const char* getName() const;
 	Seller** getSellers() const;
@@ -66,8 +70,6 @@ public:
 	int getNumOfCustomers() const;
 	Product** getAllProducts() const;
 	int getNumOfAllProducts() const;
-	void checkout(Customer* customer);
-	void placeOrder(Checkout& checkout);
 	// Friend functions
 	friend Customer* readCustomerData(const ShopSystem& shop);
 	friend Seller* readSellerData(const ShopSystem& shop);

@@ -30,6 +30,10 @@ void searchProductNameValidation(char* productName);
 bool addProductToCartValidation(unsigned int& productID, const int numOfAllProducts);
 Product* indexOfCheckoutProductValidation(int& index, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts);
 bool isSellerExists(Seller* seller, Seller** sellers, int numOfSellers);
+<<<<<<< HEAD
 void dateValidation(int& day, int& month, int& year);
+=======
+bool dateValidation(int day, int month, int year);
+>>>>>>> 0fd21c783a2960f3cb4b019d6a5e9e2acc3fa3f2
 
 #endif // __VALIDATIONS_

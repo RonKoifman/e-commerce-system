@@ -8,6 +8,7 @@
 #include "Seller.h"
 #include "Product.h"
 #include "Checkout.h"
+#include "Date.h"
 
 class ShopSystem
 {
@@ -70,6 +71,14 @@ public:
 	int getNumOfCustomers() const;
 	Product** getAllProducts() const;
 	int getNumOfAllProducts() const;
+<<<<<<< HEAD
+=======
+	void checkout(Customer* customer);
+	void placeOrder(Checkout& checkout);
+	void writeFeedback(Customer& customer);
+	Date readDate();
+	void getTextForFeedback(char *text);
+>>>>>>> 0fd21c783a2960f3cb4b019d6a5e9e2acc3fa3f2
 	// Friend functions
 	friend Customer* readCustomerData(const ShopSystem& shop);
 	friend Seller* readSellerData(const ShopSystem& shop);

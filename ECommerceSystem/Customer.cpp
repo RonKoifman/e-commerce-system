@@ -109,6 +109,7 @@ void Customer::showCart() const
 
 void Customer::showOrders() const
 {
+<<<<<<< HEAD
 	if (numOfOrders == 0)
 	{
 		cout << "No orders yet.\n" << endl;
@@ -123,6 +124,22 @@ void Customer::showOrders() const
 			cout << "\tPrice: $" << orders[i]->getTotalPrice() << endl;
 			orders[i]->showSellers();
 		}
+=======
+	if(numOfOrders == 0)
+	{
+		cout << "No products in the cart.\n" << endl;
+	}
+	else
+	{
+	cout << "Your order:\n" << endl;
+	for (int i = 0; i < numOfOrders; i++)
+	{
+		cout << i + 1 << ". \t";
+		orders[i]->showProductsNames();
+		cout << "\tPrice: " << orders[i]->getTotalPrice() << endl;
+		orders[i]->showSellers();
+	}
+>>>>>>> 0fd21c783a2960f3cb4b019d6a5e9e2acc3fa3f2
 	}
 }
 

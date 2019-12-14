@@ -123,9 +123,8 @@ void Checkout::createNewOrder()
 			}
 		}
 	}
-
+	
 	calculateTotalPrice();
-	cout << endl; show();
 }
 
 void Checkout::placeOrder() const

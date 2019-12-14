@@ -225,7 +225,7 @@ void countryValidation(char* country)
 	}
 }
 
-void cityValidation(char *city)
+void cityValidation(char* city)
 {
 	bool isValid = false;
 	int len = 0;
@@ -252,7 +252,7 @@ void cityValidation(char *city)
 	}
 }
 
-void streetValidation(char *street)
+void streetValidation(char* street)
 {
 	bool isValid = false;
 	int len = 0;
@@ -334,9 +334,9 @@ void productNameValidation(char* productName, Seller& seller)
 	cleanBuffer();
 	while (!isValid)
 	{
-		cout << "Product name (maximum 20 characters, letters digits and space only): ";
+		cout << "Product name (maximum 30 characters, letters digits and space only): ";
 
-		if (getInput(productName, len, MAX_CHARACTERS))
+		if (getInput(productName, len, MAX_PRODUCT_NAME_LENGTH))
 		{
 			if (checkLettersDigitsAndSpace(productName))
 			{
@@ -394,7 +394,7 @@ void priceValidation(float& price)
 	}
 }
 
-void categoryValidation(int &category)
+void categoryValidation(int& category)
 {
 	bool isValid = false;
 
@@ -414,44 +414,33 @@ void categoryValidation(int &category)
 	}
 }
 
-void searchProductSelectionValidation(int& selection)
+bool searchProductSelectionValidation(int& selection)
 {
-	bool isValid = false;
+	cout << "Press 1 to show all products in the shop." << endl;
+	cout << "Press 2 to search a product by name." << endl;
+	cout << "Your selection: ";
 
-	while (!isValid)
+	cin >> selection;
+	cout << endl;
+
+	if (cinTypeCheck() && (selection == ShopSystem::AllProducts || selection == ShopSystem::SpecificProductName))
 	{
-		cout << "Press 1 to show all products in the shop." << endl;
-		cout << "Press 2 to search a product by name." << endl;
-		cout << "Your selection: ";
-
-		cin >> selection;
-		cout << endl;
-
-		if (cinTypeCheck() && (selection == ShopSystem::AllProducts || selection == ShopSystem::SpecificProductName))
-		{
-			isValid = true;
-		}
-		else
-		{
-			cout << "Please choose from one of the following options!\n" << endl;
-		}
+		return true;
+	}
+	else
+	{
+		cout << "Invalid selection!\n" << endl;
+		return false;
 	}
 }
 
-void searchProductNameValidation(char* productName)
+bool searchProductNameValidation(char* productName)
 {
 	int len = 0;
 
 	// Get a name of a product to search
-	while (!(0 < len && len <= MAX_CHARACTERS))
-	{
-		cout << "Product to search: ";
-
-		if (!getInput(productName, len, MAX_CHARACTERS))
-		{
-			cout << "Invalid product name length. Try again!" << endl;
-		}
-	}
+	cout << "Product to search: ";
+	return getInput(productName, len, MAX_PRODUCT_NAME_LENGTH);
 }
 
 bool addProductToCartValidation(unsigned int& productID, const int numOfAllProducts)
@@ -485,14 +474,7 @@ Product* indexOfCheckoutProductValidation(int& index, Product** cart, int numOfP
 		{
 			if (index == -1)
 			{
-				if (numOfChosenProducts == 0)
-				{
-					cout << "Please add at least one product to order." << endl;
-				}
-				else
-				{
-					return nullptr;
-				}
+				return nullptr;
 			}
 			else
 			{

@@ -94,7 +94,7 @@ void Product::showCategory() const
 
 Product* readProductData(Seller* seller)
 {
-	char productName[MAX_CHARACTERS];
+	char productName[MAX_PRODUCT_NAME_LENGTH];
 	float price;
 	int category;
 

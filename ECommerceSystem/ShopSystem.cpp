@@ -430,7 +430,7 @@ Customer* ShopSystem::loginCustomer(char* username, char* password)
 
 void ShopSystem::searchProducts()
 {
-	char productName[MAX_CHARACTERS];
+	char productName[MAX_PRODUCT_NAME_LENGTH];
 	int selection, numOfMatchingProducts = 0;
 	bool isFound = false;
 
@@ -440,37 +440,39 @@ void ShopSystem::searchProducts()
 	}
 	else
 	{
-		searchProductSelectionValidation(selection); // Selection validation
-
-		if ((SearchProductOptions)selection == AllProducts)
+		if (searchProductSelectionValidation(selection)) // Selection validation
 		{
-			showAllProducts(); // Show all the products in the shop
-		}
-		else // SpecificProductName
-		{
-			cleanBuffer();
-			searchProductNameValidation(productName);
-
-			// Search for matching products in the general products array
-			for (int i = 0; i < numOfAllProducts; i++)
+			if ((SearchProductOptions)selection == AllProducts)
 			{
-				if (strcmp(productName, allProducts[i]->getName()) == 0) // Match
-				{
-					if (!isFound)
-					{
-						cout << "Products found:\n" << endl;
-						isFound = true;
-					}
-
-					cout << numOfMatchingProducts + 1 << "."; allProducts[i]->show();
-					cout << endl;
-					numOfMatchingProducts++;
-				}
+				showAllProducts(); // Show all the products in the shop
 			}
-
-			if (numOfMatchingProducts == 0) // No matching products found
+			else // SpecificProductName
 			{
-				cout << "No products found. Keep searching! We have it all in " << ShopSystem::name << ".\n" << endl;
+				cleanBuffer();
+				if (searchProductNameValidation(productName))
+				{
+					// Search for matching products in the general products array
+					for (int i = 0; i < numOfAllProducts; i++)
+					{
+						if (strcmp(productName, allProducts[i]->getName()) == 0) // Match
+						{
+							if (!isFound)
+							{
+								cout << "Products found:\n" << endl;
+								isFound = true;
+							}
+
+							cout << numOfMatchingProducts + 1 << "."; allProducts[i]->show();
+							cout << endl;
+							numOfMatchingProducts++;
+						}
+					}
+				}
+
+				if (numOfMatchingProducts == 0) // No matching products found
+				{
+					cout << "No products found. Keep searching! We have it all in " << ShopSystem::name << ".\n" << endl;
+				}
 			}
 		}
 	}
@@ -519,10 +521,18 @@ void ShopSystem::checkout(Customer* customer)
 	{
 		Checkout* order = new Checkout(customer);
 		order->createNewOrder();
-		order->placeOrder();
-
-		customer->initCart(); // Initialize customer cart
-		customer->addOrder(order); // Add the new order to customer orders
+		if (order->getNumOfChosenProducts() == 0) // No products selected
+		{
+			cout << endl << "Order cancelled!\n" << endl;
+			delete order;
+		}
+		else
+		{
+			cout << endl; order->show();
+			order->placeOrder(); // Place order
+			customer->initCart(); // Initialize customer cart
+			customer->addOrder(order); // Add the new order to customer orders
+		}
 	}
 }
 
@@ -575,7 +585,7 @@ void ShopSystem::writeFeedback(Customer& customer)
 			Checkout* selectedOrder = orders[index - 1];
 			Product** products = selectedOrder->getChosenProducts();
 			selectedOrder->show();
-			cout << "Pick the index of a product to write its seller the feedback: ";
+			cout << "Pick the index of the product to write its seller the feedback: ";
 			cin >> index;
 			if (!cinTypeCheck() || !(1 <= index && index <= selectedOrder->getNumOfChosenProducts()))
 			{

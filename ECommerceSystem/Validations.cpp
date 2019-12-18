@@ -102,7 +102,7 @@ bool checkSpecialCharacters(const char* str)
 
 	while (str[i] != '\0')
 	{
-		if ((str[i] < '!') || (str[i] > '~'))  // All character from '!' to '~'y' are allowed (excluding whitespaces and few extra chars)
+		if ((str[i] < '!') || (str[i] > '~'))  // All characters from '!' to '~'y' are allowed (excluding whitespaces and few extra chars)
 		{
 			cout << "Invalid character found: '" << str[i] << "'" << ". Try again!" << endl;
 			return false;
@@ -346,7 +346,7 @@ void productNameValidation(char* productName, Seller& seller)
 				}
 				else
 				{
-					cout << "You already added this product." << endl;
+					cout << "You already added this product. Please add a different one." << endl;
 				}
 			}
 			else
@@ -463,7 +463,7 @@ bool addProductToCartValidation(unsigned int& productID, const int numOfAllProdu
 Product* indexOfCheckoutProductValidation(int& index, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts)
 {
 	bool isValidIndex = false;
-	Product* product;
+	Product* product = nullptr;
 
 	while (!isValidIndex)
 	{

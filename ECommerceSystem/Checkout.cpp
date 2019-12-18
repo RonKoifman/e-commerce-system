@@ -116,7 +116,7 @@ void Checkout::createNewOrder()
 		{
 			addChosenProduct(product); // Add product to the chosen products array
 			Seller* seller = product->getSeller();
-			// Only if seller not exists already - add product's seller to the products sellers array
+			// Only if seller not exists already - add product's seller to the sellers array
 			if (!isSellerExists(seller, sellers, numOfSellers))
 			{
 				addSeller(seller);
@@ -169,9 +169,9 @@ void Checkout::placeOrder() const
 
 void Checkout::showSellers() const
 {
-	int i;
 	cout << "\tSellers names: " << sellers[0]->getUsername();
-	for (i = 1; i < numOfSellers; i++) {
+	for (int i = 1; i < numOfSellers; i++) 
+	{
 		cout << ", " << sellers[i]->getUsername();
 	}
 	cout << endl;
@@ -179,9 +179,9 @@ void Checkout::showSellers() const
 
 void Checkout::showProductsNames() const
 {
-	int i;
 	cout << "Products names: " << chosenProducts[0]->getName();
-	for (i = 1; i < numOfChosenProducts; i++) {
+	for (int i = 1; i < numOfChosenProducts; i++) 
+	{
 		cout << ", " << chosenProducts[i]->getName();
 	}
 	cout << endl;

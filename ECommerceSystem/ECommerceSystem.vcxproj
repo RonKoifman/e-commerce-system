@@ -157,7 +157,6 @@
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Feedback.cpp" />
-    <ClCompile Include="KnownIssues.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Product.cpp" />

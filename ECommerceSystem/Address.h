@@ -13,7 +13,7 @@ private:
 
 public:
 	Address(char* country, char* city, char* street, int buildingNumber); // C'tor
-	Address(const Address &other); // Copy C'tor
+	Address(const Address& other); // Copy C'tor
 	~Address(); // D'tor
 	void show() const;
 	// Setters

@@ -54,13 +54,13 @@ public:
 	void addSeller(Seller* seller);
 	void addCustomer(Customer* customer);
 	void addProduct(Product* newProduct);
-	Seller* loginSeller(char* username, char* password);
-	Customer* loginCustomer(char* username, char* password);
-	void searchProducts();
+	Seller* loginSeller(char* username, char* password) const;
+	Customer* loginCustomer(char* username, char* password) const;
+	void searchProducts() const;
 	void addProductToCart(Customer& customer);
 	void checkout(Customer* customer);
 	Date readDate();
-	void getTextForFeedback(char* text);
+	void getTextForFeedback(char* text) const;
 	void writeFeedback(Customer& customer);
 	// Getters
 	const char* getName() const;

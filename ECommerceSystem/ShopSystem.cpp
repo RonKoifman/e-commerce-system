@@ -358,7 +358,7 @@ void ShopSystem::addCustomer(Customer* customer)
 	customers = temp; // Update customers array to temp
 }
 
-Seller* ShopSystem::loginSeller(char* username, char* password)
+Seller* ShopSystem::loginSeller(char* username, char* password) const
 {
 	bool isValidUsername, isValidPassword;
 	int len = 0;
@@ -393,7 +393,7 @@ Seller* ShopSystem::loginSeller(char* username, char* password)
 	return nullptr; // Seller not found - login failed
 }
 
-Customer* ShopSystem::loginCustomer(char* username, char* password)
+Customer* ShopSystem::loginCustomer(char* username, char* password) const
 {
 	bool isValidUsername, isValidPassword;
 	int len = 0;
@@ -428,7 +428,7 @@ Customer* ShopSystem::loginCustomer(char* username, char* password)
 	return nullptr; // Customer not found - login failed
 }
 
-void ShopSystem::searchProducts()
+void ShopSystem::searchProducts() const
 {
 	char productName[MAX_PRODUCT_NAME_LENGTH];
 	int selection, numOfMatchingProducts = 0;
@@ -545,7 +545,7 @@ Date ShopSystem::readDate()
 	return Date(day, month, year);
 }
 
-void ShopSystem::getTextForFeedback(char* text)
+void ShopSystem::getTextForFeedback(char* text) const
 {
 	int len = 0;
 	bool isValid;

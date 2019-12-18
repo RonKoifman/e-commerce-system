@@ -1,4 +1,4 @@
-/* Few notes about our project:
+Few notes about our project:
 
 1. We chose to implement users login to enter the system. There is an option to register as a new
    seller or a new customer, or to sign in as an existing seller or an existing customer.
@@ -9,7 +9,7 @@
    of that, we don't allow a seller to add products with the same name. However, different sellers
    can add products with identical names but each of them will have unique serial number.
    Additionally, for the same reason we don't allow customers to add the same product (same serial
-   number) to their cart.
+   number) to their cart or their order.
 
 3. We decided to add both seller and customer the option of search a product by name
    and view all products in the shop. The reason is that customers need to know which products
@@ -21,4 +21,4 @@
 5. The options of view all existing sellers and customers available at the main login menu. 
 
 6. To create a reliable system there are a lot of validations we chose to do, so we
-   created a separate file with all the validation functions. */
+   created a separate file with all the validation functions.

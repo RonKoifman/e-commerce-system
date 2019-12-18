@@ -101,7 +101,6 @@ void Seller::showFeedbacks() const
 			cout << i + 1 << ".";
 			feedbacks[i]->show();
 		}
-		cout << endl;
 	}
 }
 

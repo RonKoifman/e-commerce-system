@@ -569,7 +569,7 @@ void ShopSystem::writeFeedback(Customer& customer)
 
 	if (numOfOrders == 0)
 	{
-		cout << "You have 0 orders made. make an order so you could leave a feedback.\n" << endl;
+		cout << "You have 0 orders made. Make an order so you could leave a feedback.\n" << endl;
 	}
 	else 
 	{

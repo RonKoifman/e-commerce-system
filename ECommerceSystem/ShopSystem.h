@@ -73,7 +73,6 @@ public:
 	// Friend functions
 	friend Customer* readCustomerData(const ShopSystem& shop);
 	friend Seller* readSellerData(const ShopSystem& shop);
-	friend Product* readProductData(Seller* seller);
 };
 
 #endif // __SHOP_SYSTEM_H

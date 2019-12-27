@@ -19,7 +19,7 @@ private:
 	int numOfOrders;
 
 public:
-	Customer(char* username, char* password, Address address); // C'tor
+	Customer(const char* username, const char* password, const Address& address); // C'tor
 	Customer(const Customer& other) = delete; // Disable copy c'tor
 	~Customer(); // D'tor
 	void show() const;
@@ -29,9 +29,9 @@ public:
 	void addOrder(Checkout* newOrder);
 	void initCart();
 	// Setters
-	void setUsername(char* username);
-	void setPassword(char* password);
-	void setAddress(Address address);
+	void setUsername(const char* username);
+	void setPassword(const char* password);
+	void setAddress(const Address& address);
 	void setNumOfPruductsInCart(int numOfProductsInCart);
 	void setNumOfOrders(int numOfOrders);
 	// Getters

@@ -21,7 +21,7 @@ private:
 	int numOfProducts;
 
 public:
-	Seller(char* username, char* password, Address address); // C'tor
+	Seller(const char* username, const char* password, const Address& address); // C'tor
 	Seller(const Seller& other) = delete; // Disable copy c'tor
 	~Seller(); // D'tor
 	void show() const;
@@ -30,9 +30,9 @@ public:
 	void addProduct(Product* newProduct);
 	void addFeedback(Feedback* newFeedback);
 	// Setters
-	void setUsername(char* username);
-	void setPassword(char* password);
-	void setAddress(Address address);
+	void setUsername(const char* username);
+	void setPassword(const char* password);
+	void setAddress(const Address& address);
 	// Getters
 	char* getUsername() const;
 	char* getPassword() const;

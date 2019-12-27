@@ -3,7 +3,7 @@
 
 unsigned int Product::uniqueID = 1000; // Generate unique id for each serial number of a product
 
-Product::Product(char* name, float price, int category, Seller* seller) // C'tor
+Product::Product(const char* name, float price, int category, Seller* seller) // C'tor
 	: name(nullptr), serialNumber(uniqueID++), seller(seller), price(price)
 {
 	setName(name);
@@ -22,7 +22,7 @@ Product::~Product() // D'tor
 	delete[] name;
 }
 
-void Product::setName(char* name)
+void Product::setName(const char* name)
 {
 	delete[] this->name; // Free the previous name - if exists
 	this->name = new char[strlen(name) + 1];

@@ -1,6 +1,6 @@
 #include "Seller.h"
 
-Seller::Seller(char* username, char* password, Address address) // C'tor
+Seller::Seller(const char* username, const char* password, const Address& address) // C'tor
 	: username(nullptr), password(nullptr), address(address), products(nullptr), feedbacks(nullptr)
 {
 	setUsername(username);
@@ -28,21 +28,21 @@ Seller::~Seller() // D'tor
 	delete[] feedbacks;
 }
 
-void Seller::setUsername(char * username)
+void Seller::setUsername(const char* username)
 {
 	delete[] this->username; // Free the previous username - if exists
 	this->username = new char[strlen(username) + 1];
 	strcpy(this->username, username);
 }
 
-void Seller::setPassword(char* password)
+void Seller::setPassword(const char* password)
 {
 	delete[] this->password; // Free the previous password - if exists
 	this->password = new char[strlen(password) + 1];
 	strcpy(this->password, password);
 }
 
-void Seller::setAddress(Address address)
+void Seller::setAddress(const Address& address)
 {
 	this->address = address;
 }

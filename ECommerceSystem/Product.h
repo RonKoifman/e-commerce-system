@@ -19,13 +19,13 @@ private:
 	const unsigned int serialNumber;
 
 public:
-	Product(char* name, float price, int category, Seller* seller); // C'tor
+	Product(const char* name, float price, int category, Seller* seller); // C'tor
 	Product(const Product& other); // Copy C'tor
 	~Product(); // D'tor
 	void show() const;
 	void showCategory() const;
 	// Setters
-	void setName(char* name);
+	void setName(const char* name);
 	void setPrice(float price);
 	void setCategory(Category category);
 	// Getters

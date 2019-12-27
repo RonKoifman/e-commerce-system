@@ -12,14 +12,14 @@ private:
 	int buildingNumber;
 
 public:
-	Address(char* country, char* city, char* street, int buildingNumber); // C'tor
+	Address(const char* country, const char* city, const char* street, int buildingNumber); // C'tor
 	Address(const Address& other); // Copy C'tor
 	~Address(); // D'tor
 	void show() const;
 	// Setters
-	void setCountry(char* country);
-	void setCity(char* city);
-	void setStreet(char* street);
+	void setCountry(const char* country);
+	void setCity(const char* city);
+	void setStreet(const char* street);
 	void setBuildingNumber(int buildingNumber);
 	// Getters
 	char* getCountry() const;

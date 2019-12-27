@@ -1,6 +1,6 @@
 #include "Feedback.h"
 
-Feedback::Feedback(Customer* customer, Product* product, Date date, char* text) // C'tor
+Feedback::Feedback(Customer* customer, Product* product, const Date& date, const char* text) // C'tor
 	: text(nullptr), date(date), customer(customer), product(product)
 {
 	setText(text);
@@ -17,12 +17,12 @@ Feedback::~Feedback() // D'tor
 	delete[] text;
 }
 
-void Feedback::setDate(Date date)
+void Feedback::setDate(const Date& date)
 {
 	this->date = date;
 }
 
-void Feedback::setText(char* text)
+void Feedback::setText(const char* text)
 {
 	delete[] this->text; // Free the previous text - if exists
 	this->text = new char[strlen(text) + 1];

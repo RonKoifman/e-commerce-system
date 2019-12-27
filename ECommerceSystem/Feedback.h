@@ -15,13 +15,13 @@ private:
 	char* text;
 
 public:
-	Feedback(Customer* customer, Product* product, Date date, char* text); // C'tor
+	Feedback(Customer* customer, Product* product, const Date& date, const char* text); // C'tor
 	Feedback(const Feedback& other); // Copy C'tor
 	~Feedback(); // D'tor
 	void show() const;
 	// Setters
-	void setDate(Date date);
-	void setText(char* text);
+	void setDate(const Date& date);
+	void setText(const char* text);
 	// Getters
 	Customer* getCustomer() const;
 	Product* getProduct() const;

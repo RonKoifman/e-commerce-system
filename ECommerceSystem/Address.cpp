@@ -1,6 +1,6 @@
 #include "Address.h"
 
-Address::Address(char* country, char* city, char* street, int buildingNumber) // C'tor
+Address::Address(const char* country, const char* city, const char* street, int buildingNumber) // C'tor
 	: country(nullptr), city(nullptr), street(nullptr)
 {
 	setCountry(country);
@@ -25,21 +25,21 @@ Address::~Address() // D'tor
 	delete[] street;
 }
 
-void Address::setCountry(char* country)
+void Address::setCountry(const char* country)
 {
 	delete[] this->country; // Free the previous country - if exists
 	this->country = new char[strlen(country) + 1];
 	strcpy(this->country, country);
 }
 
-void Address::setCity(char* city)
+void Address::setCity(const char* city)
 {
 	delete[] this->city; // Free the previous city - if exists
 	this->city = new char[strlen(city) + 1];
 	strcpy(this->city, city);
 }
 
-void Address::setStreet(char* street)
+void Address::setStreet(const char* street)
 {
 	delete[] this->street; // Free the previous street - if exists
 	this->street = new char[strlen(street) + 1];

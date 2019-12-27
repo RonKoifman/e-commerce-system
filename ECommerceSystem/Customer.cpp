@@ -1,7 +1,7 @@
 #include "Checkout.h"
 #include "Customer.h"
 
-Customer::Customer(char* username, char* password, Address address) // C'tor
+Customer::Customer(const char* username, const char* password, const Address& address) // C'tor
 	: username(nullptr), password(nullptr), cart(nullptr), orders(nullptr), address(address)
 {
 	setUsername(username);
@@ -25,21 +25,21 @@ Customer::~Customer() // D'tor
 	delete[] cart; // The products pointers themselves already released at each of their seller d'tor
 }
 
-void Customer::setUsername(char* username)
+void Customer::setUsername(const char* username)
 {
 	delete[] this->username; // Free the previous username - if exists
 	this->username = new char[strlen(username) + 1];
 	strcpy(this->username, username);
 }
 
-void Customer::setPassword(char* password)
+void Customer::setPassword(const char* password)
 {
 	delete[] this->password; // Free the previous password - if exists
 	this->password = new char[strlen(password) + 1];
 	strcpy(this->password, password);
 }
 
-void Customer::setAddress(Address address)
+void Customer::setAddress(const Address& address)
 {
 	this->address = address;
 }

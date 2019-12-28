@@ -80,12 +80,15 @@ void Product::showCategory() const
 	case Clothing:
 		cout << "Clothing" << endl;
 		break;
+
 	case Kids:
 		cout << "Kids" << endl;
 		break;
+
 	case Electricity:
 		cout << "Electricity" << endl;
 		break;
+
 	case Office:
 		cout << "Office" << endl;
 		break;

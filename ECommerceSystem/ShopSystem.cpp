@@ -127,7 +127,6 @@ bool ShopSystem::showLoginMenu()
 	switch ((LoginOptions)selection)
 	{
 	case SignupNewSeller:
-	{
 		Seller* newSeller = readSellerData(*this);
 		addSeller(newSeller);
 		cout << "Registration completed successfully!\n" << endl;
@@ -136,9 +135,8 @@ bool ShopSystem::showLoginMenu()
 			return false; // Exit from the application
 		}
 		break;
-	}
+
 	case SignupNewCustomer:
-	{
 		Customer* newCustomer = readCustomerData(*this);
 		addCustomer(newCustomer);
 		cout << "Registration completed successfully!\n" << endl;
@@ -147,9 +145,8 @@ bool ShopSystem::showLoginMenu()
 			return false; // Exit from the application
 		}
 		break;
-	}
+
 	case LoginSeller:
-	{
 		Seller* seller = loginSeller(username, password);
 		if (seller) // Seller found
 		{
@@ -160,9 +157,8 @@ bool ShopSystem::showLoginMenu()
 			}
 		}
 		break;
-	}
+
 	case LoginCustomer:
-	{
 		Customer* customer = loginCustomer(username, password);
 		if (customer) // Customer found
 		{
@@ -173,19 +169,18 @@ bool ShopSystem::showLoginMenu()
 			}
 		}
 		break;
-	}
+
 	case ViewCustomers:
-	{
 		showCustomers();
 		break;
-	}
+
 	case ViewSellers:
-	{
 		showSellers();
 		break;
-	}
+
 	case Exit:
 		return false; // Exit from the application
+
 	default: // Invalid option
 		cout << "Please choose from one of the following options!\n" << endl;
 	}
@@ -210,36 +205,32 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 		switch ((SellerOptions)selection)
 		{
 		case AddNewProductToSeller:
-		{
 			Product* newProduct = readProductData(&seller);
 			seller.addProduct(newProduct); // Add the new product to its seller
 			this->addProduct(newProduct); // Add the new product to the general products array
 			break;
-		}
+		
 		case SellerSearchProduct:
-		{
 			searchProducts();
 			break;
-		}
+		
 		case ViewProducts:
-		{
 			seller.showProducts();
 			cout << endl;
 			break;
-		}
+		
 		case ViewFeedbacks:
-		{
 			seller.showFeedbacks();
 			cout << endl;
 			break;
-		}
+		
 		case SellerLogOut:
-		{
 			cout << "Bye bye " << seller.getUsername() << "... We hope to see you again soon!\n" << endl;
 			return true; // Logout seller
-		}
+		
 		case SellerExit:
 			return false; // Exit from the application
+
 		default:
 			cout << "Please choose from one of the following options!\n" << endl;
 		}
@@ -265,37 +256,32 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		switch ((CustomerOptions)selection)
 		{
 		case CustomerSearchProduct:
-		{
 			searchProducts();
 			break;
-		}
+		
 		case AddNewProductToCart:
-		{
 			addProductToCart(customer);
 			break;
-		}
+		
 		case ViewCart:
-		{
 			customer.showCart();
 			break;
-		}
+		
 		case CheckoutAndPlaceOrder:
-		{
 			checkout(&customer);
 			break;
-		}
+		
 		case WriteFeedback:
-		{
 			writeFeedback(customer);
 			break;
-		}
+		
 		case CustomerLogOut:
-		{
 			cout << "Bye bye " << customer.getUsername() << "... We hope to see you again soon!\n" << endl;
 			return true; // Logout customer
-		}
+		
 		case CustomerExit:
 			return false; // Exit from the application
+
 		default:
 			cout << "Please choose from one of the following options!\n" << endl;
 		}

@@ -42,13 +42,15 @@ Customer* Checkout::getCustomer() const
 	return customer;
 }
 
-void Checkout::show() const
+ostream& operator<<(ostream& os, const Checkout& checkout)
 {
 	cout << "Chosen products:\n" << endl;
-	for (int i = 0; i < numOfChosenProducts; i++)
+	for (int i = 0; i < checkout.numOfChosenProducts; i++)
 	{
-		cout << i + 1 << "."; chosenProducts[i]->show(); cout << endl;
+		os << i + 1 << "." << *checkout.chosenProducts[i] << endl;
+		os << endl;
 	}
+	return os;
 }
 
 void Checkout::calculateTotalPrice()

@@ -18,7 +18,6 @@ public:
 	Feedback(Customer* customer, Product* product, const Date& date, const char* text); // C'tor
 	Feedback(const Feedback& other); // Copy C'tor
 	~Feedback(); // D'tor
-	void show() const;
 	// Setters
 	void setDate(const Date& date);
 	void setText(const char* text);
@@ -27,6 +26,8 @@ public:
 	Product* getProduct() const;
 	Date getDate() const;
 	char* getText() const;
+	// Friend functions
+	friend ostream& operator<<(ostream& os, const Feedback& feedback);
 };
 
 #endif // __FEEDBACK_H

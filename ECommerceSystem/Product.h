@@ -22,7 +22,6 @@ public:
 	Product(const char* name, float price, int category, Seller* seller); // C'tor
 	Product(const Product& other); // Copy C'tor
 	~Product(); // D'tor
-	void show() const;
 	void showCategory() const;
 	// Setters
 	void setName(const char* name);
@@ -36,6 +35,7 @@ public:
 	const unsigned int getSerialNumber() const;
 	// Friend functions
 	friend bool addProductToCartValidation(unsigned int& productID, const int numOfAllProducts);
+	friend ostream& operator<<(ostream& os, const Product& product);
 };
 
 #endif // __PRODUCT_H

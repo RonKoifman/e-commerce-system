@@ -64,13 +64,14 @@ const unsigned int Product::getSerialNumber() const
 	return serialNumber;
 }
 
-void Product::show() const
+ostream& operator<<(ostream& os, const Product& product)
 {
-	cout << "\tName: " << name << endl;
-	cout << "\tPrice: $" << price << endl;
-	cout << "\tCategory: "; showCategory();
-	cout << "\tSerial number: " << serialNumber << endl;
-	cout << "\tSeller: " << seller->getUsername() << endl;
+	os << "\tName: " << product.name << endl;
+	os << "\tPrice: $" << product.price << endl;
+	os << "\tCategory: "; product.showCategory();
+	os << "\tSerial number: " << product.serialNumber << endl;
+	os << "\tSeller: " << product.seller->getUsername();
+	return os;
 }
 
 void Product::showCategory() const
@@ -80,15 +81,12 @@ void Product::showCategory() const
 	case Clothing:
 		cout << "Clothing" << endl;
 		break;
-
 	case Kids:
 		cout << "Kids" << endl;
 		break;
-
 	case Electricity:
 		cout << "Electricity" << endl;
 		break;
-
 	case Office:
 		cout << "Office" << endl;
 		break;

@@ -35,7 +35,8 @@ int Date::getYear() const
 	return year;
 }
 
-void Date::show() const
+ostream& operator<<(ostream& os, const Date& date)
 {
-	cout << day << "/" <<  month << "/" << year << endl;
+	os << date.day << "/" << date.month << "/" << date.year;
+	return os;
 }

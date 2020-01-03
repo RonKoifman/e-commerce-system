@@ -71,7 +71,8 @@ int Address::getBuildingNumber() const
 	return buildingNumber;
 }
 
-void Address::show() const
+ostream& operator<<(ostream& os, const Address& address)
 {
-	cout << street << " " << buildingNumber << ", " << city << ", " << country << endl;
+	os << address.street << " " << address.buildingNumber << ", " << address.city << ", " << address.country;
+	return os;
 }

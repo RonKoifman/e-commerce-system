@@ -21,7 +21,6 @@ public:
 	Checkout(Customer* customer); // C'tor
 	Checkout(const Checkout& other) = delete; // Disable copy c'tor
 	~Checkout(); // D'tor
-	void show() const;
 	void showSellers() const;
 	void showProductsNames() const;
 	void calculateTotalPrice();
@@ -36,6 +35,8 @@ public:
 	int getNumOfSellers() const;
 	Customer* getCustomer() const;
 	Seller** getSellers() const;
+	// Friend functions
+	friend ostream& operator<<(ostream& os, const Checkout& checkout);
 };
 
 #endif // __CHECKOUT_H

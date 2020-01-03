@@ -92,7 +92,7 @@ int Customer::getNumOfOrders() const
 void Customer::show() const
 {
 	cout << "Username: " << username << endl;
-	cout << "Address: "; address.show();
+	cout << "Address: " << address << endl;
 }
 
 void Customer::showCart() const
@@ -106,7 +106,8 @@ void Customer::showCart() const
 		cout << "Your cart:\n" << endl;
 		for (int i = 0; i < numOfProductsInCart; i++)
 		{
-			cout << i + 1 << "."; cart[i]->show(); cout << endl;
+			cout << i + 1 << "." << *cart[i] << endl;
+			cout << endl;
 		}
 	}
 }

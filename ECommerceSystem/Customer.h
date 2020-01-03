@@ -7,12 +7,12 @@
 
 class Checkout;
 
-class Customer
+class Customer : public User
 {
 private:
-	char* username;
+	/*char* username;
 	char* password;
-	Address address;
+	Address address;*/
 	Product** cart;
 	int numOfProductsInCart;
 	Checkout** orders;
@@ -29,15 +29,15 @@ public:
 	void addOrder(Checkout* newOrder);
 	void initCart();
 	// Setters
-	void setUsername(const char* username);
+	/*void setUsername(const char* username);
 	void setPassword(const char* password);
-	void setAddress(const Address& address);
+	void setAddress(const Address& address);*/
 	void setNumOfPruductsInCart(int numOfProductsInCart);
 	void setNumOfOrders(int numOfOrders);
 	// Getters
-	char* getUsername() const;
+	/*char* getUsername() const;
 	char* getPassword() const;
-	Address getAddress() const;
+	Address getAddress() const;*/
 	Product** getCart() const;
 	int getNumOfProductsInCart() const;
 	Checkout** getOrders() const;

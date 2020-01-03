@@ -6,15 +6,16 @@
 #include "Feedback.h"
 #include "Product.h"
 #include "Validations.h"
+#include "User.h"
 
 class Pruduct;
 
-class Seller
+class Seller : public User
 {
 private:
-	char* username;
+	/*char* username;
 	char* password;
-	Address address;
+	Address address;*/
 	Feedback** feedbacks;
 	int numOfFeedbacks;
 	Product** products;
@@ -24,19 +25,19 @@ public:
 	Seller(const char* username, const char* password, const Address& address); // C'tor
 	Seller(const Seller& other) = delete; // Disable copy c'tor
 	~Seller(); // D'tor
-	void show() const;
+	virtual void show(ostream& os) const override;
 	void showFeedbacks() const;
 	void showProducts() const;
 	void addProduct(Product* newProduct);
 	void addFeedback(Feedback* newFeedback);
 	// Setters
-	void setUsername(const char* username);
+	/*void setUsername(const char* username);
 	void setPassword(const char* password);
-	void setAddress(const Address& address);
+	void setAddress(const Address& address);*/
 	// Getters
-	char* getUsername() const;
+	/*char* getUsername() const;
 	char* getPassword() const;
-	Address getAddress() const;
+	Address getAddress() const;*/
 	Feedback** getFeedbacks() const;
 	int getNumOfFeedbacks() const;
 	Product** getProducts() const;

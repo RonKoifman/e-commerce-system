@@ -21,6 +21,8 @@ public:
 	int getDay() const;
 	int getMonth() const;
 	int getYear() const;
+	// Friend functions
+	friend ostream& operator<<(ostream& os, const Date& date);
 };
 
 #endif // __DATE_H

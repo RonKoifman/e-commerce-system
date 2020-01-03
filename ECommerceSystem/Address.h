@@ -15,7 +15,6 @@ public:
 	Address(const char* country, const char* city, const char* street, int buildingNumber); // C'tor
 	Address(const Address& other); // Copy C'tor
 	~Address(); // D'tor
-	void show() const;
 	// Setters
 	void setCountry(const char* country);
 	void setCity(const char* city);
@@ -26,6 +25,8 @@ public:
 	char* getCity() const;
 	char* getStreet() const;
 	int getBuildingNumber() const;
+	// Friend functions
+	friend ostream& operator<<(ostream& os, const Address& address);
 };
 
 #endif // __ADDRESS_H

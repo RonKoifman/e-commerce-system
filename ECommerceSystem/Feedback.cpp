@@ -49,10 +49,11 @@ char* Feedback::getText() const
 	return text;
 }
 
-void Feedback::show() const
+ostream& operator<<(ostream& os, const Feedback& feedback)
 {
-	cout << "\tCustomer: " << customer->getUsername() << endl;
-	cout << "\tName of the product: " << product->getName() << endl;
-	cout << "\tDate: "; date.show();
-	cout << "\tText: " << text << endl;
+	os << "\tCustomer: " << feedback.customer->getUsername() << endl;
+	os << "\tName of the product: " << feedback.product->getName() << endl;
+	os << "\tDate: " << feedback.date << endl;
+	os << "\tText: " << feedback.text;
+	return os;
 }

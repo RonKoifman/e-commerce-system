@@ -103,7 +103,7 @@ void ShopSystem::showAllProducts() const
 		cout << name << " products:\n" << endl;
 		for (int i = 0; i < numOfAllProducts; i++)
 		{
-			cout << i + 1 << "."; allProducts[i]->show();
+			cout << i + 1 << "." << *allProducts[i] << endl;
 			cout << endl;
 		}
 	}
@@ -127,6 +127,7 @@ bool ShopSystem::showLoginMenu()
 	switch ((LoginOptions)selection)
 	{
 	case SignupNewSeller:
+	{
 		Seller* newSeller = readSellerData(*this);
 		addSeller(newSeller);
 		cout << "Registration completed successfully!\n" << endl;
@@ -135,8 +136,9 @@ bool ShopSystem::showLoginMenu()
 			return false; // Exit from the application
 		}
 		break;
-
+	}
 	case SignupNewCustomer:
+	{
 		Customer* newCustomer = readCustomerData(*this);
 		addCustomer(newCustomer);
 		cout << "Registration completed successfully!\n" << endl;
@@ -145,8 +147,9 @@ bool ShopSystem::showLoginMenu()
 			return false; // Exit from the application
 		}
 		break;
-
+	}
 	case LoginSeller:
+	{
 		Seller* seller = loginSeller(username, password);
 		if (seller) // Seller found
 		{
@@ -157,8 +160,9 @@ bool ShopSystem::showLoginMenu()
 			}
 		}
 		break;
-
+	}
 	case LoginCustomer:
+	{
 		Customer* customer = loginCustomer(username, password);
 		if (customer) // Customer found
 		{
@@ -169,18 +173,19 @@ bool ShopSystem::showLoginMenu()
 			}
 		}
 		break;
-
+	}
 	case ViewCustomers:
+	{
 		showCustomers();
 		break;
-
+	}
 	case ViewSellers:
+	{
 		showSellers();
 		break;
-
+	}
 	case Exit:
 		return false; // Exit from the application
-
 	default: // Invalid option
 		cout << "Please choose from one of the following options!\n" << endl;
 	}
@@ -205,32 +210,36 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 		switch ((SellerOptions)selection)
 		{
 		case AddNewProductToSeller:
+		{
 			Product* newProduct = readProductData(&seller);
 			seller.addProduct(newProduct); // Add the new product to its seller
 			this->addProduct(newProduct); // Add the new product to the general products array
 			break;
-		
+		}
 		case SellerSearchProduct:
+		{
 			searchProducts();
 			break;
-		
+		}
 		case ViewProducts:
+		{
 			seller.showProducts();
 			cout << endl;
 			break;
-		
+		}
 		case ViewFeedbacks:
+		{
 			seller.showFeedbacks();
 			cout << endl;
 			break;
-		
+		}
 		case SellerLogOut:
+		{
 			cout << "Bye bye " << seller.getUsername() << "... We hope to see you again soon!\n" << endl;
 			return true; // Logout seller
-		
+		}
 		case SellerExit:
 			return false; // Exit from the application
-
 		default:
 			cout << "Please choose from one of the following options!\n" << endl;
 		}
@@ -256,32 +265,37 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		switch ((CustomerOptions)selection)
 		{
 		case CustomerSearchProduct:
+		{
 			searchProducts();
 			break;
-		
+		}
 		case AddNewProductToCart:
+		{
 			addProductToCart(customer);
 			break;
-		
+		}
 		case ViewCart:
+		{
 			customer.showCart();
 			break;
-		
+		}
 		case CheckoutAndPlaceOrder:
+		{
 			checkout(&customer);
 			break;
-		
+		}
 		case WriteFeedback:
+		{
 			writeFeedback(customer);
 			break;
-		
+		}
 		case CustomerLogOut:
+		{
 			cout << "Bye bye " << customer.getUsername() << "... We hope to see you again soon!\n" << endl;
 			return true; // Logout customer
-		
+		}
 		case CustomerExit:
 			return false; // Exit from the application
-
 		default:
 			cout << "Please choose from one of the following options!\n" << endl;
 		}
@@ -448,7 +462,7 @@ void ShopSystem::searchProducts() const
 								isFound = true;
 							}
 
-							cout << numOfMatchingProducts + 1 << "."; allProducts[i]->show();
+							cout << numOfMatchingProducts + 1 << "." << *allProducts[i] << endl;
 							cout << endl;
 							numOfMatchingProducts++;
 						}
@@ -514,7 +528,7 @@ void ShopSystem::checkout(Customer* customer)
 		}
 		else
 		{
-			cout << endl; order->show();
+			cout << endl << *order;
 			order->placeOrder(); // Place order
 			customer->initCart(); // Initialize customer cart
 			customer->addOrder(order); // Add the new order to customer orders
@@ -570,7 +584,7 @@ void ShopSystem::writeFeedback(Customer& customer)
 		{
 			Checkout* selectedOrder = orders[index - 1];
 			Product** products = selectedOrder->getChosenProducts();
-			selectedOrder->show();
+			cout << *selectedOrder;
 			cout << "Pick the index of the product to write its seller the feedback: ";
 			cin >> index;
 			if (!cinTypeCheck() || !(1 <= index && index <= selectedOrder->getNumOfChosenProducts()))

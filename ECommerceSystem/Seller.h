@@ -1,8 +1,6 @@
 #ifndef __SELLER_H
 #define __SELLER_H
 
-#include "OutResources.h"
-#include "Address.h"
 #include "Feedback.h"
 #include "Product.h"
 #include "Validations.h"
@@ -10,7 +8,7 @@
 
 class Pruduct;
 
-class Seller : public User
+class Seller : virtual public User
 {
 private:
 	/*char* username;
@@ -25,7 +23,8 @@ public:
 	Seller(const char* username, const char* password, const Address& address); // C'tor
 	Seller(const Seller& other) = delete; // Disable copy c'tor
 	~Seller(); // D'tor
-	virtual void show(ostream& os) const override;
+	//virtual void show(ostream& os) const override;
+	virtual void show() const;
 	void showFeedbacks() const;
 	void showProducts() const;
 	void addProduct(Product* newProduct);

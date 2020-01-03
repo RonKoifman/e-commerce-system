@@ -12,8 +12,8 @@ Seller::Seller(const char* username, const char* password, const Address& addres
 
 Seller::~Seller() // D'tor
 {
-	delete[] username;
-	delete[] password;
+	/*delete[] username;
+	delete[] password;*/
 
 	for (int i = 0; i < numOfProducts; i++)
 	{
@@ -77,10 +77,17 @@ int Seller::getNumOfProducts() const
 	return numOfProducts;
 }
 
-void Seller::show(ostream& os) const
+//void Seller::show(ostream& os) const
+//{
+//	/*cout << "Username: " << username << endl;
+//	cout << "Address: "; address.show();*/
+//	User::show();
+//	showProducts();
+//	showFeedbacks();
+//}
+
+void Seller::show() const 
 {
-	/*cout << "Username: " << username << endl;
-	cout << "Address: "; address.show();*/
 	User::show();
 	showProducts();
 	showFeedbacks();

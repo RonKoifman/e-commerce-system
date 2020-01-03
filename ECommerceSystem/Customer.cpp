@@ -2,10 +2,10 @@
 #include "Customer.h"
 
 Customer::Customer(const char* username, const char* password, const Address& address) // C'tor
-	: username(nullptr), password(nullptr), cart(nullptr), orders(nullptr), address(address)
+	: User(username, password, address), cart(nullptr), orders(nullptr)
 {
-	setUsername(username);
-	setPassword(password);
+	/*setUsername(username);
+	setPassword(password);*/
 
 	// Initialize data members
 	numOfProductsInCart = numOfOrders = 0;
@@ -13,8 +13,8 @@ Customer::Customer(const char* username, const char* password, const Address& ad
 
 Customer::~Customer() // D'tor
 {
-	delete[] username;
-	delete[] password;
+	/*delete[] username;
+	delete[] password;*/
 
 	for (int i = 0; i < numOfOrders; i++)
 	{
@@ -25,25 +25,25 @@ Customer::~Customer() // D'tor
 	delete[] cart; // The products pointers themselves already released at each of their seller d'tor
 }
 
-void Customer::setUsername(const char* username)
-{
-	delete[] this->username; // Free the previous username - if exists
-	this->username = new char[strlen(username) + 1];
-	strcpy(this->username, username);
-}
-
-void Customer::setPassword(const char* password)
-{
-	delete[] this->password; // Free the previous password - if exists
-	this->password = new char[strlen(password) + 1];
-	strcpy(this->password, password);
-}
-
-void Customer::setAddress(const Address& address)
-{
-	this->address = address;
-}
-
+//void Customer::setUsername(const char* username)
+//{
+//	delete[] this->username; // Free the previous username - if exists
+//	this->username = new char[strlen(username) + 1];
+//	strcpy(this->username, username);
+//}
+//
+//void Customer::setPassword(const char* password)
+//{
+//	delete[] this->password; // Free the previous password - if exists
+//	this->password = new char[strlen(password) + 1];
+//	strcpy(this->password, password);
+//}
+//
+//void Customer::setAddress(const Address& address)
+//{
+//	this->address = address;
+//}
+//
 void Customer::setNumOfPruductsInCart(int numOfProductsInCart)
 {
 	this->numOfProductsInCart = numOfProductsInCart;
@@ -53,21 +53,21 @@ void Customer::setNumOfOrders(int numOfOrders)
 {
 	this->numOfOrders = numOfOrders;
 }
-
-char* Customer::getUsername() const
-{
-	return username;
-}
-
-char* Customer::getPassword() const
-{
-	return password;
-}
-
-Address Customer::getAddress() const
-{
-	return address;
-}
+//
+//char* Customer::getUsername() const
+//{
+//	return username;
+//}
+//
+//char* Customer::getPassword() const
+//{
+//	return password;
+//}
+//
+//Address Customer::getAddress() const
+//{
+//	return address;
+//}
 
 Product** Customer::getCart() const
 {
@@ -91,8 +91,9 @@ int Customer::getNumOfOrders() const
 
 void Customer::show() const
 {
-	cout << "Username: " << username << endl;
-	cout << "Address: " << address << endl;
+	/*cout << "Username: " << username << endl;
+	cout << "Address: " << address << endl;*/
+	User::show();
 }
 
 void Customer::showCart() const

@@ -1,13 +1,12 @@
 #ifndef __CUSTOMER_H
 #define __CUSTOMER_H
 
-#include "OutResources.h"
 #include "Product.h"
-#include "Address.h"
+#include "User.h"
 
 class Checkout;
 
-class Customer : public User
+class Customer : virtual public User
 {
 private:
 	/*char* username;

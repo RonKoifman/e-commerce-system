@@ -18,7 +18,7 @@ User::~User()
 void User::show() const
 {
 	cout << "Username: " << username << endl;
-	cout << "Address: "; address.show();
+	cout << "Address: "; address;
 }
 
 void User::setUsername(const char* username)

@@ -16,7 +16,7 @@ private:
 
 public:
 	Feedback(Customer* customer, Product* product, const Date& date, const char* text); // C'tor
-	Feedback(const Feedback& other); // Copy C'tor
+	Feedback(const Feedback& other) = delete; // Disable copy c'tor
 	~Feedback(); // D'tor
 	// Setters
 	void setDate(const Date& date);

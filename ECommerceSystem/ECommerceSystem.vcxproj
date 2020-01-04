@@ -148,7 +148,9 @@
     <ClInclude Include="OutResources.h" />
     <ClInclude Include="Product.h" />
     <ClInclude Include="Seller.h" />
+    <ClInclude Include="SellerCustomer.h" />
     <ClInclude Include="ShopSystem.h" />
+    <ClInclude Include="User.h" />
     <ClInclude Include="Validations.h" />
   </ItemGroup>
   <ItemGroup>
@@ -161,7 +163,9 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="Seller.cpp" />
+    <ClCompile Include="SellerCustomer.cpp" />
     <ClCompile Include="ShopSystem.cpp" />
+    <ClCompile Include="User.cpp" />
     <ClCompile Include="Validations.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -6,12 +6,6 @@ Feedback::Feedback(Customer* customer, Product* product, const Date& date, const
 	setText(text);
 }
 
-Feedback::Feedback(const Feedback& other) // Copy C'tor
-	: text(nullptr), date(other.date), customer(other.customer), product(other.product)
-{
-	setText(other.text);
-}
-
 Feedback::~Feedback() // D'tor
 {
 	delete[] text;

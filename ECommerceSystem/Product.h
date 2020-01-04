@@ -20,7 +20,7 @@ private:
 
 public:
 	Product(const char* name, float price, int category, Seller* seller); // C'tor
-	Product(const Product& other); // Copy C'tor
+	Product(const Product& other) = delete; // Disable copy c'tor
 	~Product(); // D'tor
 	void showCategory() const;
 	// Setters

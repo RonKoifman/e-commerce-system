@@ -12,10 +12,7 @@ Address::Address(const char* country, const char* city, const char* street, int 
 Address::Address(const Address& other) // Copy C'tor
 	: country(nullptr), city(nullptr), street(nullptr)
 {
-	setCountry(other.country);
-	setCity(other.city);
-	setStreet(other.street);
-	setBuildingNumber(other.buildingNumber);
+	*this = other;
 }
 
 Address::~Address() // D'tor
@@ -23,6 +20,19 @@ Address::~Address() // D'tor
 	delete[] country;
 	delete[] city;
 	delete[] street;
+}
+
+const Address& Address::operator=(const Address& other)
+{
+	if (this != &other)
+	{
+		setCountry(other.country);
+		setCity(other.city);
+		setStreet(other.street);
+		setBuildingNumber(other.buildingNumber);
+	}
+
+	return *this;
 }
 
 void Address::setCountry(const char* country)

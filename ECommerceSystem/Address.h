@@ -15,6 +15,7 @@ public:
 	Address(const char* country, const char* city, const char* street, int buildingNumber); // C'tor
 	Address(const Address& other); // Copy C'tor
 	~Address(); // D'tor
+	const Address& operator=(const Address& other);
 	// Setters
 	void setCountry(const char* country);
 	void setCity(const char* city);

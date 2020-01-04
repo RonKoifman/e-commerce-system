@@ -12,7 +12,6 @@ private:
 
 public:
 	Date(int day,int month, int year); // C'tor
-	void show() const;
 	// Setters
 	void setDay(int day);
 	void setMonth(int month);

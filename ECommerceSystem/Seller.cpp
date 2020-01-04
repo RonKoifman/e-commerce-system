@@ -1,20 +1,14 @@
 #include "Seller.h"
 
 Seller::Seller(const char* username, const char* password, const Address& address) // C'tor
-	: username(nullptr), password(nullptr), address(address), products(nullptr), feedbacks(nullptr)
+	: User(username, password, address), products(nullptr), feedbacks(nullptr)
 {
-	setUsername(username);
-	setPassword(password);
-
 	// Initialize data members
 	numOfProducts = numOfFeedbacks = 0;
 }
 
 Seller::~Seller() // D'tor
 {
-	delete[] username;
-	delete[] password;
-
 	for (int i = 0; i < numOfProducts; i++)
 	{
 		delete products[i];
@@ -26,40 +20,6 @@ Seller::~Seller() // D'tor
 
 	delete[] products;
 	delete[] feedbacks;
-}
-
-void Seller::setUsername(const char* username)
-{
-	delete[] this->username; // Free the previous username - if exists
-	this->username = new char[strlen(username) + 1];
-	strcpy(this->username, username);
-}
-
-void Seller::setPassword(const char* password)
-{
-	delete[] this->password; // Free the previous password - if exists
-	this->password = new char[strlen(password) + 1];
-	strcpy(this->password, password);
-}
-
-void Seller::setAddress(const Address& address)
-{
-	this->address = address;
-}
-
-char* Seller::getUsername() const
-{
-	return username;
-}
-
-char* Seller::getPassword() const
-{
-	return password;
-}
-
-Address Seller::getAddress() const
-{
-	return address;
 }
 
 Feedback** Seller::getFeedbacks() const
@@ -79,8 +39,7 @@ int Seller::getNumOfProducts() const
 
 void Seller::show() const
 {
-	cout << "Username: " << username << endl;
-	cout << "Address: " << address << endl;
+	User::show();
 	showProducts();
 	showFeedbacks();
 }

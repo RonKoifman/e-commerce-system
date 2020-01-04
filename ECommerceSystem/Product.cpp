@@ -10,13 +10,6 @@ Product::Product(const char* name, float price, int category, Seller* seller) //
 	setCategory((Category)category);
 }
 
-Product::Product(const Product& other) // Copy C'tor
-	: name(nullptr), serialNumber(other.serialNumber), seller(other.seller), price(other.price)
-{
-	setName(other.name);
-	setCategory(other.category);
-}
-
 Product::~Product() // D'tor
 {
 	delete[] name;

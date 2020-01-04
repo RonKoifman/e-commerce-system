@@ -3,7 +3,8 @@
 
 #include "OutResources.h"
 #include "Product.h"
-#include "Seller.h"
+//#include "Seller.h"
+#include "SellerCustomer.h"
 
 class Customer;
 

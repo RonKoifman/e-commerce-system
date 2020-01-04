@@ -7,6 +7,7 @@ class ShopSystem;
 #include "ShopSystem.h"
 #include "Product.h"
 
+
 void cleanBuffer();
 bool getInput(char* str, int& len, const int maxLen);
 bool cinTypeCheck();

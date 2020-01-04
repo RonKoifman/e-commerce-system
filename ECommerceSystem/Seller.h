@@ -1,12 +1,12 @@
 #ifndef __SELLER_H
 #define __SELLER_H
 
+#include "User.h"
 #include "Feedback.h"
 #include "Product.h"
 #include "Validations.h"
-#include "User.h"
 
-class Pruduct;
+class Product;
 
 class Seller : virtual public User
 {

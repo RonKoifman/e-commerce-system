@@ -1,8 +1,10 @@
 #ifndef __SELLERCUSTOMER_H
 #define __SELLERCUSTOMER_H
 
+#include "User.h"
 #include "Seller.h"
 #include "Customer.h"
+
 
 class SellerCustomer : public Seller, public Customer
 {

@@ -1,8 +1,9 @@
 #ifndef __CUSTOMER_H
 #define __CUSTOMER_H
 
-#include "Product.h"
 #include "User.h"
+#include "Product.h"
+//#include "User.h"
 
 class Checkout;
 

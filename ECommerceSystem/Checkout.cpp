@@ -8,8 +8,8 @@ Checkout::Checkout(Customer* customer) // C'tor
 
 Checkout::~Checkout() // D'tor
 {
-	delete[] chosenProducts; // The products pointers themselves will be released at each of their seller d'tor
-	delete[] sellers; // The seller pointers themselves will be released at the shop system d'tor
+	delete[] chosenProducts; // The pointers will be released at each of their seller d'tor
+	delete[] sellers; // The pointers will be released at the shop system d'tor
 }
 
 Product** Checkout::getChosenProducts() const
@@ -44,7 +44,7 @@ Customer* Checkout::getCustomer() const
 
 ostream& operator<<(ostream& os, const Checkout& checkout)
 {
-	cout << "Chosen products:\n" << endl;
+	os << "Chosen products:\n" << endl;
 	for (int i = 0; i < checkout.numOfChosenProducts; i++)
 	{
 		os << i + 1 << "." << *checkout.chosenProducts[i] << endl;

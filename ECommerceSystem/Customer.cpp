@@ -16,7 +16,7 @@ Customer::~Customer() // D'tor
 	}
 
 	delete[] orders; 
-	delete[] cart; // The products pointers themselves already released at each of their seller d'tor
+	delete[] cart; // The pointers already released at each of their seller d'tor
 }
 
 void Customer::setNumOfPruductsInCart(int numOfProductsInCart)

@@ -52,13 +52,3 @@ void User::show() const
 	cout << "Username: " << username << endl;
 	cout << "Address: " << address << endl;
 }
-
-//void User::show(ostream & os) const {}
-
-//ostream& operator<<(ostream& os, const User& user)
-//{
-//	os << "Username: " << user.username << endl;
-//	os << "Address: "; user.address.show();
-//	user.show(os);
-//	return os;
-//}

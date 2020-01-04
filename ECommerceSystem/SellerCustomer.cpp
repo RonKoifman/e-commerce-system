@@ -7,6 +7,5 @@ SellerCustomer::SellerCustomer(const char* username, const char* password, const
 
 void SellerCustomer::show() const
 {
-	Customer::show();
 	Seller::show();
 }

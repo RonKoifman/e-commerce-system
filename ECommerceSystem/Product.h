@@ -3,7 +3,7 @@
 
 #include "OutResources.h"
 
-class Seller;
+class User;
 
 class Product
 {
@@ -15,11 +15,11 @@ private:
 	char* name;
 	float price;
 	Category category;
-	Seller* seller;
+	User* seller;
 	const unsigned int serialNumber;
 
 public:
-	Product(const char* name, float price, int category, Seller* seller); // C'tor
+	Product(const char* name, float price, int category, User* seller); // C'tor
 	Product(const Product& other) = delete; // Disable copy c'tor
 	const Product& operator=(const Product& other) = delete; // Disable operator=
 	~Product(); // D'tor
@@ -32,7 +32,7 @@ public:
 	char* getName() const;
 	float getPrice() const;
 	Category getCategory() const;
-	Seller* getSeller() const;
+	User* getSeller() const;
 	const unsigned int getSerialNumber() const;
 	// Friend functions
 	friend bool addProductToCartValidation(unsigned int& productID, const int numOfAllProducts);

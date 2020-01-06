@@ -8,13 +8,13 @@
 class Feedback
 {
 private:
-	Customer* customer;
+	User* customer;
 	Product* product;
 	Date date;
 	char* text;
 
 public:
-	Feedback(Customer* customer, Product* product, const Date& date, const char* text); // C'tor
+	Feedback(User* customer, Product* product, const Date& date, const char* text); // C'tor
 	Feedback(const Feedback& other) = delete; // Disable copy c'tor
 	const Feedback& operator=(const Feedback& other) = delete; // Disable operator=
 	~Feedback(); // D'tor
@@ -22,7 +22,7 @@ public:
 	void setDate(const Date& date);
 	void setText(const char* text);
 	// Getters
-	Customer* getCustomer() const;
+	User* getCustomer() const;
 	Product* getProduct() const;
 	Date getDate() const;
 	char* getText() const;

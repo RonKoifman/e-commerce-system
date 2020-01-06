@@ -141,7 +141,7 @@ bool checkLetters(const char* str)
 	return true;
 }
 
-void usernameValidation(char* username, const ShopSystem& shop) 
+void usernameValidation(char* username, const User** users, int numOfUsers)
 {
 	bool isValid = false;
 	int len = 0;
@@ -155,7 +155,7 @@ void usernameValidation(char* username, const ShopSystem& shop)
 		{
 			if (checkLettersAndDigits(username))
 			{
-				isValid = uniqueUsername(username, shop);
+				isValid = checkUniqueUsername(username, users, numOfUsers);
 			}
 			else
 			{
@@ -300,24 +300,11 @@ void buildingNumberValidation(int& buildingNumber)
 	}
 }
 
-bool uniqueUsername(char* username, const ShopSystem& shop)
+bool checkUniqueUsername(char* username, const User** users, int numOfUsers)
 {
-	Seller** sellers = shop.getSellers();
-	Customer** customers = shop.getCustomers();
-	int numOfSellers = shop.getNumOfSellers();
-	int numOfCustomers = shop.getNumOfCustomers();
-
-	for (int i = 0; i < numOfSellers; i++) // Search through all sellers
+	for (int i = 0; i < numOfUsers; i++) // Search through all sellers
 	{
-		if (strcmp(sellers[i]->getUsername(), username) == 0) // Username taken
-		{
-			cout << "Username taken! Please choose a different username." << endl;
-			return false;
-		}
-	}
-	for (int i = 0; i < numOfCustomers; i++) // Search through all customers
-	{
-		if (strcmp(customers[i]->getUsername(), username) == 0) // Username taken
+		if (strcmp(users[i]->getUsername(), username) == 0) // Username taken
 		{
 			cout << "Username taken! Please choose a different username." << endl;
 			return false;

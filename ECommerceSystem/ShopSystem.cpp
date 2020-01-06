@@ -1,51 +1,45 @@
 #include "ShopSystem.h"
 
 ShopSystem::ShopSystem(const char* name) // C'tor
-	: name(name), sellers(nullptr), customers(nullptr), allProducts(nullptr)
+	: name(nullptr), users(nullptr), allProducts(nullptr)
 {
+	setName(name);
+
 	// Initialize data members
-	numOfSellers = numOfCustomers = numOfAllProducts = 0;
+	numOfUsers = numOfAllProducts = 0;
 }
 
 ShopSystem::~ShopSystem() // D'tor
 {
-	for (int i = 0; i < numOfSellers; i++)
+	for (int i = 0; i < numOfUsers; i++)
 	{
-		delete sellers[i];
-	}
-	for (int i = 0; i < numOfCustomers; i++)
-	{
-		delete customers[i];
+		delete users[i];
 	}
 
-	delete[] sellers;
-	delete[] customers;
+	delete[] users;
 	delete[] allProducts; // The pointers already released at each of their seller d'tor
 }
 
-const char* ShopSystem::getName() const
+void ShopSystem::setName(const char* name)
+{
+	delete[] this->name; // Free previous name - if exists
+	this->name = new char[strlen(name) + 1];
+	strcpy(this->name, name);
+}
+
+char* ShopSystem::getName() const
 {
 	return name;
 }
 
-Seller** ShopSystem::getSellers() const
+User** ShopSystem::getUsers() const
 {
-	return sellers;
+	return users;
 }
 
-Customer** ShopSystem::getCustomers() const
+int ShopSystem::getNumOfUsers() const
 {
-	return customers;
-}
-
-int ShopSystem::getNumOfSellers() const
-{
-	return numOfSellers;
-}
-
-int ShopSystem::getNumOfCustomers() const
-{
-	return numOfCustomers;
+	return numOfUsers;
 }
 
 Product** ShopSystem::getAllProducts() const
@@ -60,35 +54,79 @@ int ShopSystem::getNumOfAllProducts() const
 
 void ShopSystem::showCustomers() const
 {
-	if (numOfCustomers == 0)
+	bool isFound = false;
+
+	for (int i = 0; i < numOfUsers; i++)
 	{
-		cout << "There are no registered customers yet.\n" << endl;
-	}
-	else
-	{
-		cout << name << " customers:\n" << endl;
-		for (int i = 0; i < numOfCustomers; i++)
+		Customer* temp = dynamic_cast<Customer*>(users[i]);
+		if (temp) // Print only customers
 		{
-			customers[i]->show();
+			if (!isFound)
+			{
+				cout << ShopSystem::name << " customers:\n" << endl;
+				isFound = true;
+			}
+
+			users[i]->show();
 			cout << endl;
 		}
+	}
+
+	if (!isFound) // No customers found
+	{
+		cout << "There are no registered customers yet.\n" << endl;
 	}
 }
 
 void ShopSystem::showSellers() const
 {
-	if (numOfSellers == 0)
+	bool isFound = false;
+
+	for (int i = 0; i < numOfUsers; i++)
+	{
+		Seller* temp = dynamic_cast<Seller*>(users[i]);
+		if (temp) // Print only sellers
+		{
+			if (!isFound)
+			{
+				cout << ShopSystem::name << " sellers:\n" << endl;
+				isFound = true;
+			}
+
+			users[i]->show();
+			cout << endl;
+		}
+	}
+
+	if (!isFound) // No sellers found
 	{
 		cout << "There are no registered sellers yet.\n" << endl;
 	}
-	else
+}
+
+void ShopSystem::showSellerCustomers() const
+{
+	bool isFound = false;
+
+	for (int i = 0; i < numOfUsers; i++)
 	{
-		cout << name << " sellers:\n" << endl;
-		for (int i = 0; i < numOfSellers; i++)
+		SellerCustomer* temp = dynamic_cast<SellerCustomer*>(users[i]);
+		if (temp) // Print only seller-customers
 		{
-			sellers[i]->show();
+			if (!isFound)
+			{
+				cout << ShopSystem::name << " seller-customers:\n" << endl;
+				isFound = true;
+			}
+
+			users[i]->show();
 			cout << endl;
 		}
+	}
+
+	if (!isFound) // No seller-customers found
+	{
+		cout << "There are no registered seller-customers yet.\n" << endl;
 	}
 }
 
@@ -128,8 +166,8 @@ bool ShopSystem::showLoginMenu()
 	{
 	case SignupNewSeller:
 	{
-		Seller* newSeller = readSellerData(*this);
-		addSeller(newSeller);
+		User* newSeller = readUserData(false, true, false);
+		addUser(newSeller);
 		cout << "Registration completed successfully!\n" << endl;
 		if (!showSellerMenu(*newSeller)) // Repeatedly show seller menu until he asks to exit
 		{
@@ -139,8 +177,8 @@ bool ShopSystem::showLoginMenu()
 	}
 	case SignupNewCustomer:
 	{
-		Customer* newCustomer = readCustomerData(*this);
-		addCustomer(newCustomer);
+		User* newCustomer = readUserData(true, false, false);
+		addUser(newCustomer);
 		cout << "Registration completed successfully!\n" << endl;
 		if (!showCustomerMenu(*newCustomer)) // Repeatedly show customer menu until he asks to exit
 		{
@@ -148,26 +186,13 @@ bool ShopSystem::showLoginMenu()
 		}
 		break;
 	}
-	case LoginSeller:
+	case Login:
 	{
-		Seller* seller = loginSeller(username, password);
+		User* seller = loginUser(username, password);
 		if (seller) // Seller found
 		{
 			cout << "Welcome back " << seller->getUsername() << "!\n" << endl;
 			if (!showSellerMenu(*seller)) // Repeatedly show seller menu until he asks to exit
-			{
-				return false; // Exit from the application
-			}
-		}
-		break;
-	}
-	case LoginCustomer:
-	{
-		Customer* customer = loginCustomer(username, password);
-		if (customer) // Customer found
-		{
-			cout << "Welcome back " << customer->getUsername() << "!\n" << endl;
-			if (!showCustomerMenu(*customer)) // Repeatedly show customer menu until he asks to exit
 			{
 				return false; // Exit from the application
 			}
@@ -209,7 +234,7 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 	{
 		switch ((SellerOptions)selection)
 		{
-		case AddNewProductToSeller:
+		case AddNewProduct:
 		{
 			Product* newProduct = readProductData(&seller);
 			seller.addProduct(newProduct); // Add the new product to its seller
@@ -269,7 +294,7 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 			searchProducts();
 			break;
 		}
-		case AddNewProductToCart:
+		case AddProductToCart:
 		{
 			addProductToCart(customer);
 			break;
@@ -304,22 +329,22 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 	return showCustomerMenu(customer); // Repeatedly show menu
 }
 
-void ShopSystem::addSeller(Seller* seller)
+void ShopSystem::addUser(User* user)
 {
 	int i;
 
-	Seller** temp = new Seller*[numOfSellers + 1]; // Create bigger array to add the new seller
+	User** temp = new User*[numOfUsers + 1]; // Create bigger array to add the new user
 
 	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfSellers; i++)
+	for (i = 0; i < numOfUsers; i++)
 	{
-		temp[i] = sellers[i];
+		temp[i] = users[i];
 	}
-	temp[i] = seller; // Add the new seller
-	numOfSellers++;
+	temp[i] = user; // Add the new user
+	numOfUsers++;
 
-	delete[] sellers; // Free the current array
-	sellers = temp; // Update sellers array to temp
+	delete[] users; // Free the current array
+	users = temp; // Update users array to temp
 }
 
 void ShopSystem::addProduct(Product* newProduct)
@@ -340,25 +365,7 @@ void ShopSystem::addProduct(Product* newProduct)
 	allProducts = temp; // Update products array to temp
 }
 
-void ShopSystem::addCustomer(Customer* customer)
-{
-	int i;
-
-	Customer** temp = new Customer*[numOfCustomers + 1]; // Create bigger array to add the new customer
-
-	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfCustomers; i++)
-	{
-		temp[i] = customers[i];
-	}
-	temp[i] = customer; // Add the new customer
-	numOfCustomers++;
-
-	delete[] customers; // Free the current array
-	customers = temp; // Update customers array to temp
-}
-
-Seller* ShopSystem::loginSeller(char* username, char* password) const
+User* ShopSystem::loginUser(char* username, char* password)
 {
 	bool isValidUsername, isValidPassword;
 	int len = 0;
@@ -376,56 +383,21 @@ Seller* ShopSystem::loginSeller(char* username, char* password) const
 		return nullptr; // Invalid input - login failed
 	}
 
-	// Check if the entered username and password match to some seller
-	for (int i = 0; i < numOfSellers; i++)
+	// Check if the entered username and password match to registered user
+	for (int i = 0; i < numOfUsers; i++)
 	{
-		if (strcmp(sellers[i]->getUsername(), username) == 0)
+		if (strcmp(users[i]->getUsername(), username) == 0)
 		{
-			if (strcmp(sellers[i]->getPassword(), password) == 0)
+			if (strcmp(users[i]->getPassword(), password) == 0)
 			{
 				cout << "Logged in successfully!\n" << endl;
-				return sellers[i]; // Seller found
+				return users[i]; // User found
 			}
 		}
 	}
 
 	cout << endl << "Wrong details. Login failed!\n" << endl;
-	return nullptr; // Seller not found - login failed
-}
-
-Customer* ShopSystem::loginCustomer(char* username, char* password) const
-{
-	bool isValidUsername, isValidPassword;
-	int len = 0;
-
-	cout << "Please Login with your credentials.\n" << endl;
-	cleanBuffer();
-	cout << "Username: ";
-	isValidUsername = getInput(username, len, MAX_CHARACTERS);
-	cout << "Password: ";
-	isValidPassword = getInput(password, len, MAX_CHARACTERS);
-
-	if (!(isValidUsername && isValidPassword)) // One of the inputs not valid
-	{
-		cout << endl << "Wrong details. Login failed!\n" << endl;
-		return nullptr; // Customer not found
-	}
-
-	// Check if the entered username and password match to some customer
-	for (int i = 0; i < numOfCustomers; i++)
-	{
-		if (strcmp(customers[i]->getUsername(), username) == 0)
-		{
-			if (strcmp(customers[i]->getPassword(), password) == 0)
-			{
-				cout << "Logged in successfully!\n" << endl;
-				return customers[i]; // Customer found
-			}
-		}
-	}
-
-	cout << endl << "Wrong details. Login failed!\n" << endl;
-	return nullptr; // Customer not found - login failed
+	return nullptr; // User not found - login failed
 }
 
 void ShopSystem::searchProducts() const
@@ -601,4 +573,41 @@ void ShopSystem::writeFeedback(Customer& customer)
 			}
 		}
 	}
+}
+
+User* ShopSystem::readUserData(bool isCustomer, bool isSeller, bool isSellerCustomer)
+{
+	User* user;
+	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
+	char country[MAX_CHARACTERS], city[MAX_CHARACTERS], street[MAX_CHARACTERS];
+	int buildingNumber;
+
+	cout << "Thanks for joining in, new user!"<< endl;
+	cout << "We are using an universal and decentralized authentication." << endl;
+	cout << "Please fill in the following fields:\n" << endl;
+
+	usernameValidation(username, users, numOfUsers);
+	passwordValidation(password);
+	countryValidation(country);
+	cityValidation(city);
+	streetValidation(street);
+	buildingNumberValidation(buildingNumber);
+	cout << endl;
+
+	Address address(country, city, street, buildingNumber);
+	
+	if (isCustomer)
+	{
+		user = new Customer(username, password, address);
+	}
+	else if (isSeller)
+	{
+		user = new Seller(username, password, address);
+	}
+	else // Seller-Customer
+	{
+		user = new SellerCustomer(username, password, address);
+	}
+
+	return user;
 }

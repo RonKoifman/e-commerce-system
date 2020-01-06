@@ -90,28 +90,6 @@ void Customer::showOrders() const
 	}
 }
 
-Customer* readCustomerData(const ShopSystem& shop)
-{
-	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
-	char country[MAX_CHARACTERS], city[MAX_CHARACTERS], street[MAX_CHARACTERS];
-	int buildingNumber;
-
-	cout << "Thanks for joining in, new customer! Let's get you a good deal!" << endl;
-	cout << "We are using an universal and decentralized authentication." << endl;
-	cout << "Please fill in the following fields:\n" << endl;
-
-	usernameValidation(username, shop);
-	passwordValidation(password);
-	countryValidation(country);
-	cityValidation(city);
-	streetValidation(street);
-	buildingNumberValidation(buildingNumber);
-	cout << endl;
-
-	Address address(country, city, street, buildingNumber);
-	return new Customer(username, password, address);
-}
-
 void Customer::addProductToCart(Product* newProduct)
 {
 	int i;

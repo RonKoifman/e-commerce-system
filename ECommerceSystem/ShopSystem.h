@@ -44,6 +44,7 @@ public:
 
 	ShopSystem(const char* name); // C'tor
 	ShopSystem(const ShopSystem& other) = delete; // Disable copy c'tor
+	const ShopSystem& operator=(const ShopSystem& other) = delete; // Disable operator=
 	~ShopSystem(); // D'tor
 	void showCustomers() const;
 	void showSellers() const;

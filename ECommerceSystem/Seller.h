@@ -6,7 +6,7 @@
 #include "Validations.h"
 #include "User.h"
 
-class Pruduct;
+class Product;
 
 class Seller : virtual public User
 {
@@ -19,6 +19,7 @@ protected:
 public:
 	Seller(const char* username, const char* password, const Address& address); // C'tor
 	Seller(const Seller& other) = delete; // Disable copy c'tor
+	const Seller& operator=(const Seller& other) = delete; // Disable operator=
 	virtual ~Seller(); // D'tor
 	virtual void show() const override;
 	void showFeedbacks() const;

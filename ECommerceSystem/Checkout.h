@@ -20,6 +20,7 @@ private:
 public:
 	Checkout(Customer* customer); // C'tor
 	Checkout(const Checkout& other) = delete; // Disable copy c'tor
+	const Checkout& operator=(const Checkout& other) = delete; // Disable operator=
 	~Checkout(); // D'tor
 	void showSellers() const;
 	void showProductsNames() const;

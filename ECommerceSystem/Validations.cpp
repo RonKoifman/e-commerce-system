@@ -326,7 +326,7 @@ bool uniqueUsername(char* username, const ShopSystem& shop)
 	return true;
 }
 
-void productNameValidation(char* productName, Seller& seller)
+void productNameValidation(char* productName, const Seller& seller)
 {
 	bool isValid = false;
 	int len = 0;

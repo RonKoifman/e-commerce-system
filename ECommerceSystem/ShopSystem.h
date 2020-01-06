@@ -20,8 +20,8 @@ public:
 	// enum declarations
 	enum LoginOptions
 	{
-		SignupNewSeller = 1, SignupNewCustomer = 2, LoginSeller = 3,
-		LoginCustomer = 4, ViewCustomers = 5, ViewSellers = 6, Exit = 7
+		SignupNewSeller = 1, SignupNewCustomer = 2, SignupNewSC = 3, Login = 4,
+		ViewCustomers = 5, ViewSellers = 6, ViewSC = 7, Exit = 8
 	};
 	enum SellerOptions
 	{
@@ -33,6 +33,11 @@ public:
 		CustomerSearchProduct = 1, AddNewProductToCart = 2, ViewCart = 3, CheckoutAndPlaceOrder = 4,
 		WriteFeedback = 5, CustomerLogOut = 6, CustomerExit = 7
 	};
+	enum SCOptions
+	{
+		SCSearchProduct = 1, SCAddNewProductToCart = 2, SCViewCart = 3, SCCheckoutAndPlaceOrder = 4,
+		SCWriteFeedback = 5, SCLogOut = 6, SCExit = 7
+	};  //SC = SellerCustomer
 	enum SearchProductOptions
 	{
 		AllProducts = 1, SpecificProductName = 2

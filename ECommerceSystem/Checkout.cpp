@@ -1,7 +1,7 @@
 #include "Customer.h"
 #include "Checkout.h"
 
-Checkout::Checkout(Customer* customer) // C'tor
+Checkout::Checkout(User* customer) // C'tor
 	: customer(customer), sellers(nullptr), chosenProducts(nullptr), numOfChosenProducts(0), numOfSellers(0), totalPrice(0)
 {
 }
@@ -27,7 +27,7 @@ float Checkout::getTotalPrice() const
 	return totalPrice;
 }
 
-Seller** Checkout::getSellers() const
+User** Checkout::getSellers() const
 {
 	return sellers;
 }
@@ -37,7 +37,7 @@ int Checkout::getNumOfSellers() const
 	return numOfSellers;
 }
 
-Customer* Checkout::getCustomer() const
+User* Checkout::getCustomer() const
 {
 	return customer;
 }
@@ -79,11 +79,11 @@ void Checkout::addChosenProduct(Product* newProduct)
 	chosenProducts = temp; // Update products array to temp
 }
 
-void Checkout::addSeller(Seller* seller)
+void Checkout::addSeller(User* seller)
 {
 	int i;
 
-	Seller** temp = new Seller*[numOfSellers + 1]; // Create bigger array to add the new seller
+	User** temp = new User*[numOfSellers + 1]; // Create bigger array to add the new seller
 
 	// Move the pointers from the current array to temp
 	for (i = 0; i < numOfSellers; i++)
@@ -117,7 +117,7 @@ void Checkout::createNewOrder()
 		else
 		{
 			addChosenProduct(product); // Add product to the chosen products array
-			Seller* seller = product->getSeller();
+			User* seller = product->getSeller();
 			// Only if seller not exists already - add product's seller to the sellers array
 			if (!isSellerExists(seller, sellers, numOfSellers))
 			{

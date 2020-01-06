@@ -5,7 +5,7 @@
 //#include "Seller.h"
 #include "SellerCustomer.h"
 
-class Customer;
+class User;
 
 class Checkout
 {
@@ -13,12 +13,12 @@ private:
 	Product** chosenProducts;
 	int numOfChosenProducts;
 	float totalPrice; 
-	Seller** sellers;
+	User** sellers;
 	int numOfSellers;
-	Customer* customer;
+	User* customer;
 
 public:
-	Checkout(Customer* customer); // C'tor
+	Checkout(User* customer); // C'tor
 	Checkout(const Checkout& other) = delete; // Disable copy c'tor
 	const Checkout& operator=(const Checkout& other) = delete; // Disable operator=
 	~Checkout(); // D'tor
@@ -26,7 +26,7 @@ public:
 	void showProductsNames() const;
 	void calculateTotalPrice();
 	void addChosenProduct(Product* newProduct);
-	void addSeller(Seller* seller);
+	void addSeller(User* seller);
 	void createNewOrder();
 	void placeOrder() const;
 	// Getters
@@ -34,8 +34,8 @@ public:
 	int getNumOfChosenProducts() const;
 	float getTotalPrice() const;
 	int getNumOfSellers() const;
-	Customer* getCustomer() const;
-	Seller** getSellers() const;
+	User* getCustomer() const;
+	User** getSellers() const;
 	// Friend functions
 	friend ostream& operator<<(ostream& os, const Checkout& checkout);
 };

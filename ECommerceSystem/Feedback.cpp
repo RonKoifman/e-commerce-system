@@ -1,6 +1,6 @@
 #include "Feedback.h"
 
-Feedback::Feedback(Customer* customer, Product* product, const Date& date, const char* text) // C'tor
+Feedback::Feedback(User* customer, Product* product, const Date& date, const char* text) // C'tor
 	: text(nullptr), date(date), customer(customer), product(product)
 {
 	setText(text);
@@ -23,7 +23,7 @@ void Feedback::setText(const char* text)
 	strcpy(this->text, text);
 }
 
-Customer* Feedback::getCustomer() const
+User* Feedback::getCustomer() const
 {
 	return customer;
 }

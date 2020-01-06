@@ -1,5 +1,5 @@
-#include "Product.h"
 #include "Seller.h"
+#include "Product.h"
 
 unsigned int Product::uniqueID = 1000; // Generate unique id for each serial number of a product
 

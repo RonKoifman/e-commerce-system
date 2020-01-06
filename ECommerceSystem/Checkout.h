@@ -1,7 +1,6 @@
 #ifndef __CHECKOUT_H
 #define __CHECKOUT_H
 
-#include "OutResources.h"
 #include "Product.h"
 #include "Seller.h"
 

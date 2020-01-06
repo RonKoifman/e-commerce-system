@@ -1,3 +1,4 @@
+#include "ShopSystem.h"
 #include "Validations.h"
 
 void cleanBuffer()

@@ -1,7 +1,6 @@
 #ifndef __FEEDBACK_H
 #define __FEEDBACK_H
 
-#include "OutResources.h"
 #include "Date.h"
 #include "Customer.h"
 #include "Product.h"

@@ -2,7 +2,6 @@
 #define __SELLER_H
 
 #include "Feedback.h"
-#include "Product.h"
 #include "Validations.h"
 #include "User.h"
 

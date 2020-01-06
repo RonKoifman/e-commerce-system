@@ -3,8 +3,6 @@
 
 class ShopSystem;
 
-#include "OutResources.h"
-#include "ShopSystem.h"
 #include "Product.h"
 
 void cleanBuffer();

@@ -1,3 +1,4 @@
+#include "Product.h"
 #include "Seller.h"
 
 Seller::Seller(const char* username, const char* password, const Address& address) // C'tor

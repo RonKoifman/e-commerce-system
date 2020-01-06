@@ -1,7 +1,6 @@
 #ifndef __CHECKOUT_H
 #define __CHECKOUT_H
 
-#include "OutResources.h"
 #include "Product.h"
 //#include "Seller.h"
 #include "SellerCustomer.h"
@@ -21,6 +20,7 @@ private:
 public:
 	Checkout(Customer* customer); // C'tor
 	Checkout(const Checkout& other) = delete; // Disable copy c'tor
+	const Checkout& operator=(const Checkout& other) = delete; // Disable operator=
 	~Checkout(); // D'tor
 	void showSellers() const;
 	void showProductsNames() const;

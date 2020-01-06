@@ -3,7 +3,6 @@
 
 #include "User.h"
 #include "Feedback.h"
-#include "Product.h"
 #include "Validations.h"
 
 class Product;
@@ -19,6 +18,7 @@ protected:
 public:
 	Seller(const char* username, const char* password, const Address& address); // C'tor
 	Seller(const Seller& other) = delete; // Disable copy c'tor
+	const Seller& operator=(const Seller& other) = delete; // Disable operator=
 	virtual ~Seller(); // D'tor
 	virtual void show() const override;
 	void showFeedbacks() const;

@@ -1,15 +1,9 @@
 #ifndef __SHOP_SYSTEM_H
 #define __SHOP_SYSTEM_H
 
-#include "OutResources.h"
 #include "Menu.h"
-#include "Validations.h"
-//#include "Customer.h"
-//#include "Seller.h"
-#include "Product.h"
 #include "Checkout.h"
 #include "SellerCustomer.h"
-
 
 class ShopSystem
 {
@@ -26,8 +20,8 @@ public:
 	// enum declarations
 	enum LoginOptions
 	{
-		SignupNewSeller = 1, SignupNewCustomer = 2, SignupNewSC = 3, Login = 4,
-		ViewCustomers = 5, ViewSellers = 6, ViewSC = 7, Exit = 8
+		SignupNewSeller = 1, SignupNewCustomer = 2, LoginSeller = 3,
+		LoginCustomer = 4, ViewCustomers = 5, ViewSellers = 6, Exit = 7
 	};
 	enum SellerOptions
 	{
@@ -39,11 +33,6 @@ public:
 		CustomerSearchProduct = 1, AddNewProductToCart = 2, ViewCart = 3, CheckoutAndPlaceOrder = 4,
 		WriteFeedback = 5, CustomerLogOut = 6, CustomerExit = 7
 	};
-	enum SCOptions 
-	{
-		SCSearchProduct = 1, SCAddNewProductToCart = 2, SCViewCart = 3, SCCheckoutAndPlaceOrder = 4,
-		SCWriteFeedback = 5, SCLogOut = 6, SCExit = 7
-	};  //SC = SellerCustomer
 	enum SearchProductOptions
 	{
 		AllProducts = 1, SpecificProductName = 2
@@ -51,6 +40,7 @@ public:
 
 	ShopSystem(const char* name); // C'tor
 	ShopSystem(const ShopSystem& other) = delete; // Disable copy c'tor
+	const ShopSystem& operator=(const ShopSystem& other) = delete; // Disable operator=
 	~ShopSystem(); // D'tor
 	void showCustomers() const;
 	void showSellers() const;

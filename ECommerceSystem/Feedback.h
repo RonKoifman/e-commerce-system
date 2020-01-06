@@ -1,7 +1,6 @@
 #ifndef __FEEDBACK_H
 #define __FEEDBACK_H
 
-#include "OutResources.h"
 #include "Date.h"
 #include "Customer.h"
 #include "Product.h"
@@ -17,6 +16,7 @@ private:
 public:
 	Feedback(Customer* customer, Product* product, const Date& date, const char* text); // C'tor
 	Feedback(const Feedback& other) = delete; // Disable copy c'tor
+	const Feedback& operator=(const Feedback& other) = delete; // Disable operator=
 	~Feedback(); // D'tor
 	// Setters
 	void setDate(const Date& date);

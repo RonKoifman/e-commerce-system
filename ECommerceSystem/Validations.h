@@ -3,8 +3,6 @@
 
 class ShopSystem;
 
-#include "OutResources.h"
-#include "ShopSystem.h"
 #include "Product.h"
 
 
@@ -22,7 +20,7 @@ void cityValidation(char* city);
 void streetValidation(char* street);
 void buildingNumberValidation(int& buildingNumber);
 bool uniqueUsername(char* username, const ShopSystem& shop);
-void productNameValidation(char* productName, Seller& seller);
+void productNameValidation(char* productName, const Seller& seller);
 bool isProductExists(char* productName, Product** products, int numOfProductsInCart);
 void priceValidation(float& price);
 void categoryValidation(int& category);

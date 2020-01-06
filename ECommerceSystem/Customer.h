@@ -18,6 +18,7 @@ protected:
 public:
 	Customer(const char* username, const char* password, const Address& address); // C'tor
 	Customer(const Customer& other) = delete; // Disable copy c'tor
+	const Customer& operator=(const Customer& other) = delete; // Disable operator=
 	virtual ~Customer(); // D'tor
 	virtual void show() const override;
 	void showCart() const;

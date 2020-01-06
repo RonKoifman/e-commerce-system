@@ -21,6 +21,7 @@ private:
 public:
 	Product(const char* name, float price, int category, Seller* seller); // C'tor
 	Product(const Product& other) = delete; // Disable copy c'tor
+	const Product& operator=(const Product& other) = delete; // Disable operator=
 	~Product(); // D'tor
 	void showCategory() const;
 	// Setters

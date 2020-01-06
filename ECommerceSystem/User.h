@@ -14,6 +14,7 @@ protected:
 public:
 	User(const char* username, const char* password, const Address& address); // C'tor
 	User(const User& other) = delete; // Disable copy c'tor
+	const User& operator=(const User& other) = delete; // Disable operator=
 	virtual ~User(); // D'tor
 	virtual void show() const = 0;
 	// Setters

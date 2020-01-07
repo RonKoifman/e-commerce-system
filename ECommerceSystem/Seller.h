@@ -16,6 +16,7 @@ protected:
 	int numOfProducts;
 
 public:
+	Seller() = default; // Default C'tor
 	Seller(const char* username, const char* password, const Address& address); // C'tor
 	Seller(const Seller& other) = delete; // Disable copy c'tor
 	const Seller& operator=(const Seller& other) = delete; // Disable operator=
@@ -30,8 +31,6 @@ public:
 	int getNumOfFeedbacks() const;
 	Product** getProducts() const;
 	int getNumOfProducts() const;
-	// Friend functions
-	friend Product* readProductData(Seller* seller);
 };
 
 #endif // __SELLER_H

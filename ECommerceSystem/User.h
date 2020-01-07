@@ -12,22 +12,12 @@ protected:
 	Address address;
 
 public:
+	User() = default; // Default C'tor
 	User(const char* username, const char* password, const Address& address); // C'tor
 	User(const User& other) = delete; // Disable copy c'tor
 	const User& operator=(const User& other) = delete; // Disable operator=
 	virtual ~User(); // D'tor
-	virtual void show() const = 0;
-	// Seller methods
-	virtual void showFeedbacks() const {}
-	virtual void showProducts() const {}
-	virtual void addProduct(Product* newProduct) {}
-	virtual void addFeedback(Feedback* newFeedback) {}
-	// Customer methods
-	virtual void showCart() const {}
-	virtual void showOrders() const {}
-	virtual void addProductToCart(Product* newProduct) {}
-	virtual void addOrder(Checkout* newOrder) {}
-	virtual void initCart() {}
+	virtual void show() const = 0; // Make user class an abstract class
 	// Setters
 	void setUsername(const char* username);
 	void setPassword(const char* password);

@@ -12,6 +12,7 @@ private:
 	int buildingNumber;
 
 public:
+	Address() = default; // Default C'tor
 	Address(const char* country, const char* city, const char* street, int buildingNumber); // C'tor
 	Address(const Address& other); // Copy C'tor
 	~Address(); // D'tor

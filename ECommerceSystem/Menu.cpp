@@ -4,11 +4,12 @@ void printLoginMenu()
 {
 	cout << "Press 1 to create a new seller account." << endl;
 	cout << "Press 2 to create a new customer account." << endl;
-	cout << "Press 3 to login as a seller." << endl;
-	cout << "Press 4 to login as a customer." << endl;
+	cout << "Press 3 to create a new seller-customer account." << endl;
+	cout << "Press 4 to login." << endl;
 	cout << "Press 5 to view all the customers in the shop." << endl;
 	cout << "Press 6 to view all the sellers in the shop." << endl;
-	cout << "Press 7 to exit." << endl;
+	cout << "Press 7 to view all the seller-customers in the shop." << endl;
+	cout << "Press 8 to exit from app." << endl;
 
 	cout << "Your selection: ";
 }
@@ -19,8 +20,8 @@ void printSellerMenu()
 	cout << "Press 2 to search for a product." << endl;
 	cout << "Press 3 to view your products." << endl;
 	cout << "Press 4 to view your feedbacks." << endl;
-	cout << "Press 5 to logout." << endl;
-	cout << "Press 6 to exit." << endl;
+	cout << "Press 5 to go back." << endl;
+	cout << "Press 6 to exit from app." << endl;
 
 	cout << "Your selection: ";
 }
@@ -32,8 +33,18 @@ void printCustomerMenu()
 	cout << "Press 3 to view your cart." << endl;
 	cout << "Press 4 to checkout." << endl;
 	cout << "Press 5 to write a feedback to a seller." << endl;
-	cout << "Press 6 to logout." << endl;
-	cout << "Press 7 to exit." << endl;
+	cout << "Press 6 to go back." << endl;
+	cout << "Press 7 to exit from app." << endl;
+
+	cout << "Your selection: ";
+}
+
+void printSellerCustomerMenu()
+{
+	cout << "Press 1 to view customer menu." << endl;
+	cout << "Press 2 to view seller menu." << endl;
+	cout << "Press 3 to go back." << endl;
+	cout << "Press 4 to exit from app." << endl;
 
 	cout << "Your selection: ";
 }

@@ -6,5 +6,6 @@
 void printLoginMenu();
 void printSellerMenu();
 void printCustomerMenu();
+void printSellerCustomerMenu();
 
 #endif // __MENU_H

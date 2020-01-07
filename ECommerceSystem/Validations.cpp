@@ -141,7 +141,7 @@ bool checkLetters(const char* str)
 	return true;
 }
 
-void usernameValidation(char* username, const User** users, int numOfUsers)
+void usernameValidation(char* username, User** users, int numOfUsers)
 {
 	bool isValid = false;
 	int len = 0;
@@ -300,9 +300,9 @@ void buildingNumberValidation(int& buildingNumber)
 	}
 }
 
-bool checkUniqueUsername(char* username, const User** users, int numOfUsers)
+bool checkUniqueUsername(char* username, User** users, int numOfUsers)
 {
-	for (int i = 0; i < numOfUsers; i++) // Search through all sellers
+	for (int i = 0; i < numOfUsers; i++) // Search through all users
 	{
 		if (strcmp(users[i]->getUsername(), username) == 0) // Username taken
 		{
@@ -314,8 +314,9 @@ bool checkUniqueUsername(char* username, const User** users, int numOfUsers)
 	return true;
 }
 
-void productNameValidation(char* productName, const Seller& seller)
+void productNameValidation(char* productName, User* user)
 {
+	Seller* seller = dynamic_cast<Seller*>(user);
 	bool isValid = false;
 	int len = 0;
 
@@ -328,7 +329,7 @@ void productNameValidation(char* productName, const Seller& seller)
 		{
 			if (checkLettersDigitsAndSpace(productName))
 			{
-				if (!isProductExists(productName, seller.getProducts(), seller.getNumOfProducts()))
+				if (!isProductExists(productName, seller->getProducts(), seller->getNumOfProducts()))
 				{
 					isValid = true;
 				}
@@ -486,7 +487,7 @@ Product* indexOfCheckoutProductValidation(int& index, Product** cart, int numOfP
 	return product;
 }
 
-bool isSellerExists(Seller* seller, Seller** sellers, int numOfSellers)
+bool isSellerExists(User* seller, User** sellers, int numOfSellers)
 {
 	for (int i = 0; i < numOfSellers; i++)
 	{

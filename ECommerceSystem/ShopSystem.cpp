@@ -58,8 +58,7 @@ void ShopSystem::showCustomers() const
 
 	for (int i = 0; i < numOfUsers; i++)
 	{
-		Customer* temp = dynamic_cast<Customer*>(users[i]);
-		if (temp) // Print only customers
+		if (dynamic_cast<Customer*>(users[i])) // Print only customers
 		{
 			if (!isFound)
 			{
@@ -84,8 +83,7 @@ void ShopSystem::showSellers() const
 
 	for (int i = 0; i < numOfUsers; i++)
 	{
-		Seller* temp = dynamic_cast<Seller*>(users[i]);
-		if (temp) // Print only sellers
+		if (dynamic_cast<Seller*>(users[i])) // Print only sellers
 		{
 			if (!isFound)
 			{
@@ -110,8 +108,7 @@ void ShopSystem::showSellerCustomers() const
 
 	for (int i = 0; i < numOfUsers; i++)
 	{
-		SellerCustomer* temp = dynamic_cast<SellerCustomer*>(users[i]);
-		if (temp) // Print only seller-customers
+		if (dynamic_cast<SellerCustomer*>(users[i])) // Print only seller-customers
 		{
 			if (!isFound)
 			{
@@ -147,7 +144,7 @@ void ShopSystem::showAllProducts() const
 	}
 }
 
-bool ShopSystem::showLoginMenu()
+bool ShopSystem::loginMenu()
 {
 	int selection;
 	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
@@ -166,10 +163,10 @@ bool ShopSystem::showLoginMenu()
 	{
 	case SignupNewSeller:
 	{
-		User* newSeller = readUserData(false, true, false);
+		User* newSeller = readUserData(&Seller());
 		addUser(newSeller);
 		cout << "Registration completed successfully!\n" << endl;
-		if (!showSellerMenu(*newSeller)) // Repeatedly show seller menu until he asks to exit
+		if (!sellerMenu(newSeller)) // Repeatedly show seller menu until he asks to exit
 		{
 			return false; // Exit from the application
 		}
@@ -177,10 +174,21 @@ bool ShopSystem::showLoginMenu()
 	}
 	case SignupNewCustomer:
 	{
-		User* newCustomer = readUserData(true, false, false);
+		User* newCustomer = readUserData(&Customer());
 		addUser(newCustomer);
 		cout << "Registration completed successfully!\n" << endl;
-		if (!showCustomerMenu(*newCustomer)) // Repeatedly show customer menu until he asks to exit
+		if (!customerMenu(newCustomer)) // Repeatedly show customer menu until he asks to exit
+		{
+			return false; // Exit from the application
+		}
+		break;
+	}
+	case SignupNewSC:
+	{
+		User* newSC = readUserData(&SellerCustomer());
+		addUser(newSC);
+		cout << "Registration completed successfully!\n" << endl;
+		if (!sellerCustomerMenu(newSC)) // Repeatedly show seller-customer menu until he asks to exit
 		{
 			return false; // Exit from the application
 		}
@@ -188,13 +196,30 @@ bool ShopSystem::showLoginMenu()
 	}
 	case Login:
 	{
-		User* seller = loginUser(username, password);
-		if (seller) // Seller found
+		User* user = loginUser(username, password);
+		if (user) // User found
 		{
-			cout << "Welcome back " << seller->getUsername() << "!\n" << endl;
-			if (!showSellerMenu(*seller)) // Repeatedly show seller menu until he asks to exit
+			cout << "Welcome back " << user->getUsername() << "!\n" << endl;
+			if (dynamic_cast<Seller*>(user)) // Seller
 			{
-				return false; // Exit from the application
+				if (!sellerMenu(user)) // Repeatedly show seller menu until he asks to exit
+				{
+					return false; // Exit from the application
+				}
+			}
+			else if (dynamic_cast<Customer*>(user)) // Customer
+			{
+				if (!customerMenu(user)) // Repeatedly show customer menu until he asks to exit
+				{
+					return false; // Exit from the application
+				}
+			}
+			else // Seller-Customer
+			{
+				if (!sellerCustomerMenu(user)) // Repeatedly show seller-customer menu until he asks to exit
+				{
+					return false; // Exit from the application
+				}
 			}
 		}
 		break;
@@ -218,8 +243,9 @@ bool ShopSystem::showLoginMenu()
 	return true; // Go back to login menu
 }
 
-bool ShopSystem::showSellerMenu(Seller& seller)
+bool ShopSystem::sellerMenu(User* user)
 {
+	Seller* seller = dynamic_cast<Seller*>(user);
 	int selection;
 
 	printSellerMenu();
@@ -236,8 +262,8 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 		{
 		case AddNewProduct:
 		{
-			Product* newProduct = readProductData(&seller);
-			seller.addProduct(newProduct); // Add the new product to its seller
+			Product* newProduct = readProductData(seller);
+			seller->addProduct(newProduct); // Add the new product to its seller
 			this->addProduct(newProduct); // Add the new product to the general products array
 			break;
 		}
@@ -248,20 +274,20 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 		}
 		case ViewProducts:
 		{
-			seller.showProducts();
+			seller->showProducts();
 			cout << endl;
 			break;
 		}
 		case ViewFeedbacks:
 		{
-			seller.showFeedbacks();
+			seller->showFeedbacks();
 			cout << endl;
 			break;
 		}
-		case SellerLogOut:
+		case SellerGoBack:
 		{
-			cout << "Bye bye " << seller.getUsername() << "... We hope to see you again soon!\n" << endl;
-			return true; // Logout seller
+			cout << "Bye bye " << seller->getUsername() << "... We hope to see you again soon!\n" << endl;
+			return true; // Go to previous menu
 		}
 		case SellerExit:
 			return false; // Exit from the application
@@ -270,11 +296,12 @@ bool ShopSystem::showSellerMenu(Seller& seller)
 		}
 	}
 
-	return showSellerMenu(seller); // Repeatedly show menu
+	return sellerMenu(seller); // Repeatedly show menu
 }
 
-bool ShopSystem::showCustomerMenu(Customer& customer)
+bool ShopSystem::customerMenu(User* user)
 {
+	Customer* customer = dynamic_cast<Customer*>(user);
 	int selection;
 
 	printCustomerMenu();
@@ -301,12 +328,12 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		}
 		case ViewCart:
 		{
-			customer.showCart();
+			customer->showCart();
 			break;
 		}
 		case CheckoutAndPlaceOrder:
 		{
-			checkout(&customer);
+			checkout(customer);
 			break;
 		}
 		case WriteFeedback:
@@ -314,10 +341,10 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 			writeFeedback(customer);
 			break;
 		}
-		case CustomerLogOut:
+		case CustomerGoBack:
 		{
-			cout << "Bye bye " << customer.getUsername() << "... We hope to see you again soon!\n" << endl;
-			return true; // Logout customer
+			cout << "Bye bye " << customer->getUsername() << "... We hope to see you again soon!\n" << endl;
+			return true; // Go back to previous menu
 		}
 		case CustomerExit:
 			return false; // Exit from the application
@@ -326,7 +353,40 @@ bool ShopSystem::showCustomerMenu(Customer& customer)
 		}
 	}
 
-	return showCustomerMenu(customer); // Repeatedly show menu
+	return customerMenu(customer); // Repeatedly show menu
+}
+
+bool ShopSystem::sellerCustomerMenu(User* user)
+{
+	SellerCustomer* sc = dynamic_cast<SellerCustomer*>(user);
+	int selection;
+
+	printSellerCustomerMenu();
+	cin >> selection;
+	cout << endl;
+
+	if (!cinTypeCheck()) // cin failed - ask again for valid type
+	{
+		cout << "Please choose from one of the following options!\n" << endl;
+	}
+	else
+	{
+		switch ((SellerCustomerOptions)selection)
+		{
+		case ViewCustomerMenu:
+		{
+			if (!customerMenu(sc)) // Repeatedly show customer menu until he asks to exit
+			{
+				return false; // Exit from the application
+			}
+			break;
+		}
+		default:
+			cout << "Please choose from one of the following options!\n" << endl;
+		}
+
+
+	}
 }
 
 void ShopSystem::addUser(User* user)
@@ -450,8 +510,9 @@ void ShopSystem::searchProducts() const
 	}
 }
 
-void ShopSystem::addProductToCart(Customer& customer)
+void ShopSystem::addProductToCart(User* user)
 {
+	Customer* customer = dynamic_cast<Customer*>(user);
 	unsigned int productID = 0;
 
 	if (numOfAllProducts == 0) // No products in the shop
@@ -466,10 +527,10 @@ void ShopSystem::addProductToCart(Customer& customer)
 			{
 				if (productID == allProducts[i]->getSerialNumber()) // Match
 				{
-					if (!isProductExists(allProducts[i]->getName(), customer.getCart(), customer.getNumOfProductsInCart()))
+					if (!isProductExists(allProducts[i]->getName(), customer->getCart(), customer->getNumOfProductsInCart()))
 					{
 						// Add the chosen product to customer's cart
-						customer.addProductToCart(allProducts[i]);
+						customer->addProductToCart(allProducts[i]);
 						cout << "The product '" << allProducts[i]->getName() << "' added to cart successfully!\n" << endl;
 					}
 					else
@@ -483,8 +544,10 @@ void ShopSystem::addProductToCart(Customer& customer)
 	}
 }
 
-void ShopSystem::checkout(Customer* customer)
+void ShopSystem::checkout(User* user)
 {
+	Customer* customer = dynamic_cast<Customer*>(user);
+
 	if (customer->getNumOfProductsInCart() == 0) // No products in cart
 	{
 		cout << "Please add products to your cart before checkout.\n" << endl;
@@ -534,10 +597,11 @@ void ShopSystem::getTextForFeedback(char* text) const
 	} while (!isValid);
 }
 
-void ShopSystem::writeFeedback(Customer& customer)
+void ShopSystem::writeFeedback(User* user)
 {
-	int index, numOfOrders = customer.getNumOfOrders();
-	Checkout** orders = customer.getOrders();
+	Customer* customer = dynamic_cast<Customer*>(user);
+	int index, numOfOrders = customer->getNumOfOrders();
+	Checkout** orders = customer->getOrders();
 
 	if (numOfOrders == 0)
 	{
@@ -545,7 +609,7 @@ void ShopSystem::writeFeedback(Customer& customer)
 	}
 	else 
 	{
-		customer.showOrders();
+		customer->showOrders();
 		cout << endl << "Choose the index of the order you wish to make the feedback about: ";
 		cin >> index;
 		if (!cinTypeCheck() || !(1 <= index && index <= numOfOrders)) 
@@ -566,18 +630,18 @@ void ShopSystem::writeFeedback(Customer& customer)
 			else 
 			{
 				Product* chosenProuct = products[index - 1];
+				Seller* seller = dynamic_cast<Seller*>(chosenProuct->getSeller());
 				char text[MAX_FEEDBACK_LENGTH];
 				getTextForFeedback(text);
-				chosenProuct->getSeller()->addFeedback(new Feedback(&customer, products[index - 1], readDate(), text)); // Add the feedback to its seller
+				seller->addFeedback(new Feedback(user, products[index - 1], readDate(), text)); // Add the feedback to its seller
 				cout << endl << "Your feedback to " << chosenProuct->getSeller()->getUsername() << " added successfully!\n" << endl;
 			}
 		}
 	}
 }
 
-User* ShopSystem::readUserData(bool isCustomer, bool isSeller, bool isSellerCustomer)
+User* ShopSystem::readUserData(User* type)
 {
-	User* user;
 	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
 	char country[MAX_CHARACTERS], city[MAX_CHARACTERS], street[MAX_CHARACTERS];
 	int buildingNumber;
@@ -596,18 +660,31 @@ User* ShopSystem::readUserData(bool isCustomer, bool isSeller, bool isSellerCust
 
 	Address address(country, city, street, buildingNumber);
 	
-	if (isCustomer)
+	if (dynamic_cast<Customer*>(type)) // Customer
 	{
-		user = new Customer(username, password, address);
+		return new Customer(username, password, address);
 	}
-	else if (isSeller)
+	else if (dynamic_cast<Seller*>(type)) // Seller
 	{
-		user = new Seller(username, password, address);
+		return new Seller(username, password, address);
 	}
 	else // Seller-Customer
 	{
-		user = new SellerCustomer(username, password, address);
+		return new SellerCustomer(username, password, address);
 	}
+}
 
-	return user;
+Product* ShopSystem::readProductData(User* user)
+{
+	char productName[MAX_PRODUCT_NAME_LENGTH];
+	float price;
+	int category;
+
+	cout << "Please fill in the following fields.\n" << endl;
+	productNameValidation(productName, user);
+	priceValidation(price);
+	categoryValidation(category);
+
+	cout << endl << "Product added successfully!\n" << endl;
+	return new Product(productName, price, category, user);
 }

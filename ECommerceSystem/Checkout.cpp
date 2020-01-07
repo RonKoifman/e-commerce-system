@@ -99,6 +99,7 @@ void Checkout::addSeller(User* seller)
 
 void Checkout::createNewOrder()
 {
+	Customer* customer = dynamic_cast<Customer*>(this->customer);
 	Product* product;
 	int index = 0;
 	bool toContinue = true;

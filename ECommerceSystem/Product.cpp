@@ -85,18 +85,3 @@ void Product::showCategory() const
 		break;
 	}
 }
-
-Product* readProductData(Seller* seller)
-{
-	char productName[MAX_PRODUCT_NAME_LENGTH];
-	float price;
-	int category;
-
-	cout << "Please fill in the following fields.\n" << endl;
-	productNameValidation(productName, *seller);
-	priceValidation(price);
-	categoryValidation(category);
-
-	cout << endl << "Product added successfully!\n" << endl;
-	return new Product(productName, price, category, seller);
-}

@@ -24,19 +24,21 @@ public:
 	void showSellers() const;
 	void showSellerCustomers() const;
 	void showAllProducts() const;
-	bool showLoginMenu();
-	bool showSellerMenu(Seller& seller);
-	bool showCustomerMenu(Customer& seller);
-	User* readUserData(bool isCustomer, bool isSeller, bool isSellerCustomer);
+	bool loginMenu();
+	bool sellerMenu(User* user);
+	bool customerMenu(User* user);
+	bool sellerCustomerMenu(User* user);
+	User* readUserData(User* type);
+	Product* readProductData(User* user);
 	void addUser(User* user);
 	void addProduct(Product* newProduct);
 	User* loginUser(char* username, char* password);
 	void searchProducts() const;
-	void addProductToCart(Customer& customer);
-	void checkout(Customer* customer);
+	void addProductToCart(User* user);
+	void checkout(User* user);
 	Date readDate();
 	void getTextForFeedback(char* text) const;
-	void writeFeedback(Customer& customer);
+	void writeFeedback(User* user);
 	// Getters
 	char* getName() const;
 	User** getUsers() const;
@@ -53,18 +55,16 @@ public:
 	enum SellerOptions
 	{
 		AddNewProduct = 1, SellerSearchProduct = 2, ViewProducts = 3, ViewFeedbacks = 4,
-		SellerLogOut = 5, SellerExit = 6
+		SellerGoBack = 5, SellerExit = 6
 	};
 	enum CustomerOptions
 	{
 		CustomerSearchProduct = 1, AddProductToCart = 2, ViewCart = 3, CheckoutAndPlaceOrder = 4,
-		WriteFeedback = 5, CustomerLogOut = 6, CustomerExit = 7
+		WriteFeedback = 5, CustomerGoBack = 6, CustomerExit = 7
 	};
 	enum SellerCustomerOptions
 	{
-		SCSearchProduct = 1, SCAddProductToCart = 2, SCViewCart = 3, SCCheckoutAndPlaceOrder = 4,
-		SCWriteFeedback = 5, SCAddNewProduct = 6, SCViewProducts = 7, SCViewFeedbacks = 8,
-		SCLogOut = 9, SCExit = 10
+		ViewCustomerMenu = 1, ViewSellerMenu = 2, SCGoBack = 3, SCExit = 4
 	};
 	enum SearchProductOptions
 	{

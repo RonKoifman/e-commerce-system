@@ -8,7 +8,7 @@ int main()
 	cout << "Welcome to " << shop.getName() << ". The shop of the new Internet!\n" << endl;
 	while (toContinue)
 	{
-		toContinue = shop.showLoginMenu();
+		toContinue = shop.loginMenu();
 	}
 
 	cout << "Thanks for visiting our shop! See you next time!" << endl;

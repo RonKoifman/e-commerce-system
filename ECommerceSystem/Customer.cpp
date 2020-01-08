@@ -17,6 +17,23 @@ Customer::~Customer() // D'tor
 	delete[] cart; // The pointers already released at each of their seller d'tor
 }
 
+bool Customer::operator>(const Customer& other) const
+{
+	return (this->calculateCartTotalAmount() > other.calculateCartTotalAmount());
+}
+
+float Customer::calculateCartTotalAmount() const
+{
+	float res = 0;
+
+	for (int i = 0; i < numOfProductsInCart; i++)
+	{
+		res += cart[i]->getPrice();
+	}
+
+	return res;
+}
+
 Product** Customer::getCart() const
 {
 	return cart;

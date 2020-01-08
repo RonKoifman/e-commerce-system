@@ -10,7 +10,8 @@ void Menu::printMainMenu()
 	cout << "Press 5 to view all the customers in the shop." << endl;
 	cout << "Press 6 to view all the sellers in the shop." << endl;
 	cout << "Press 7 to view all the seller-customers in the shop." << endl;
-	cout << "Press 8 to exit from the app." << endl;
+	cout << "Press 8 to compare two users carts amount." << endl;
+	cout << "Press 9 to exit from the app." << endl;
 
 	cout << "Your selection: ";
 }

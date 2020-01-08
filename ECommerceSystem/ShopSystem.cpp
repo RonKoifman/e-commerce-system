@@ -156,7 +156,7 @@ bool ShopSystem::mainMenu()
 	case SignupNewSeller:
 	{
 		User* newSeller = readUserData(TypeSeller);
-		*this += newSeller; // Add new seller to users array
+		*this += *newSeller; // Add new seller to users array
 		if (!sellerMenu(newSeller)) // Repeatedly show seller menu until he asks to exit
 		{
 			return false; // Exit from the application
@@ -166,7 +166,7 @@ bool ShopSystem::mainMenu()
 	case SignupNewCustomer:
 	{
 		User* newCustomer = readUserData(TypeCustomer);
-		*this += newCustomer; // Add new customer to users array
+		*this += *newCustomer; // Add new customer to users array
 		if (!customerMenu(newCustomer)) // Repeatedly show customer menu until he asks to exit
 		{
 			return false; // Exit from the application
@@ -176,7 +176,7 @@ bool ShopSystem::mainMenu()
 	case SignupNewSC:
 	{
 		User* newSC = readUserData(TypeSellerCustomer);
-		*this += newSC; // Add new seller-customer to users array
+		*this += *newSC; // Add new seller-customer to users array
 		if (!sellerCustomerMenu(newSC)) // Repeatedly show seller-customer menu until he asks to exit
 		{
 			return false; // Exit from the application
@@ -225,6 +225,11 @@ bool ShopSystem::mainMenu()
 	case ViewSC:
 	{
 		showSellerCustomers();
+		break;
+	}
+	case CompareCarts:
+	{
+		compareUsersCartsAmount();
 		break;
 	}
 	case Exit:
@@ -394,7 +399,7 @@ bool ShopSystem::sellerCustomerMenu(User* user)
 	return sellerCustomerMenu(sc); // Repeatedly show menu
 }
 
-const ShopSystem& ShopSystem::operator+=(User* user)
+const ShopSystem& ShopSystem::operator+=(User& user)
 {
 	User** temp = new User*[numOfUsers + 1]; // Create bigger array to add the new user
 
@@ -403,7 +408,7 @@ const ShopSystem& ShopSystem::operator+=(User* user)
 	{
 		temp[i] = users[i];
 	}
-	temp[numOfUsers] = user; // Add the new user
+	temp[numOfUsers] = &user; // Add the new user
 	numOfUsers++;
 
 	delete[] users; // Free the current array
@@ -654,6 +659,42 @@ void ShopSystem::writeFeedback(User* user)
 				seller->addFeedback(new Feedback(user, chosenProuct, readDate(), text)); // Add the feedback to its seller
 				cout << endl << "Your feedback to " << chosenProuct->getSeller()->getUsername() << " added successfully!\n" << endl;
 			}
+		}
+	}
+}
+
+void ShopSystem::compareUsersCartsAmount() const
+{
+	Validations validator;
+	int indexUser1 = 0, indexUser2 = 0;
+
+	if (numOfUsers < 2)
+	{
+		cout << "There are no users to compare yet.\n" << endl;
+	}
+	else
+	{
+		if (validator.areValidUsers(users, numOfUsers, indexUser1, indexUser2))
+		{
+			Customer* customer1 = dynamic_cast<Customer*>(users[indexUser1]);
+			Customer* customer2 = dynamic_cast<Customer*>(users[indexUser2]);
+
+			if (*customer1 > *customer2)
+			{
+				cout << customer1->getUsername() << "'s cart amount is bigger.\n" << endl;
+			}
+			else if (*customer2 > *customer1)
+			{
+				cout << customer2->getUsername() << "'s cart amount is bigger.\n" << endl;
+			}
+			else // Equal
+			{
+				cout << "Carts amounts are equal.\n" << endl;
+			}
+		}
+		else
+		{
+			cout << "Invalid users selection!\n" << endl;
 		}
 	}
 }

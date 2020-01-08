@@ -559,3 +559,40 @@ void Validations::dateValidation(int& day, int& month, int& year)
 		cin >> year;
 	}
 }
+
+bool Validations::areValidUsers(User** users, int numOfUsers, int& indexUser1, int& indexUser2)
+{
+	char username1[MAX_CHARACTERS], username2[MAX_CHARACTERS];
+	int len = 0, usersFound = 0;
+	bool isUsername1Valid, isUsername2Valid;
+
+	cleanBuffer();
+	cout << "Please enter the first username of a customer or a seller-customer for comparison:" << endl;
+	isUsername1Valid = getInput(username1, len, MAX_CHARACTERS);
+	cout << "Please enter the second username of a customer or a seller-customer for comparison:" << endl;
+	isUsername2Valid = getInput(username2, len, MAX_CHARACTERS);
+	cout << endl;
+
+	// Check for valid input length
+	if (!(isUsername1Valid && isUsername2Valid))
+	{
+		return false;
+	}
+
+	for (int i = 0; i < numOfUsers && usersFound < 2; i++)
+	{
+		if (strcmp(username1, users[i]->getUsername()) == 0)
+		{
+			indexUser1 = i;
+			usersFound++;
+		}
+		if (strcmp(username2, users[i]->getUsername()) == 0)
+		{
+			indexUser2 = i;
+			usersFound++;
+		}
+	}
+
+	// Check that both different users are found and their type is either customer or seller-customer
+	return (usersFound == 2 && indexUser1 != indexUser2 && dynamic_cast<Customer*>(users[indexUser1]) && dynamic_cast<Customer*>(users[indexUser2]));
+}

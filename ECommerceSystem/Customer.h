@@ -19,6 +19,8 @@ public:
 	Customer(const Customer& other) = delete; // Disable copy c'tor
 	const Customer& operator=(const Customer& other) = delete; // Disable operator=
 	virtual ~Customer(); // D'tor
+	bool operator>(const Customer& other) const;
+	float calculateCartTotalAmount() const;
 	virtual void show(ostream& os) const override;
 	void showCart() const;
 	void showOrders() const;

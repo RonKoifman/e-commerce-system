@@ -23,7 +23,7 @@ public:
 	enum LoginOptions
 	{
 		SignupNewSeller = 1, SignupNewCustomer = 2, SignupNewSC = 3, Login = 4,
-		ViewCustomers = 5, ViewSellers = 6, ViewSC = 7, Exit = 8
+		ViewCustomers = 5, ViewSellers = 6, ViewSC = 7, CompareCarts = 8, Exit = 9
 	};
 	enum SellerOptions
 	{
@@ -48,7 +48,7 @@ public:
 	ShopSystem(const ShopSystem& other) = delete; // Disable copy c'tor
 	const ShopSystem& operator=(const ShopSystem& other) = delete; // Disable operator=
 	~ShopSystem(); // D'tor
-	const ShopSystem& operator+=(User* user);
+	const ShopSystem& operator+=(User& user);
 	void setName(const char* name);
 	void showCustomers() const;
 	void showSellers() const;
@@ -68,6 +68,7 @@ public:
 	void addProductToUserCart(User* user);
 	void checkout(User* user);
 	void writeFeedback(User* user);
+	void compareUsersCartsAmount() const;
 	// Getters
 	char* getName() const;
 	User** getUsers() const;

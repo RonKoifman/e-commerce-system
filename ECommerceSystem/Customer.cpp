@@ -80,15 +80,14 @@ void Customer::showOrders() const
 
 void Customer::addProductToCart(Product* newProduct)
 {
-	int i;
 	Product** temp = new Product*[numOfProductsInCart + 1]; // Create bigger array to add the new product
 
 	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfProductsInCart; i++)
+	for (int i = 0; i < numOfProductsInCart; i++)
 	{
 		temp[i] = cart[i];
 	}
-	temp[i] = newProduct; // Add the new product
+	temp[numOfProductsInCart] = newProduct; // Add the new product
 	numOfProductsInCart++;
 
 	delete[] cart; // Free the current array
@@ -97,15 +96,14 @@ void Customer::addProductToCart(Product* newProduct)
 
 void Customer::addOrder(Checkout* newOrder)
 {
-	int i;
 	Checkout** temp = new Checkout*[numOfOrders + 1]; // Create bigger array to add the new order
 
 	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfOrders; i++)
+	for (int i = 0; i < numOfOrders; i++)
 	{
 		temp[i] = orders[i];
 	}
-	temp[i] = newOrder; // Add the new order
+	temp[numOfOrders] = newOrder; // Add the new order
 	numOfOrders++;
 
 	delete[] orders; // Free the current array

@@ -88,15 +88,14 @@ Product** Seller::getProducts() const
 
 void Seller::addProduct(Product* newProduct)
 {
-	int i;
 	Product** temp = new Product*[numOfProducts + 1]; // Create bigger array to add the new product
 
 	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfProducts; i++)
+	for (int i = 0; i < numOfProducts; i++)
 	{
 		temp[i] = products[i];
 	}
-	temp[i] = newProduct; // Add the new product
+	temp[numOfProducts] = newProduct; // Add the new product
 	numOfProducts++;
 
 	delete[] products; // Free the current array
@@ -105,15 +104,14 @@ void Seller::addProduct(Product* newProduct)
 
 void Seller::addFeedback(Feedback* newFeedback)
 {
-	int i;
 	Feedback** temp = new Feedback*[numOfFeedbacks + 1]; // Create bigger array to add the new feedback
 
 	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfFeedbacks; i++)
+	for (int i = 0; i < numOfFeedbacks; i++)
 	{
 		temp[i] = feedbacks[i];
 	}
-	temp[i] = newFeedback; // Add the new feedback
+	temp[numOfFeedbacks] = newFeedback; // Add the new feedback
 	numOfFeedbacks++;
 
 	delete[] feedbacks; // Free the current array

@@ -44,7 +44,7 @@ void Menu::printCustomerMenu()
 
 void Menu::printSellerCustomerMenu()
 {
-	cout << "=============================== Seller-Customer Menu ===============================" << endl;
+	cout << "=============================== Seller-Customer Menu ==============================" << endl;
 	cout << "Press 1 to view customer menu." << endl;
 	cout << "Press 2 to view seller menu." << endl;
 	cout << "Press 3 to go back to previous menu." << endl;

@@ -48,6 +48,7 @@ public:
 	ShopSystem(const ShopSystem& other) = delete; // Disable copy c'tor
 	const ShopSystem& operator=(const ShopSystem& other) = delete; // Disable operator=
 	~ShopSystem(); // D'tor
+	const ShopSystem& operator+=(User* user);
 	void setName(const char* name);
 	void showCustomers() const;
 	void showSellers() const;
@@ -61,7 +62,6 @@ public:
 	Product* readProductData(User* user);
 	Date readDate();
 	void readTextForFeedback(char* text) const;
-	void addUser(User* user);
 	User* loginUser();
 	void searchProducts() const;
 	void addProductToStock(Product* newProduct);

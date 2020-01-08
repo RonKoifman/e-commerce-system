@@ -156,7 +156,7 @@ bool ShopSystem::mainMenu()
 	case SignupNewSeller:
 	{
 		User* newSeller = readUserData(TypeSeller);
-		addUser(newSeller);
+		*this += newSeller; // Add new seller to users array
 		if (!sellerMenu(newSeller)) // Repeatedly show seller menu until he asks to exit
 		{
 			return false; // Exit from the application
@@ -166,7 +166,7 @@ bool ShopSystem::mainMenu()
 	case SignupNewCustomer:
 	{
 		User* newCustomer = readUserData(TypeCustomer);
-		addUser(newCustomer);
+		*this += newCustomer; // Add new customer to users array
 		if (!customerMenu(newCustomer)) // Repeatedly show customer menu until he asks to exit
 		{
 			return false; // Exit from the application
@@ -176,7 +176,7 @@ bool ShopSystem::mainMenu()
 	case SignupNewSC:
 	{
 		User* newSC = readUserData(TypeSellerCustomer);
-		addUser(newSC);
+		*this += newSC; // Add new seller-customer to users array
 		if (!sellerCustomerMenu(newSC)) // Repeatedly show seller-customer menu until he asks to exit
 		{
 			return false; // Exit from the application
@@ -394,34 +394,33 @@ bool ShopSystem::sellerCustomerMenu(User* user)
 	return sellerCustomerMenu(sc); // Repeatedly show menu
 }
 
-void ShopSystem::addUser(User* user)
+const ShopSystem& ShopSystem::operator+=(User* user)
 {
-	int i;
 	User** temp = new User*[numOfUsers + 1]; // Create bigger array to add the new user
 
 	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfUsers; i++)
+	for (int i = 0; i < numOfUsers; i++)
 	{
 		temp[i] = users[i];
 	}
-	temp[i] = user; // Add the new user
+	temp[numOfUsers] = user; // Add the new user
 	numOfUsers++;
 
 	delete[] users; // Free the current array
 	users = temp; // Update users array to temp
+	return *this;
 }
 
 void ShopSystem::addProductToStock(Product* newProduct)
 {
-	int i;
 	Product** temp = new Product*[numOfAllProducts + 1]; // Create bigger array to add the new product
 
 	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfAllProducts; i++)
+	for (int i = 0; i < numOfAllProducts; i++)
 	{
 		temp[i] = allProducts[i];
 	}
-	temp[i] = newProduct; // Add the new product
+	temp[numOfAllProducts] = newProduct; // Add the new product
 	numOfAllProducts++;
 
 	delete[] allProducts; // Free the current array

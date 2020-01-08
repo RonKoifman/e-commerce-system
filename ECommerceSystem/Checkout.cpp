@@ -63,15 +63,14 @@ void Checkout::calculateTotalPrice()
 
 void Checkout::addChosenProduct(Product* newProduct)
 {
-	int i;
 	Product** temp = new Product*[numOfChosenProducts + 1]; // Create bigger array to add the new product
 
 	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfChosenProducts; i++)
+	for (int i = 0; i < numOfChosenProducts; i++)
 	{
 		temp[i] = chosenProducts[i];
 	}
-	temp[i] = newProduct; // Add the new product
+	temp[numOfChosenProducts] = newProduct; // Add the new product
 	numOfChosenProducts++;
 
 	delete[] chosenProducts; // Free the current array
@@ -80,15 +79,14 @@ void Checkout::addChosenProduct(Product* newProduct)
 
 void Checkout::addSeller(User* seller)
 {
-	int i;
 	User** temp = new User*[numOfSellers + 1]; // Create bigger array to add the new seller
 
 	// Move the pointers from the current array to temp
-	for (i = 0; i < numOfSellers; i++)
+	for (int i = 0; i < numOfSellers; i++)
 	{
 		temp[i] = sellers[i];
 	}
-	temp[i] = seller; // Add the new seller
+	temp[numOfSellers] = seller; // Add the new seller
 	numOfSellers++;
 
 	delete[] sellers; // Free the current array

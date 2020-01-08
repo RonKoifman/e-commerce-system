@@ -64,7 +64,6 @@ void Checkout::calculateTotalPrice()
 void Checkout::addChosenProduct(Product* newProduct)
 {
 	int i;
-
 	Product** temp = new Product*[numOfChosenProducts + 1]; // Create bigger array to add the new product
 
 	// Move the pointers from the current array to temp
@@ -82,7 +81,6 @@ void Checkout::addChosenProduct(Product* newProduct)
 void Checkout::addSeller(User* seller)
 {
 	int i;
-
 	User** temp = new User*[numOfSellers + 1]; // Create bigger array to add the new seller
 
 	// Move the pointers from the current array to temp
@@ -99,7 +97,7 @@ void Checkout::addSeller(User* seller)
 
 void Checkout::createNewOrder()
 {
-	Customer* customer = dynamic_cast<Customer*>(this->customer);
+	Customer* customer = dynamic_cast<Customer*>(this->customer); if (!customer) return;
 	Product* product;
 	Validations validator;
 	int index = 0;

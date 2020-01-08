@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-void Menu::printLoginMenu()
+void Menu::printMainMenu()
 {
 	cout << "==================================== Main Menu ====================================" << endl;
 	cout << "Press 1 to create a new seller account." << endl;

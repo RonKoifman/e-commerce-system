@@ -6,7 +6,7 @@
 class Menu
 {
 public:
-	void printLoginMenu();
+	void printMainMenu();
 	void printSellerMenu();
 	void printCustomerMenu();
 	void printSellerCustomerMenu();

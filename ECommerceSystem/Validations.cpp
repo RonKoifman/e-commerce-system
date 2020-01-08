@@ -316,7 +316,7 @@ bool Validations::checkUniqueUsername(char* username, User** users, int numOfUse
 
 void Validations::productNameValidation(char* productName, User* user)
 {
-	Seller* seller = dynamic_cast<Seller*>(user);
+	Seller* seller = dynamic_cast<Seller*>(user); if (!seller) return;
 	bool isValid = false;
 	int len = 0;
 
@@ -522,9 +522,9 @@ void Validations::dateValidation(int& day, int& month, int& year)
 
 	cout << "Please enter the year: ";
 	cin >> year;
-	while (!cinTypeCheck() || !(2000 <= year && year <= 2020))
+	while (!cinTypeCheck() || !(2000 <= year && year <= 2021))
 	{
-		cout << "Invalid year. Pied Piper Shop only exists since year 2000 and will be closed in the year 2020 due to cash overflow. Try again!" << endl;
+		cout << "Invalid year. Our shop only exists since year 2000 and will be closed in the year 2021 due to cash overflow. Try again!" << endl;
 		cout << "Please enter the year: ";
 		cin >> year;
 	}

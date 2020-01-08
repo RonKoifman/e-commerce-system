@@ -92,7 +92,6 @@ void Customer::showOrders() const
 void Customer::addProductToCart(Product* newProduct)
 {
 	int i;
-
 	Product** temp = new Product*[numOfProductsInCart + 1]; // Create bigger array to add the new product
 
 	// Move the pointers from the current array to temp
@@ -110,7 +109,6 @@ void Customer::addProductToCart(Product* newProduct)
 void Customer::addOrder(Checkout* newOrder)
 {
 	int i;
-
 	Checkout** temp = new Checkout*[numOfOrders + 1]; // Create bigger array to add the new order
 
 	// Move the pointers from the current array to temp

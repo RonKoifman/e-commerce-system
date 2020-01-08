@@ -139,14 +139,13 @@ void ShopSystem::showAllProducts() const
 	}
 }
 
-bool ShopSystem::loginMenu()
+bool ShopSystem::mainMenu()
 {
 	Menu menu;
 	Validations validator;
 	int selection;
-	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
 
-	menu.printLoginMenu();
+	menu.printMainMenu();
 	cin >> selection;
 	cout << endl;
 
@@ -190,7 +189,7 @@ bool ShopSystem::loginMenu()
 	}
 	case Login:
 	{
-		User* user = loginUser(username, password);
+		User* user = loginUser();
 		if (user) // User found
 		{
 			if (typeid(*user) == typeid(Seller)) // Seller
@@ -227,6 +226,11 @@ bool ShopSystem::loginMenu()
 		showSellers();
 		break;
 	}
+	case ViewSC:
+	{
+		showSellerCustomers();
+		break;
+	}
 	case Exit:
 		return false; // Exit from the application
 	default: // Invalid option
@@ -238,7 +242,7 @@ bool ShopSystem::loginMenu()
 
 bool ShopSystem::sellerMenu(User* user)
 {
-	Seller* seller = dynamic_cast<Seller*>(user);
+	Seller* seller = dynamic_cast<Seller*>(user); if (!seller) return false;
 	Validations validator;
 	Menu menu;
 	int selection;
@@ -280,9 +284,7 @@ bool ShopSystem::sellerMenu(User* user)
 			break;
 		}
 		case SellerPreviousMenu:
-		{
 			return true; // Go back to previous menu
-		}
 		case SellerExit:
 			return false; // Exit from the application
 		default:
@@ -295,7 +297,7 @@ bool ShopSystem::sellerMenu(User* user)
 
 bool ShopSystem::customerMenu(User* user)
 {
-	Customer* customer = dynamic_cast<Customer*>(user);
+	Customer* customer = dynamic_cast<Customer*>(user); if (!customer) return false;
 	Menu menu;
 	Validations validator;
 	int selection;
@@ -338,9 +340,7 @@ bool ShopSystem::customerMenu(User* user)
 			break;
 		}
 		case CustomerPreviousMenu:
-		{
 			return true; // Go back to previous menu
-		}
 		case CustomerExit:
 			return false; // Exit from the application
 		default:
@@ -353,7 +353,7 @@ bool ShopSystem::customerMenu(User* user)
 
 bool ShopSystem::sellerCustomerMenu(User* user)
 {
-	SellerCustomer* sellerCustomer = dynamic_cast<SellerCustomer*>(user);
+	SellerCustomer* sc = dynamic_cast<SellerCustomer*>(user); if (!sc) return false;
 	Menu menu;
 	Validations validator;
 	int selection;
@@ -372,24 +372,35 @@ bool ShopSystem::sellerCustomerMenu(User* user)
 		{
 		case ViewCustomerMenu:
 		{
-			if (!customerMenu(sellerCustomer)) // Repeatedly show customer menu until he asks to exit
+			if (!customerMenu(sc)) // Repeatedly show customer menu until he asks to exit
 			{
 				return false; // Exit from the application
 			}
 			break;
 		}
+		case ViewSellerMenu:
+		{
+			if (!sellerMenu(sc)) // Repeatedly show seller menu until he asks to exit
+			{
+				return false;
+			}
+			break;
+		}
+		case SCPreviousMenu:
+			return true; // Go back to previous menu
+		case SCExit:
+			return false; // Exit from the application
 		default:
 			cout << "Please choose from one of the following options!\n" << endl;
 		}
-
-
 	}
+
+	return sellerCustomerMenu(sc);
 }
 
 void ShopSystem::addUser(User* user)
 {
 	int i;
-
 	User** temp = new User*[numOfUsers + 1]; // Create bigger array to add the new user
 
 	// Move the pointers from the current array to temp
@@ -407,7 +418,6 @@ void ShopSystem::addUser(User* user)
 void ShopSystem::addProduct(Product* newProduct)
 {
 	int i;
-
 	Product** temp = new Product*[numOfAllProducts + 1]; // Create bigger array to add the new product
 
 	// Move the pointers from the current array to temp
@@ -422,9 +432,10 @@ void ShopSystem::addProduct(Product* newProduct)
 	allProducts = temp; // Update products array to temp
 }
 
-User* ShopSystem::loginUser(char* username, char* password)
+User* ShopSystem::loginUser()
 {
 	Validations validator;
+	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
 	bool isValidUsername, isValidPassword;
 	int len = 0;
 
@@ -512,7 +523,7 @@ void ShopSystem::searchProducts() const
 
 void ShopSystem::addProductToUserCart(User* user)
 {
-	Customer* customer = dynamic_cast<Customer*>(user);
+	Customer* customer = dynamic_cast<Customer*>(user); if (!customer) return;
 	Validations validator;
 	unsigned int productID = 0;
 
@@ -547,7 +558,7 @@ void ShopSystem::addProductToUserCart(User* user)
 
 void ShopSystem::checkout(User* user)
 {
-	Customer* customer = dynamic_cast<Customer*>(user);
+	Customer* customer = dynamic_cast<Customer*>(user); if (!customer) return;
 
 	if (customer->getNumOfProductsInCart() == 0) // No products in cart
 	{
@@ -603,8 +614,8 @@ void ShopSystem::readTextForFeedback(char* text) const
 
 void ShopSystem::writeFeedback(User* user)
 {
+	Customer* customer = dynamic_cast<Customer*>(user); if (!customer) return;
 	Validations validator;
-	Customer* customer = dynamic_cast<Customer*>(user);
 	int index;
 
 	if (customer->getNumOfOrders() == 0)
@@ -634,7 +645,7 @@ void ShopSystem::writeFeedback(User* user)
 			else 
 			{
 				Product* chosenProuct = selectedOrder->getChosenProducts()[index - 1];
-				Seller* seller = dynamic_cast<Seller*>(chosenProuct->getSeller());
+				Seller* seller = dynamic_cast<Seller*>(chosenProuct->getSeller()); if (!seller) return;
 				char text[MAX_FEEDBACK_LENGTH];
 
 				readTextForFeedback(text);

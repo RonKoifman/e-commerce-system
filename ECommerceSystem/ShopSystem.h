@@ -24,7 +24,7 @@ public:
 	void showSellers() const;
 	void showSellerCustomers() const;
 	void showAllProducts() const;
-	bool loginMenu();
+	bool mainMenu();
 	bool sellerMenu(User* user);
 	bool customerMenu(User* user);
 	bool sellerCustomerMenu(User* user);
@@ -33,7 +33,7 @@ public:
 	Date readDate();
 	void readTextForFeedback(char* text) const;
 	void addUser(User* user);
-	User* loginUser(char* username, char* password);
+	User* loginUser();
 	void addProduct(Product* newProduct);
 	void searchProducts() const;
 	void addProductToUserCart(User* user);

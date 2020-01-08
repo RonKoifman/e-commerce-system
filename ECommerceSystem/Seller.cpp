@@ -90,7 +90,6 @@ Product** Seller::getProducts() const
 void Seller::addProduct(Product* newProduct)
 {
 	int i;
-
 	Product** temp = new Product*[numOfProducts + 1]; // Create bigger array to add the new product
 
 	// Move the pointers from the current array to temp
@@ -108,7 +107,6 @@ void Seller::addProduct(Product* newProduct)
 void Seller::addFeedback(Feedback* newFeedback)
 {
 	int i;
-
 	Feedback** temp = new Feedback*[numOfFeedbacks + 1]; // Create bigger array to add the new feedback
 
 	// Move the pointers from the current array to temp

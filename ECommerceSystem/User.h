@@ -12,7 +12,6 @@ protected:
 	Address address;
 
 public:
-	User() = default; // Default C'tor
 	User(const char* username, const char* password, const Address& address); // C'tor
 	User(const User& other) = delete; // Disable copy c'tor
 	const User& operator=(const User& other) = delete; // Disable operator=

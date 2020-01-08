@@ -15,38 +15,11 @@ private:
 	int numOfAllProducts;
 
 public:
-	ShopSystem(const char* name); // C'tor
-	ShopSystem(const ShopSystem& other) = delete; // Disable copy c'tor
-	const ShopSystem& operator=(const ShopSystem& other) = delete; // Disable operator=
-	~ShopSystem(); // D'tor
-	void setName(const char* name);
-	void showCustomers() const;
-	void showSellers() const;
-	void showSellerCustomers() const;
-	void showAllProducts() const;
-	bool mainMenu();
-	bool sellerMenu(User* user);
-	bool customerMenu(User* user);
-	bool sellerCustomerMenu(User* user);
-	User* readUserData(User* type);
-	Product* readProductData(User* user);
-	Date readDate();
-	void readTextForFeedback(char* text) const;
-	void addUser(User* user);
-	User* loginUser();
-	void searchProducts() const;
-	void addProductToStock(Product* newProduct);
-	void addProductToUserCart(User* user);
-	void checkout(User* user);
-	void writeFeedback(User* user);
-	// Getters
-	char* getName() const;
-	User** getUsers() const;
-	int getNumOfUsers() const;
-	Product** getAllProducts() const;
-	int getNumOfAllProducts() const;
-
 	// enum declarations
+	enum UserType
+	{
+		TypeSeller = 1, TypeCustomer = 2, TypeSellerCustomer = 3
+	};
 	enum LoginOptions
 	{
 		SignupNewSeller = 1, SignupNewCustomer = 2, SignupNewSC = 3, Login = 4,
@@ -70,6 +43,37 @@ public:
 	{
 		AllProducts = 1, SpecificProductName = 2
 	};
+
+	ShopSystem(const char* name); // C'tor
+	ShopSystem(const ShopSystem& other) = delete; // Disable copy c'tor
+	const ShopSystem& operator=(const ShopSystem& other) = delete; // Disable operator=
+	~ShopSystem(); // D'tor
+	void setName(const char* name);
+	void showCustomers() const;
+	void showSellers() const;
+	void showSellerCustomers() const;
+	void showAllProducts() const;
+	bool mainMenu();
+	bool sellerMenu(User* user);
+	bool customerMenu(User* user);
+	bool sellerCustomerMenu(User* user);
+	User* readUserData(UserType type);
+	Product* readProductData(User* user);
+	Date readDate();
+	void readTextForFeedback(char* text) const;
+	void addUser(User* user);
+	User* loginUser();
+	void searchProducts() const;
+	void addProductToStock(Product* newProduct);
+	void addProductToUserCart(User* user);
+	void checkout(User* user);
+	void writeFeedback(User* user);
+	// Getters
+	char* getName() const;
+	User** getUsers() const;
+	int getNumOfUsers() const;
+	Product** getAllProducts() const;
+	int getNumOfAllProducts() const;
 };
 
 #endif // __SHOP_SYSTEM_H

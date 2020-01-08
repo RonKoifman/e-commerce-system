@@ -158,7 +158,7 @@ bool ShopSystem::mainMenu()
 	{
 	case SignupNewSeller:
 	{
-		User* newSeller = readUserData(&Seller());
+		User* newSeller = readUserData(TypeSeller);
 		addUser(newSeller);
 		if (!sellerMenu(newSeller)) // Repeatedly show seller menu until he asks to exit
 		{
@@ -168,7 +168,7 @@ bool ShopSystem::mainMenu()
 	}
 	case SignupNewCustomer:
 	{
-		User* newCustomer = readUserData(&Customer());
+		User* newCustomer = readUserData(TypeCustomer);
 		addUser(newCustomer);
 		if (!customerMenu(newCustomer)) // Repeatedly show customer menu until he asks to exit
 		{
@@ -178,7 +178,7 @@ bool ShopSystem::mainMenu()
 	}
 	case SignupNewSC:
 	{
-		User* newSC = readUserData(&SellerCustomer());
+		User* newSC = readUserData(TypeSellerCustomer);
 		addUser(newSC);
 		if (!sellerCustomerMenu(newSC)) // Repeatedly show seller-customer menu until he asks to exit
 		{
@@ -662,7 +662,7 @@ void ShopSystem::writeFeedback(User* user)
 	}
 }
 
-User* ShopSystem::readUserData(User* type)
+User* ShopSystem::readUserData(UserType type)
 {
 	Validations validator;
 	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
@@ -681,11 +681,11 @@ User* ShopSystem::readUserData(User* type)
 	validator.buildingNumberValidation(buildingNumber);
 	cout << endl << "Registration completed successfully!\n" << endl;
 
-	if (typeid(*type) == typeid(SellerCustomer)) // Seller-Customer
+	if (type == TypeSellerCustomer) // Seller-Customer
 	{
 		return new SellerCustomer(username, password, Address(country, city, street, buildingNumber));
 	}
-	else if (typeid(*type) == typeid(Seller)) // Seller
+	else if (type == TypeSeller) // Seller
 	{
 		return new Seller(username, password, Address(country, city, street, buildingNumber));
 	}

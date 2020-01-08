@@ -15,7 +15,6 @@ protected:
 	int numOfOrders;
 
 public:
-	Customer() = default; // Default C'tor
 	Customer(const char* username, const char* password, const Address& address); // C'tor
 	Customer(const Customer& other) = delete; // Disable copy c'tor
 	const Customer& operator=(const Customer& other) = delete; // Disable operator=

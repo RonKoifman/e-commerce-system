@@ -19,12 +19,14 @@ public:
 	void streetValidation(char* street);
 	void buildingNumberValidation(int& buildingNumber);
 	void productNameValidation(char* productName, User* user);
-	bool isProductExists(char* productName, Product** products, int numOfProductsInCart);
+	bool addProudctToCartValidation(unsigned int& productID, int numOfAllProducts);
+	bool isProductExists(const int productSerialNumber, Product** products, int numOfProducts);
+	bool isProductNameExists(const char* productName, Product** products, int numOfProducts);
+	bool isProductBelongsToUser(User* user, const int productSerialNumber);
 	void priceValidation(float& price);
 	void categoryValidation(int& category);
 	bool searchProductSelectionValidation(int& selection);
 	bool searchProductNameValidation(char* productName);
-	bool addProductToCartValidation(unsigned int& productID, const int numOfAllProducts);
 	Product* indexOfCheckoutProductValidation(int& index, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts);
 	bool isSellerExists(User* seller, User** sellers, int numOfSellers);
 	void dateValidation(int& day, int& month, int& year);

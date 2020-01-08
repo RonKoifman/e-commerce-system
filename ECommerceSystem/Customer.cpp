@@ -2,9 +2,8 @@
 #include "Customer.h"
 
 Customer::Customer(const char* username, const char* password, const Address& address) // C'tor
-	: User(username, password, address), cart(nullptr), orders(nullptr)
+	: User(username, password, address), cart(nullptr), orders(nullptr), numOfProductsInCart(0), numOfOrders(0)
 {
-	numOfProductsInCart = numOfOrders = 0; // Initialize data members
 }
 
 Customer::~Customer() // D'tor
@@ -16,16 +15,6 @@ Customer::~Customer() // D'tor
 
 	delete[] orders; 
 	delete[] cart; // The pointers already released at each of their seller d'tor
-}
-
-void Customer::setNumOfPruductsInCart(int numOfProductsInCart)
-{
-	this->numOfProductsInCart = numOfProductsInCart;
-}
-
-void Customer::setNumOfOrders(int numOfOrders)
-{
-	this->numOfOrders = numOfOrders;
 }
 
 Product** Customer::getCart() const

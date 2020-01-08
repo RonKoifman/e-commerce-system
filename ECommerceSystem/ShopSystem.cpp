@@ -1,10 +1,9 @@
 #include "ShopSystem.h"
 
 ShopSystem::ShopSystem(const char* name) // C'tor
-	: name(nullptr), users(nullptr), allProducts(nullptr)
+	: name(nullptr), users(nullptr), allProducts(nullptr), numOfUsers(0), numOfAllProducts(0)
 {
 	setName(name);
-	numOfUsers = numOfAllProducts = 0; // Initialize data members
 }
 
 ShopSystem::~ShopSystem() // D'tor
@@ -263,7 +262,7 @@ bool ShopSystem::sellerMenu(User* user)
 		{
 			Product* newProduct = readProductData(seller);
 			seller->addProduct(newProduct); // Add the new product to its seller
-			this->addProduct(newProduct); // Add the new product to the general products array
+			this->addProductToStock(newProduct); // Add the new product to the general products array
 			break;
 		}
 		case SellerSearchProduct:
@@ -395,7 +394,7 @@ bool ShopSystem::sellerCustomerMenu(User* user)
 		}
 	}
 
-	return sellerCustomerMenu(sc);
+	return sellerCustomerMenu(sc); // Repeatedly show menu
 }
 
 void ShopSystem::addUser(User* user)
@@ -415,7 +414,7 @@ void ShopSystem::addUser(User* user)
 	users = temp; // Update users array to temp
 }
 
-void ShopSystem::addProduct(Product* newProduct)
+void ShopSystem::addProductToStock(Product* newProduct)
 {
 	int i;
 	Product** temp = new Product*[numOfAllProducts + 1]; // Create bigger array to add the new product
@@ -533,21 +532,28 @@ void ShopSystem::addProductToUserCart(User* user)
 	}
 	else
 	{
-		if (validator.addProductToCartValidation(productID, numOfAllProducts)) // Valid product ID
+		if (validator.addProudctToCartValidation(productID, numOfAllProducts)) // Valid product ID
 		{
 			for (int i = 0; i < numOfAllProducts; i++)
 			{
 				if (productID == allProducts[i]->getSerialNumber()) // Match
 				{
-					if (!validator.isProductExists(allProducts[i]->getName(), customer->getCart(), customer->getNumOfProductsInCart()))
+					if (!validator.isProductBelongsToUser(user, allProducts[i]->getSerialNumber()))
 					{
-						// Add the chosen product to customer's cart
-						customer->addProductToCart(allProducts[i]);
-						cout << "The product '" << allProducts[i]->getName() << "' added to cart successfully!\n" << endl;
+						if (!validator.isProductExists(allProducts[i]->getSerialNumber(), customer->getCart(), customer->getNumOfProductsInCart()))
+						{
+							// Add the chosen product to customer's cart
+							customer->addProductToCart(allProducts[i]);
+							cout << "The product '" << allProducts[i]->getName() << "' added to cart successfully!\n" << endl;
+						}
+						else
+						{
+							cout << "You already added this product to your cart.\n" << endl;
+						}
 					}
 					else
 					{
-						cout << "You already added this product to your cart.\n" << endl;
+						cout << "You can't add your own products to your cart.\n" << endl;
 					}
 					return;
 				}

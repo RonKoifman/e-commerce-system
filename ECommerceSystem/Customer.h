@@ -26,9 +26,6 @@ public:
 	void addProductToCart(Product* newProduct);
 	void addOrder(Checkout* newOrder);
 	void initCart();
-	// Setters
-	void setNumOfPruductsInCart(int numOfProductsInCart);
-	void setNumOfOrders(int numOfOrders);
 	// Getters
 	Product** getCart() const;
 	int getNumOfProductsInCart() const;

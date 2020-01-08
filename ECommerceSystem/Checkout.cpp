@@ -140,7 +140,7 @@ void Checkout::placeOrder() const
 		cout << "Please enter the amount to pay: ";
 		cin >> payment;
 
-		if (!validator.cinTypeCheck())
+		if (!validator.cinTypeCheck() || payment <= 0)
 		{
 			cout << "Invalid amount. Try again!" << endl;
 		}
@@ -154,7 +154,7 @@ void Checkout::placeOrder() const
 			}
 			else if (res > totalPrice)
 			{
-				cout << "Add the appropriate amount! ";
+				cout << "Add the appropriate amount!";
 				res -= payment;
 				cout << "Please add more $" << totalPrice - res << " to complete the order." << endl;
 			}

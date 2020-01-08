@@ -329,7 +329,7 @@ void Validations::productNameValidation(char* productName, User* user)
 		{
 			if (checkLettersDigitsAndSpace(productName))
 			{
-				if (!isProductExists(productName, seller->getProducts(), seller->getNumOfProducts()))
+				if (!isProductNameExists(productName, seller->getProducts(), seller->getNumOfProducts()))
 				{
 					isValid = true;
 				}
@@ -350,13 +350,43 @@ void Validations::productNameValidation(char* productName, User* user)
 	}
 }
 
-bool Validations::isProductExists(char* productName, Product** products, int numOfProducts)
+bool Validations::isProductExists(int productSerialNumber, Product** products, int numOfProducts)
 {
 	for (int i = 0; i < numOfProducts; i++)
 	{
-		if (strcmp(productName, products[i]->getName()) == 0) // Product already exists
+		if (productSerialNumber == products[i]->getSerialNumber())
 		{
-			return true;
+			return true; // Product already exists
+		}
+	}
+
+	return false;
+}
+
+bool Validations::isProductNameExists(const char* productName, Product** products, int numOfProducts)
+{
+	for (int i = 0; i < numOfProducts; i++)
+	{
+		if (strcmp(productName, products[i]->getName()) == 0)
+		{
+			return true; // Product name already exists
+		}
+	}
+
+	return false;
+}
+
+bool Validations::isProductBelongsToUser(User* user, const int productSerialNumber)
+{
+	SellerCustomer* sc = dynamic_cast<SellerCustomer*>(user); if (!sc) return false;
+	Product** userProducts = sc->getProducts();
+	int numOfProducts = sc->getNumOfProducts();
+
+	for (int i = 0; i < numOfProducts; i++)
+	{
+		if (userProducts[i]->getSerialNumber() == productSerialNumber)
+		{
+			return true; // Product belongs to the user
 		}
 	}
 
@@ -432,7 +462,7 @@ bool Validations::searchProductNameValidation(char* productName)
 	return getInput(productName, len, MAX_PRODUCT_NAME_LENGTH);
 }
 
-bool Validations::addProductToCartValidation(unsigned int& productID, const int numOfAllProducts)
+bool Validations::addProudctToCartValidation(unsigned int& productID, const int numOfAllProducts)
 {
 	cout << "Please provide the serial number of wanted product to add to cart: ";
 	cin >> productID;
@@ -473,7 +503,7 @@ Product* Validations::indexOfCheckoutProductValidation(int& index, Product** car
 		else
 		{
 			product = cart[index - 1];
-			if (!isProductExists(product->getName(), chosenProducts, numOfChosenProducts))
+			if (!isProductExists(product->getSerialNumber(), chosenProducts, numOfChosenProducts))
 			{
 				isValidIndex = true;
 			}

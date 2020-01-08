@@ -34,8 +34,8 @@ public:
 	void readTextForFeedback(char* text) const;
 	void addUser(User* user);
 	User* loginUser();
-	void addProduct(Product* newProduct);
 	void searchProducts() const;
+	void addProductToStock(Product* newProduct);
 	void addProductToUserCart(User* user);
 	void checkout(User* user);
 	void writeFeedback(User* user);

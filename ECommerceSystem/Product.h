@@ -34,8 +34,8 @@ public:
 	Category getCategory() const;
 	User* getSeller() const;
 	const unsigned int getSerialNumber() const;
-	// Friend functions
-	friend bool addProductToCartValidation(unsigned int& productID, const int numOfAllProducts);
+	// Friend functions and classes
+	friend class Validations;
 	friend ostream& operator<<(ostream& os, const Product& product);
 };
 

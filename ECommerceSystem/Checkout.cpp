@@ -101,6 +101,7 @@ void Checkout::createNewOrder()
 {
 	Customer* customer = dynamic_cast<Customer*>(this->customer);
 	Product* product;
+	Validations validator;
 	int index = 0;
 	bool toContinue = true;
 
@@ -110,28 +111,28 @@ void Checkout::createNewOrder()
 
 	while (toContinue)
 	{
-		product = indexOfCheckoutProductValidation(index, customer->getCart(), customer->getNumOfProductsInCart(), chosenProducts, numOfChosenProducts);
+		product = validator.indexOfCheckoutProductValidation(index, customer->getCart(), customer->getNumOfProductsInCart(), chosenProducts, numOfChosenProducts);
 		if (index == -1) // Customer finished to add products to order
 		{
 			toContinue = false;
 		}
 		else
 		{
-			addChosenProduct(product); // Add product to the chosen products array
-			User* seller = product->getSeller();
+			// Add product to the chosen products array
+			addChosenProduct(product);
 			// Only if seller not exists already - add product's seller to the sellers array
-			if (!isSellerExists(seller, sellers, numOfSellers))
+			if (!validator.isSellerExists(product->getSeller(), sellers, numOfSellers))
 			{
-				addSeller(seller);
+				addSeller(product->getSeller());
 			}
 		}
 	}
-	
 	calculateTotalPrice();
 }
 
 void Checkout::placeOrder() const
 {
+	Validations validator;
 	bool isPayed = false;
 	float payment, res = 0;
 
@@ -141,7 +142,7 @@ void Checkout::placeOrder() const
 		cout << "Please enter the amount to pay: ";
 		cin >> payment;
 
-		if (!cinTypeCheck())
+		if (!validator.cinTypeCheck())
 		{
 			cout << "Invalid amount. Try again!" << endl;
 		}
@@ -162,12 +163,11 @@ void Checkout::placeOrder() const
 			else
 			{
 				cout << endl << "Order completed successfully!" << endl;
+				cout << "Thanks for ordering from our shop!\n" << endl;
 				isPayed = true;
 			}
 		}
 	}
-
-	cout << "Thanks for ordering from Pied Piper Shop!\n" << endl;
 }
 
 void Checkout::showSellers() const

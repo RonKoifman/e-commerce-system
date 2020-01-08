@@ -4,9 +4,7 @@ ShopSystem::ShopSystem(const char* name) // C'tor
 	: name(nullptr), users(nullptr), allProducts(nullptr)
 {
 	setName(name);
-
-	// Initialize data members
-	numOfUsers = numOfAllProducts = 0;
+	numOfUsers = numOfAllProducts = 0; // Initialize data members
 }
 
 ShopSystem::~ShopSystem() // D'tor
@@ -58,14 +56,13 @@ void ShopSystem::showCustomers() const
 
 	for (int i = 0; i < numOfUsers; i++)
 	{
-		if (dynamic_cast<Customer*>(users[i])) // Print only customers
+		if (typeid(*users[i]) == typeid(Customer)) // Print only customers
 		{
 			if (!isFound)
 			{
 				cout << ShopSystem::name << " customers:\n" << endl;
 				isFound = true;
 			}
-
 			users[i]->show();
 			cout << endl;
 		}
@@ -83,14 +80,13 @@ void ShopSystem::showSellers() const
 
 	for (int i = 0; i < numOfUsers; i++)
 	{
-		if (dynamic_cast<Seller*>(users[i])) // Print only sellers
+		if (typeid(*users[i]) == typeid(Seller)) // Print only sellers
 		{
 			if (!isFound)
 			{
 				cout << ShopSystem::name << " sellers:\n" << endl;
 				isFound = true;
 			}
-
 			users[i]->show();
 			cout << endl;
 		}
@@ -108,14 +104,13 @@ void ShopSystem::showSellerCustomers() const
 
 	for (int i = 0; i < numOfUsers; i++)
 	{
-		if (dynamic_cast<SellerCustomer*>(users[i])) // Print only seller-customers
+		if (typeid(*users[i]) == typeid(SellerCustomer)) // Print only seller-customers
 		{
 			if (!isFound)
 			{
 				cout << ShopSystem::name << " seller-customers:\n" << endl;
 				isFound = true;
 			}
-
 			users[i]->show();
 			cout << endl;
 		}
@@ -146,14 +141,16 @@ void ShopSystem::showAllProducts() const
 
 bool ShopSystem::loginMenu()
 {
+	Menu menu;
+	Validations validator;
 	int selection;
 	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
 
-	printLoginMenu();
+	menu.printLoginMenu();
 	cin >> selection;
 	cout << endl;
 
-	if (!cinTypeCheck())
+	if (!validator.cinTypeCheck())
 	{
 		cout << "Please choose from one of the following options!\n" << endl;
 		return true; // cin failed - wrong input type. Go back to login menu
@@ -165,7 +162,6 @@ bool ShopSystem::loginMenu()
 	{
 		User* newSeller = readUserData(&Seller());
 		addUser(newSeller);
-		cout << "Registration completed successfully!\n" << endl;
 		if (!sellerMenu(newSeller)) // Repeatedly show seller menu until he asks to exit
 		{
 			return false; // Exit from the application
@@ -176,7 +172,6 @@ bool ShopSystem::loginMenu()
 	{
 		User* newCustomer = readUserData(&Customer());
 		addUser(newCustomer);
-		cout << "Registration completed successfully!\n" << endl;
 		if (!customerMenu(newCustomer)) // Repeatedly show customer menu until he asks to exit
 		{
 			return false; // Exit from the application
@@ -187,7 +182,6 @@ bool ShopSystem::loginMenu()
 	{
 		User* newSC = readUserData(&SellerCustomer());
 		addUser(newSC);
-		cout << "Registration completed successfully!\n" << endl;
 		if (!sellerCustomerMenu(newSC)) // Repeatedly show seller-customer menu until he asks to exit
 		{
 			return false; // Exit from the application
@@ -199,15 +193,14 @@ bool ShopSystem::loginMenu()
 		User* user = loginUser(username, password);
 		if (user) // User found
 		{
-			cout << "Welcome back " << user->getUsername() << "!\n" << endl;
-			if (dynamic_cast<Seller*>(user)) // Seller
+			if (typeid(*user) == typeid(Seller)) // Seller
 			{
 				if (!sellerMenu(user)) // Repeatedly show seller menu until he asks to exit
 				{
 					return false; // Exit from the application
 				}
 			}
-			else if (dynamic_cast<Customer*>(user)) // Customer
+			else if (typeid(*user) == typeid(Customer)) // Customer
 			{
 				if (!customerMenu(user)) // Repeatedly show customer menu until he asks to exit
 				{
@@ -246,13 +239,15 @@ bool ShopSystem::loginMenu()
 bool ShopSystem::sellerMenu(User* user)
 {
 	Seller* seller = dynamic_cast<Seller*>(user);
+	Validations validator;
+	Menu menu;
 	int selection;
 
-	printSellerMenu();
+	menu.printSellerMenu();
 	cin >> selection;
 	cout << endl;
 
-	if (!cinTypeCheck()) // cin failed - ask again for valid type
+	if (!validator.cinTypeCheck()) // cin failed - ask again for valid type
 	{
 		cout << "Please choose from one of the following options!\n" << endl;
 	}
@@ -284,10 +279,9 @@ bool ShopSystem::sellerMenu(User* user)
 			cout << endl;
 			break;
 		}
-		case SellerGoBack:
+		case SellerPreviousMenu:
 		{
-			cout << "Bye bye " << seller->getUsername() << "... We hope to see you again soon!\n" << endl;
-			return true; // Go to previous menu
+			return true; // Go back to previous menu
 		}
 		case SellerExit:
 			return false; // Exit from the application
@@ -302,13 +296,15 @@ bool ShopSystem::sellerMenu(User* user)
 bool ShopSystem::customerMenu(User* user)
 {
 	Customer* customer = dynamic_cast<Customer*>(user);
+	Menu menu;
+	Validations validator;
 	int selection;
 
-	printCustomerMenu();
+	menu.printCustomerMenu();
 	cin >> selection;
 	cout << endl;
 
-	if (!cinTypeCheck()) // cin failed - ask again for valid type
+	if (!validator.cinTypeCheck()) // cin failed - ask again for valid type
 	{
 		cout << "Please choose from one of the following options!\n" << endl;
 	}
@@ -323,7 +319,7 @@ bool ShopSystem::customerMenu(User* user)
 		}
 		case AddProductToCart:
 		{
-			addProductToCart(customer);
+			addProductToUserCart(customer);
 			break;
 		}
 		case ViewCart:
@@ -341,9 +337,8 @@ bool ShopSystem::customerMenu(User* user)
 			writeFeedback(customer);
 			break;
 		}
-		case CustomerGoBack:
+		case CustomerPreviousMenu:
 		{
-			cout << "Bye bye " << customer->getUsername() << "... We hope to see you again soon!\n" << endl;
 			return true; // Go back to previous menu
 		}
 		case CustomerExit:
@@ -358,14 +353,16 @@ bool ShopSystem::customerMenu(User* user)
 
 bool ShopSystem::sellerCustomerMenu(User* user)
 {
-	SellerCustomer* sc = dynamic_cast<SellerCustomer*>(user);
+	SellerCustomer* sellerCustomer = dynamic_cast<SellerCustomer*>(user);
+	Menu menu;
+	Validations validator;
 	int selection;
 
-	printSellerCustomerMenu();
+	menu.printSellerCustomerMenu();
 	cin >> selection;
 	cout << endl;
 
-	if (!cinTypeCheck()) // cin failed - ask again for valid type
+	if (!validator.cinTypeCheck()) // cin failed - ask again for valid type
 	{
 		cout << "Please choose from one of the following options!\n" << endl;
 	}
@@ -375,7 +372,7 @@ bool ShopSystem::sellerCustomerMenu(User* user)
 		{
 		case ViewCustomerMenu:
 		{
-			if (!customerMenu(sc)) // Repeatedly show customer menu until he asks to exit
+			if (!customerMenu(sellerCustomer)) // Repeatedly show customer menu until he asks to exit
 			{
 				return false; // Exit from the application
 			}
@@ -427,15 +424,16 @@ void ShopSystem::addProduct(Product* newProduct)
 
 User* ShopSystem::loginUser(char* username, char* password)
 {
+	Validations validator;
 	bool isValidUsername, isValidPassword;
 	int len = 0;
 
-	cout << "Please Login with your credentials.\n" << endl;
-	cleanBuffer();
+	cout << "Please login with your credentials.\n" << endl;
+	validator.cleanBuffer();
 	cout << "Username: ";
-	isValidUsername = getInput(username, len, MAX_CHARACTERS);
+	isValidUsername = validator.getInput(username, len, MAX_CHARACTERS);
 	cout << "Password: ";
-	isValidPassword = getInput(password, len, MAX_CHARACTERS);
+	isValidPassword = validator.getInput(password, len, MAX_CHARACTERS);
 
 	if (!(isValidUsername && isValidPassword)) // One of the inputs not valid
 	{
@@ -451,6 +449,7 @@ User* ShopSystem::loginUser(char* username, char* password)
 			if (strcmp(users[i]->getPassword(), password) == 0)
 			{
 				cout << "Logged in successfully!\n" << endl;
+				cout << "Welcome back " << users[i]->getUsername() << "!\n" << endl;
 				return users[i]; // User found
 			}
 		}
@@ -462,6 +461,7 @@ User* ShopSystem::loginUser(char* username, char* password)
 
 void ShopSystem::searchProducts() const
 {
+	Validations validator;
 	char productName[MAX_PRODUCT_NAME_LENGTH];
 	int selection, numOfMatchingProducts = 0;
 	bool isFound = false;
@@ -472,7 +472,7 @@ void ShopSystem::searchProducts() const
 	}
 	else
 	{
-		if (searchProductSelectionValidation(selection)) // Selection validation
+		if (validator.searchProductSelectionValidation(selection)) // Selection validation
 		{
 			if ((SearchProductOptions)selection == AllProducts)
 			{
@@ -480,8 +480,8 @@ void ShopSystem::searchProducts() const
 			}
 			else // SpecificProductName
 			{
-				cleanBuffer();
-				if (searchProductNameValidation(productName))
+				validator.cleanBuffer();
+				if (validator.searchProductNameValidation(productName))
 				{
 					// Search for matching products in the general products array
 					for (int i = 0; i < numOfAllProducts; i++)
@@ -510,9 +510,10 @@ void ShopSystem::searchProducts() const
 	}
 }
 
-void ShopSystem::addProductToCart(User* user)
+void ShopSystem::addProductToUserCart(User* user)
 {
 	Customer* customer = dynamic_cast<Customer*>(user);
+	Validations validator;
 	unsigned int productID = 0;
 
 	if (numOfAllProducts == 0) // No products in the shop
@@ -521,13 +522,13 @@ void ShopSystem::addProductToCart(User* user)
 	}
 	else
 	{
-		if (addProductToCartValidation(productID, numOfAllProducts)) // Valid product ID
+		if (validator.addProductToCartValidation(productID, numOfAllProducts)) // Valid product ID
 		{
 			for (int i = 0; i < numOfAllProducts; i++)
 			{
 				if (productID == allProducts[i]->getSerialNumber()) // Match
 				{
-					if (!isProductExists(allProducts[i]->getName(), customer->getCart(), customer->getNumOfProductsInCart()))
+					if (!validator.isProductExists(allProducts[i]->getName(), customer->getCart(), customer->getNumOfProductsInCart()))
 					{
 						// Add the chosen product to customer's cart
 						customer->addProductToCart(allProducts[i]);
@@ -555,6 +556,7 @@ void ShopSystem::checkout(User* user)
 	else
 	{
 		Checkout* order = new Checkout(customer);
+
 		order->createNewOrder();
 		if (order->getNumOfChosenProducts() == 0) // No products selected
 		{
@@ -573,23 +575,25 @@ void ShopSystem::checkout(User* user)
 
 Date ShopSystem::readDate()
 {
+	Validations validator;
 	int day, month, year;
 
 	cout << endl << "Fill in the date details.\n" << endl;
-	dateValidation(day, month, year);
+	validator.dateValidation(day, month, year);
 	return Date(day, month, year);
 }
 
-void ShopSystem::getTextForFeedback(char* text) const
+void ShopSystem::readTextForFeedback(char* text) const
 {
+	Validations validator;
 	int len = 0;
 	bool isValid;
 
-	cleanBuffer();
+	validator.cleanBuffer();
 	do
 	{
 		cout << endl << "Please write your feedback here (up to 90 characters):" << endl;
-		isValid = getInput(text, len, MAX_FEEDBACK_LENGTH);
+		isValid = validator.getInput(text, len, MAX_FEEDBACK_LENGTH);
 		if (!isValid)
 		{
 			cout << "Invalid input length. Please write again!" << endl;
@@ -599,11 +603,11 @@ void ShopSystem::getTextForFeedback(char* text) const
 
 void ShopSystem::writeFeedback(User* user)
 {
+	Validations validator;
 	Customer* customer = dynamic_cast<Customer*>(user);
-	int index, numOfOrders = customer->getNumOfOrders();
-	Checkout** orders = customer->getOrders();
+	int index;
 
-	if (numOfOrders == 0)
+	if (customer->getNumOfOrders() == 0)
 	{
 		cout << "You have 0 orders made. Make an order so you could leave a feedback.\n" << endl;
 	}
@@ -612,28 +616,29 @@ void ShopSystem::writeFeedback(User* user)
 		customer->showOrders();
 		cout << endl << "Choose the index of the order you wish to make the feedback about: ";
 		cin >> index;
-		if (!cinTypeCheck() || !(1 <= index && index <= numOfOrders)) 
+		if (!validator.cinTypeCheck() || !(1 <= index && index <= customer->getNumOfOrders()))
 		{
 			cout << "You don't have such order.\n" << endl;
 		}
 		else 
 		{
-			Checkout* selectedOrder = orders[index - 1];
-			Product** products = selectedOrder->getChosenProducts();
+			Checkout* selectedOrder = customer->getOrders()[index - 1];
+
 			cout << *selectedOrder;
 			cout << "Pick the index of the product to write its seller the feedback: ";
 			cin >> index;
-			if (!cinTypeCheck() || !(1 <= index && index <= selectedOrder->getNumOfChosenProducts()))
+			if (!validator.cinTypeCheck() || !(1 <= index && index <= selectedOrder->getNumOfChosenProducts()))
 			{
 				cout << "You don't have such product in this order.\n" << endl;
 			}
 			else 
 			{
-				Product* chosenProuct = products[index - 1];
+				Product* chosenProuct = selectedOrder->getChosenProducts()[index - 1];
 				Seller* seller = dynamic_cast<Seller*>(chosenProuct->getSeller());
 				char text[MAX_FEEDBACK_LENGTH];
-				getTextForFeedback(text);
-				seller->addFeedback(new Feedback(user, products[index - 1], readDate(), text)); // Add the feedback to its seller
+
+				readTextForFeedback(text);
+				seller->addFeedback(new Feedback(user, chosenProuct, readDate(), text)); // Add the feedback to its seller
 				cout << endl << "Your feedback to " << chosenProuct->getSeller()->getUsername() << " added successfully!\n" << endl;
 			}
 		}
@@ -642,48 +647,48 @@ void ShopSystem::writeFeedback(User* user)
 
 User* ShopSystem::readUserData(User* type)
 {
+	Validations validator;
 	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
 	char country[MAX_CHARACTERS], city[MAX_CHARACTERS], street[MAX_CHARACTERS];
 	int buildingNumber;
 
-	cout << "Thanks for joining in, new user!"<< endl;
+	cout << "Thanks for joining in!"<< endl;
 	cout << "We are using an universal and decentralized authentication." << endl;
 	cout << "Please fill in the following fields:\n" << endl;
 
-	usernameValidation(username, users, numOfUsers);
-	passwordValidation(password);
-	countryValidation(country);
-	cityValidation(city);
-	streetValidation(street);
-	buildingNumberValidation(buildingNumber);
-	cout << endl;
+	validator.usernameValidation(username, users, numOfUsers);
+	validator.passwordValidation(password);
+	validator.countryValidation(country);
+	validator.cityValidation(city);
+	validator.streetValidation(street);
+	validator.buildingNumberValidation(buildingNumber);
+	cout << endl << "Registration completed successfully!\n" << endl;
 
-	Address address(country, city, street, buildingNumber);
-	
-	if (dynamic_cast<Customer*>(type)) // Customer
+	if (typeid(*type) == typeid(SellerCustomer)) // Seller-Customer
 	{
-		return new Customer(username, password, address);
+		return new SellerCustomer(username, password, Address(country, city, street, buildingNumber));
 	}
-	else if (dynamic_cast<Seller*>(type)) // Seller
+	else if (typeid(*type) == typeid(Seller)) // Seller
 	{
-		return new Seller(username, password, address);
+		return new Seller(username, password, Address(country, city, street, buildingNumber));
 	}
-	else // Seller-Customer
+	else // Customer
 	{
-		return new SellerCustomer(username, password, address);
+		return new Customer(username, password, Address(country, city, street, buildingNumber));
 	}
 }
 
 Product* ShopSystem::readProductData(User* user)
 {
+	Validations validator;
 	char productName[MAX_PRODUCT_NAME_LENGTH];
 	float price;
 	int category;
 
 	cout << "Please fill in the following fields.\n" << endl;
-	productNameValidation(productName, user);
-	priceValidation(price);
-	categoryValidation(category);
+	validator.productNameValidation(productName, user);
+	validator.priceValidation(price);
+	validator.categoryValidation(category);
 
 	cout << endl << "Product added successfully!\n" << endl;
 	return new Product(productName, price, category, user);

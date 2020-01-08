@@ -4,8 +4,7 @@
 Customer::Customer(const char* username, const char* password, const Address& address) // C'tor
 	: User(username, password, address), cart(nullptr), orders(nullptr)
 {
-	// Initialize data members
-	numOfProductsInCart = numOfOrders = 0;
+	numOfProductsInCart = numOfOrders = 0; // Initialize data members
 }
 
 Customer::~Customer() // D'tor

@@ -1,7 +1,7 @@
 #include "ShopSystem.h"
 #include "Validations.h"
 
-void cleanBuffer()
+void Validations::cleanBuffer()
 {
 	char ch;
 
@@ -11,7 +11,7 @@ void cleanBuffer()
 	} while (ch != EOF && ch != '\n');
 }
 
-bool getInput(char* str, int& len, const int maxLen)
+bool Validations::getInput(char* str, int& len, const int maxLen)
 {
 	int i = 0;
 	char ch = ' ';
@@ -41,7 +41,7 @@ bool getInput(char* str, int& len, const int maxLen)
 	return true; // Valid length
 }
 
-bool cinTypeCheck()
+bool Validations::cinTypeCheck()
 {
 	if (cin.fail())
 	{
@@ -53,7 +53,7 @@ bool cinTypeCheck()
 	return true; // Valid type
 }
 
-bool checkLettersAndDigits(const char* str)
+bool Validations::checkLettersAndDigits(const char* str)
 {
 	int i = 0;
 
@@ -69,7 +69,7 @@ bool checkLettersAndDigits(const char* str)
 	return true;
 }
 
-bool checkLettersDigitsAndSpace(const char* str)
+bool Validations::checkLettersDigitsAndSpace(const char* str)
 {
 	int i = 0;
 
@@ -97,7 +97,7 @@ bool checkLettersDigitsAndSpace(const char* str)
 	return true;
 }
 
-bool checkSpecialCharacters(const char* str)
+bool Validations::checkSpecialCharacters(const char* str)
 {
 	int i = 0;
 
@@ -113,7 +113,7 @@ bool checkSpecialCharacters(const char* str)
 	return true;
 }
 
-bool checkLetters(const char* str)
+bool Validations::checkLetters(const char* str)
 {
 	int i = 0;
 
@@ -141,7 +141,7 @@ bool checkLetters(const char* str)
 	return true;
 }
 
-void usernameValidation(char* username, User** users, int numOfUsers)
+void Validations::usernameValidation(char* username, User** users, int numOfUsers)
 {
 	bool isValid = false;
 	int len = 0;
@@ -169,7 +169,7 @@ void usernameValidation(char* username, User** users, int numOfUsers)
 	}
 }
 
-void passwordValidation(char* password)
+void Validations::passwordValidation(char* password)
 {
 	bool isValid = false;
 	int len = 0;
@@ -199,7 +199,7 @@ void passwordValidation(char* password)
 	}
 }
 
-void countryValidation(char* country)
+void Validations::countryValidation(char* country)
 {
 	bool isValid = false;
 	int len = 0;
@@ -226,7 +226,7 @@ void countryValidation(char* country)
 	}
 }
 
-void cityValidation(char* city)
+void Validations::cityValidation(char* city)
 {
 	bool isValid = false;
 	int len = 0;
@@ -253,7 +253,7 @@ void cityValidation(char* city)
 	}
 }
 
-void streetValidation(char* street)
+void Validations::streetValidation(char* street)
 {
 	bool isValid = false;
 	int len = 0;
@@ -280,7 +280,7 @@ void streetValidation(char* street)
 	}
 }
 
-void buildingNumberValidation(int& buildingNumber)
+void Validations::buildingNumberValidation(int& buildingNumber)
 {
 	bool isValid = false;
 
@@ -300,7 +300,7 @@ void buildingNumberValidation(int& buildingNumber)
 	}
 }
 
-bool checkUniqueUsername(char* username, User** users, int numOfUsers)
+bool Validations::checkUniqueUsername(char* username, User** users, int numOfUsers)
 {
 	for (int i = 0; i < numOfUsers; i++) // Search through all users
 	{
@@ -314,7 +314,7 @@ bool checkUniqueUsername(char* username, User** users, int numOfUsers)
 	return true;
 }
 
-void productNameValidation(char* productName, User* user)
+void Validations::productNameValidation(char* productName, User* user)
 {
 	Seller* seller = dynamic_cast<Seller*>(user);
 	bool isValid = false;
@@ -350,7 +350,7 @@ void productNameValidation(char* productName, User* user)
 	}
 }
 
-bool isProductExists(char* productName, Product** products, int numOfProducts)
+bool Validations::isProductExists(char* productName, Product** products, int numOfProducts)
 {
 	for (int i = 0; i < numOfProducts; i++)
 	{
@@ -363,7 +363,7 @@ bool isProductExists(char* productName, Product** products, int numOfProducts)
 	return false;
 }
 
-void priceValidation(float& price)
+void Validations::priceValidation(float& price)
 {
 	bool isValid = false;
 
@@ -383,7 +383,7 @@ void priceValidation(float& price)
 	}
 }
 
-void categoryValidation(int& category)
+void Validations::categoryValidation(int& category)
 {
 	bool isValid = false;
 
@@ -403,7 +403,7 @@ void categoryValidation(int& category)
 	}
 }
 
-bool searchProductSelectionValidation(int& selection)
+bool Validations::searchProductSelectionValidation(int& selection)
 {
 	cout << "Press 1 to show all products in the shop." << endl;
 	cout << "Press 2 to search a product by name." << endl;
@@ -423,7 +423,7 @@ bool searchProductSelectionValidation(int& selection)
 	}
 }
 
-bool searchProductNameValidation(char* productName)
+bool Validations::searchProductNameValidation(char* productName)
 {
 	int len = 0;
 
@@ -432,7 +432,7 @@ bool searchProductNameValidation(char* productName)
 	return getInput(productName, len, MAX_PRODUCT_NAME_LENGTH);
 }
 
-bool addProductToCartValidation(unsigned int& productID, const int numOfAllProducts)
+bool Validations::addProductToCartValidation(unsigned int& productID, const int numOfAllProducts)
 {
 	cout << "Please provide the serial number of wanted product to add to cart: ";
 	cin >> productID;
@@ -449,7 +449,7 @@ bool addProductToCartValidation(unsigned int& productID, const int numOfAllProdu
 	}
 }
 
-Product* indexOfCheckoutProductValidation(int& index, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts)
+Product* Validations::indexOfCheckoutProductValidation(int& index, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts)
 {
 	bool isValidIndex = false;
 	Product* product = nullptr;
@@ -487,7 +487,7 @@ Product* indexOfCheckoutProductValidation(int& index, Product** cart, int numOfP
 	return product;
 }
 
-bool isSellerExists(User* seller, User** sellers, int numOfSellers)
+bool Validations::isSellerExists(User* seller, User** sellers, int numOfSellers)
 {
 	for (int i = 0; i < numOfSellers; i++)
 	{
@@ -500,7 +500,7 @@ bool isSellerExists(User* seller, User** sellers, int numOfSellers)
 	return false;
 }
 
-void dateValidation(int& day, int& month, int& year)
+void Validations::dateValidation(int& day, int& month, int& year)
 {
 	cout << "Please enter the day: ";
 	cin >> day;

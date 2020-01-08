@@ -3,9 +3,13 @@
 
 #include "OutResources.h"
 
-void printLoginMenu();
-void printSellerMenu();
-void printCustomerMenu();
-void printSellerCustomerMenu();
+class Menu
+{
+public:
+	void printLoginMenu();
+	void printSellerMenu();
+	void printCustomerMenu();
+	void printSellerCustomerMenu();
+};
 
 #endif // __MENU_H

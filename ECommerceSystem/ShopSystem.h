@@ -30,14 +30,14 @@ public:
 	bool sellerCustomerMenu(User* user);
 	User* readUserData(User* type);
 	Product* readProductData(User* user);
-	void addUser(User* user);
-	void addProduct(Product* newProduct);
-	User* loginUser(char* username, char* password);
-	void searchProducts() const;
-	void addProductToCart(User* user);
-	void checkout(User* user);
 	Date readDate();
-	void getTextForFeedback(char* text) const;
+	void readTextForFeedback(char* text) const;
+	void addUser(User* user);
+	User* loginUser(char* username, char* password);
+	void addProduct(Product* newProduct);
+	void searchProducts() const;
+	void addProductToUserCart(User* user);
+	void checkout(User* user);
 	void writeFeedback(User* user);
 	// Getters
 	char* getName() const;
@@ -55,16 +55,16 @@ public:
 	enum SellerOptions
 	{
 		AddNewProduct = 1, SellerSearchProduct = 2, ViewProducts = 3, ViewFeedbacks = 4,
-		SellerGoBack = 5, SellerExit = 6
+		SellerPreviousMenu = 5, SellerExit = 6
 	};
 	enum CustomerOptions
 	{
 		CustomerSearchProduct = 1, AddProductToCart = 2, ViewCart = 3, CheckoutAndPlaceOrder = 4,
-		WriteFeedback = 5, CustomerGoBack = 6, CustomerExit = 7
+		WriteFeedback = 5, CustomerPreviousMenu = 6, CustomerExit = 7
 	};
 	enum SellerCustomerOptions
 	{
-		ViewCustomerMenu = 1, ViewSellerMenu = 2, SCGoBack = 3, SCExit = 4
+		ViewCustomerMenu = 1, ViewSellerMenu = 2, SCPreviousMenu = 3, SCExit = 4
 	};
 	enum SearchProductOptions
 	{

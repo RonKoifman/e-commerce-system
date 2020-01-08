@@ -4,8 +4,7 @@
 Seller::Seller(const char* username, const char* password, const Address& address) // C'tor
 	: User(username, password, address), products(nullptr), feedbacks(nullptr)
 {
-	// Initialize data members
-	numOfProducts = numOfFeedbacks = 0;
+	numOfProducts = numOfFeedbacks = 0; // Initialize data members
 }
 
 Seller::~Seller() // D'tor

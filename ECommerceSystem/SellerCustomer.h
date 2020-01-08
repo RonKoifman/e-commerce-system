@@ -12,8 +12,6 @@ public:
 	SellerCustomer(const SellerCustomer& other) = delete; // Disable copy c'tor
 	const SellerCustomer& operator=(const SellerCustomer& other) = delete; // Disable operator=
 	virtual void show() const override;
-	// Friend functions
-	friend Product* readProductData(Seller* seller);
 };
 
 #endif // __SELLERCUSTOMER_H

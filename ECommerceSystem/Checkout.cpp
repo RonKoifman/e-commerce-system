@@ -154,8 +154,8 @@ void Checkout::placeOrder() const
 			}
 			else if (res > totalPrice)
 			{
-				cout << "Add the appropriate amount!";
 				res -= payment;
+				cout << "Add the appropriate amount! ";
 				cout << "Please add more $" << totalPrice - res << " to complete the order." << endl;
 			}
 			else

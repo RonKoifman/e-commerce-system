@@ -19,7 +19,7 @@ public:
 	Customer(const Customer& other) = delete; // Disable copy c'tor
 	const Customer& operator=(const Customer& other) = delete; // Disable operator=
 	virtual ~Customer(); // D'tor
-	virtual void show() const override;
+	virtual void show(ostream& os) const override;
 	void showCart() const;
 	void showOrders() const;
 	void addProductToCart(Product* newProduct);

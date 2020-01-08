@@ -36,9 +36,9 @@ int Seller::getNumOfProducts() const
 	return numOfProducts;
 }
 
-void Seller::show() const
+void Seller::show(ostream& os) const
 {
-	User::show();
+	User::show(os);
 	showProducts();
 	showFeedbacks();
 }

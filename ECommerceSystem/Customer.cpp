@@ -37,9 +37,9 @@ int Customer::getNumOfOrders() const
 	return numOfOrders;
 }
 
-void Customer::show() const
+void Customer::show(ostream& os) const
 {
-	User::show();
+	User::show(os);
 }
 
 void Customer::showCart() const

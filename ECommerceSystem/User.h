@@ -16,7 +16,7 @@ public:
 	User(const User& other) = delete; // Disable copy c'tor
 	const User& operator=(const User& other) = delete; // Disable operator=
 	virtual ~User(); // D'tor
-	virtual void show() const = 0; // Make user class an abstract class
+	virtual void show(ostream& os) const = 0; // Make user class an abstract class
 	// Setters
 	void setUsername(const char* username);
 	void setPassword(const char* password);
@@ -25,6 +25,8 @@ public:
 	char* getUsername() const;
 	char* getPassword() const;
 	Address getAddress() const;
+	// Friend functions
+	friend ostream& operator<<(ostream& os, const User& user);
 };
 
 #endif // __USER_H

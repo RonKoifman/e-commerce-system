@@ -5,7 +5,7 @@ SellerCustomer::SellerCustomer(const char* username, const char* password, const
 {
 }
 
-void SellerCustomer::show() const
+void SellerCustomer::show(ostream& os) const
 {
-	Seller::show();
+	Seller::show(os);
 }

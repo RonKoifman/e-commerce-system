@@ -10,7 +10,7 @@ public:
 	SellerCustomer(const char* username, const char* password, const Address& address); // C'tor
 	SellerCustomer(const SellerCustomer& other) = delete; // Disable copy c'tor
 	const SellerCustomer& operator=(const SellerCustomer& other) = delete; // Disable operator=
-	virtual void show() const override;
+	virtual void show(ostream& os) const override;
 };
 
 #endif // __SELLERCUSTOMER_H

@@ -62,8 +62,7 @@ void ShopSystem::showCustomers() const
 				cout << ShopSystem::name << " customers:\n" << endl;
 				isFound = true;
 			}
-			users[i]->show();
-			cout << endl;
+			cout << *users[i] << endl;
 		}
 	}
 
@@ -86,8 +85,7 @@ void ShopSystem::showSellers() const
 				cout << ShopSystem::name << " sellers:\n" << endl;
 				isFound = true;
 			}
-			users[i]->show();
-			cout << endl;
+			cout << *users[i] << endl;
 		}
 	}
 
@@ -110,8 +108,7 @@ void ShopSystem::showSellerCustomers() const
 				cout << ShopSystem::name << " seller-customers:\n" << endl;
 				isFound = true;
 			}
-			users[i]->show();
-			cout << endl;
+			cout << *users[i] << endl;
 		}
 	}
 

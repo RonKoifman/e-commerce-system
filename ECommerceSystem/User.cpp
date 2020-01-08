@@ -47,8 +47,14 @@ Address User::getAddress() const
 	return address;
 }
 
-void User::show() const
+void User::show(ostream& os) const
 {
-	cout << "Username: " << username << endl;
-	cout << "Address: " << address << endl;
+	os << "Username: " << username << endl;
+	os << "Address: " << address << endl;
+}
+
+ostream& operator<<(ostream& os, const User& user)
+{
+	user.show(os);
+	return os;
 }

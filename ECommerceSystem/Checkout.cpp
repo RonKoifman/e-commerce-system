@@ -2,7 +2,7 @@
 #include "Checkout.h"
 
 Checkout::Checkout(User& customer) // C'tor
-	: customer(&customer), sellers(nullptr), chosenProducts(nullptr), numOfChosenProducts(0), numOfSellers(0), totalPrice(0)
+	: customer(customer), sellers(nullptr), chosenProducts(nullptr), numOfChosenProducts(0), numOfSellers(0), totalPrice(0)
 {
 }
 
@@ -37,7 +37,7 @@ int Checkout::getNumOfSellers() const
 	return numOfSellers;
 }
 
-User* Checkout::getCustomer() const
+User& Checkout::getCustomer() const
 {
 	return customer;
 }
@@ -95,7 +95,7 @@ void Checkout::addSeller(User* seller)
 
 void Checkout::createNewOrder()
 {
-	Customer* customer = dynamic_cast<Customer*>(this->customer); if (!customer) return;
+	Customer* customer = dynamic_cast<Customer*>(&this->customer); if (!customer) return;
 	Product* product;
 	Validations validator;
 	int index = 0;
@@ -117,9 +117,9 @@ void Checkout::createNewOrder()
 			// Add product to the chosen products array
 			addChosenProduct(product);
 			// Only if seller not exists already - add product's seller to the sellers array
-			if (!validator.isSellerExists(product->getSeller(), sellers, numOfSellers))
+			if (!validator.isSellerExists(&product->getSeller(), sellers, numOfSellers))
 			{
-				addSeller(product->getSeller());
+				addSeller(&product->getSeller());
 			}
 		}
 	}

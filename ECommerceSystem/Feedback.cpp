@@ -1,7 +1,7 @@
 #include "Feedback.h"
 
 Feedback::Feedback(User& customer, Product& product, const Date& date, const char* text) // C'tor
-	: text(nullptr), date(date), customer(&customer), product(&product)
+	: text(nullptr), date(date), customer(customer), product(product)
 {
 	setText(text);
 }
@@ -23,12 +23,12 @@ void Feedback::setText(const char* text)
 	strcpy(this->text, text);
 }
 
-User* Feedback::getCustomer() const
+User& Feedback::getCustomer() const
 {
 	return customer;
 }
 
-Product* Feedback::getProduct() const
+Product& Feedback::getProduct() const
 {
 	return product;
 }
@@ -45,8 +45,8 @@ const char* Feedback::getText() const
 
 ostream& operator<<(ostream& os, const Feedback& feedback)
 {
-	os << "\tCustomer: " << feedback.customer->getUsername() << endl;
-	os << "\tName of the product: " << feedback.product->getName() << endl;
+	os << "\tCustomer: " << feedback.customer.getUsername() << endl;
+	os << "\tName of the product: " << feedback.product.getName() << endl;
 	os << "\tDate: " << feedback.date << endl;
 	os << "\tText: " << feedback.text;
 	return os;

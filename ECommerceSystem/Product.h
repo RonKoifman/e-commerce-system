@@ -16,7 +16,7 @@ private:
 	char* name;
 	float price;
 	Category category;
-	User* seller;
+	User& seller;
 	const unsigned int serialNumber;
 
 public:
@@ -33,7 +33,7 @@ public:
 	const char* getName() const;
 	float getPrice() const;
 	Category getCategory() const;
-	User* getSeller() const;
+	User& getSeller() const;
 	const unsigned int getSerialNumber() const;
 	// Friend functions and classes
 	friend class Validations;

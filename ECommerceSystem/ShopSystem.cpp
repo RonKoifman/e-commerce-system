@@ -651,12 +651,12 @@ void ShopSystem::writeFeedback(User* user)
 			else 
 			{
 				Product* chosenProuct = selectedOrder->getChosenProducts()[index - 1];
-				Seller* seller = dynamic_cast<Seller*>(chosenProuct->getSeller()); if (!seller) return;
+				Seller* seller = dynamic_cast<Seller*>(&chosenProuct->getSeller()); if (!seller) return;
 				char text[MAX_FEEDBACK_LENGTH];
 
 				readTextForFeedback(text);
 				seller->addFeedback(new Feedback(*user, *chosenProuct, readDate(), text)); // Add the feedback to its seller
-				cout << endl << "Your feedback to " << chosenProuct->getSeller()->getUsername() << " added successfully!\n" << endl;
+				cout << endl << "Your feedback to " << chosenProuct->getSeller().getUsername() << " added successfully!\n" << endl;
 			}
 		}
 	}

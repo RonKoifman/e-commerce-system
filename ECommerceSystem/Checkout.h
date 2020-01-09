@@ -14,7 +14,7 @@ private:
 	float totalPrice; 
 	User** sellers;
 	int numOfSellers;
-	User* customer;
+	User& customer;
 
 public:
 	Checkout(User& customer); // C'tor
@@ -33,7 +33,7 @@ public:
 	int getNumOfChosenProducts() const;
 	float getTotalPrice() const;
 	int getNumOfSellers() const;
-	User* getCustomer() const;
+	User& getCustomer() const;
 	User** getSellers() const;
 	// Friend functions
 	friend ostream& operator<<(ostream& os, const Checkout& checkout);

@@ -8,8 +8,8 @@
 class Feedback
 {
 private:
-	User* customer;
-	Product* product;
+	User& customer;
+	Product& product;
 	Date date;
 	char* text;
 
@@ -22,8 +22,8 @@ public:
 	void setDate(const Date& date);
 	void setText(const char* text);
 	// Getters
-	User* getCustomer() const;
-	Product* getProduct() const;
+	User& getCustomer() const;
+	Product& getProduct() const;
 	const Date& getDate() const;
 	const char* getText() const;
 	// Friend functions

@@ -4,7 +4,7 @@
 unsigned int Product::uniqueID = 1000; // Generate unique id for each serial number of a product
 
 Product::Product(const char* name, float price, int category, User& seller) // C'tor
-	: name(nullptr), serialNumber(uniqueID++), seller(&seller), price(price)
+	: name(nullptr), serialNumber(uniqueID++), seller(seller), price(price)
 {
 	setName(name);
 	setCategory((Category)category);
@@ -47,7 +47,7 @@ Product::Category Product::getCategory() const
 	return category;
 }
 
-User* Product::getSeller() const
+User& Product::getSeller() const
 {
 	return seller;
 }
@@ -63,7 +63,7 @@ ostream& operator<<(ostream& os, const Product& product)
 	os << "\tPrice: $" << product.price << endl;
 	os << "\tCategory: "; product.showCategory();
 	os << "\tSerial number: " << product.serialNumber << endl;
-	os << "\tSeller: " << product.seller->getUsername();
+	os << "\tSeller: " << product.seller.getUsername();
 	return os;
 }
 

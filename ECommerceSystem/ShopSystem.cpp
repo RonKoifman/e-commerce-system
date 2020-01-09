@@ -437,14 +437,13 @@ User* ShopSystem::loginUser()
 	Validations validator;
 	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
 	bool isValidUsername, isValidPassword;
-	int len = 0;
 
 	cout << "Please login with your credentials.\n" << endl;
 	validator.cleanBuffer();
 	cout << "Username: ";
-	isValidUsername = validator.getInput(username, len, MAX_CHARACTERS);
+	isValidUsername = validator.getInput(username, MAX_CHARACTERS);
 	cout << "Password: ";
-	isValidPassword = validator.getInput(password, len, MAX_CHARACTERS);
+	isValidPassword = validator.getInput(password, MAX_CHARACTERS);
 
 	if (!(isValidUsername && isValidPassword)) // One of the inputs not valid
 	{
@@ -491,8 +490,9 @@ void ShopSystem::searchProducts() const
 			}
 			else // SpecificProductName
 			{
+				cout << "Product to search: ";
 				validator.cleanBuffer();
-				if (validator.searchProductNameValidation(productName))
+				if (validator.getInput(productName, MAX_PRODUCT_NAME_LENGTH))
 				{
 					// Search for matching products in the general products array
 					for (int i = 0; i < numOfAllProducts; i++)
@@ -533,7 +533,7 @@ void ShopSystem::addProductToUserCart(User* user)
 	}
 	else
 	{
-		if (validator.addProudctToCartValidation(productID, numOfAllProducts)) // Valid product ID
+		if (validator.productSerialNumberValidation(productID, numOfAllProducts)) // Valid product ID
 		{
 			for (int i = 0; i < numOfAllProducts; i++)
 			{
@@ -604,14 +604,13 @@ Date ShopSystem::readDate()
 void ShopSystem::readTextForFeedback(char* text) const
 {
 	Validations validator;
-	int len = 0;
 	bool isValid;
 
 	validator.cleanBuffer();
 	do
 	{
 		cout << endl << "Please write your feedback here (up to 90 characters):" << endl;
-		isValid = validator.getInput(text, len, MAX_FEEDBACK_LENGTH);
+		isValid = validator.getInput(text, MAX_FEEDBACK_LENGTH);
 		if (!isValid)
 		{
 			cout << "Invalid input length. Please write again!" << endl;

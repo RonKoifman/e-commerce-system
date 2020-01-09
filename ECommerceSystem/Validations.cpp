@@ -11,22 +11,21 @@ void Validations::cleanBuffer()
 	} while (ch != EOF && ch != '\n');
 }
 
-bool Validations::getInput(char* str, int& len, const int maxLen)
+bool Validations::getInput(char* str, const int maxLen)
 {
-	int i = 0;
+	int len = 0;
 	char ch = ' ';
 
 	// Get input from buffer
-	while (i < maxLen - 1 && ch != '\n')
+	while (len < maxLen - 1 && ch != '\n')
 	{
 		ch = getchar();
 		if (ch != '\n')
 		{
-			str[i++] = ch;
+			str[len++] = ch;
 		}
 	}
-	str[i] = '\0';
-	len = i;
+	str[len] = '\0';
 
 	// Invalid string length or an empty string
 	if (len == maxLen - 1 || len == 0)
@@ -113,7 +112,7 @@ bool Validations::checkSpecialCharacters(const char* str)
 	return true;
 }
 
-bool Validations::checkLetters(const char* str)
+bool Validations::checkLettersAndSpace(const char* str)
 {
 	int i = 0;
 
@@ -144,14 +143,13 @@ bool Validations::checkLetters(const char* str)
 void Validations::usernameValidation(char* username, User** users, int numOfUsers)
 {
 	bool isValid = false;
-	int len = 0;
 
 	cleanBuffer();
 	while (!isValid)
 	{
 		cout << "Username (maximum 20 characters, letters and digits only): ";
 
-		if (getInput(username, len, MAX_CHARACTERS))
+		if (getInput(username, MAX_CHARACTERS))
 		{
 			if (checkLettersAndDigits(username))
 			{
@@ -172,13 +170,12 @@ void Validations::usernameValidation(char* username, User** users, int numOfUser
 void Validations::passwordValidation(char* password)
 {
 	bool isValid = false;
-	int len = 0;
 
 	while (!isValid)
 	{
 		cout << "Password (between 6-20 characters): ";
 
-		if (getInput(password, len, MAX_CHARACTERS))
+		if (getInput(password, MAX_CHARACTERS))
 		{
 			if (strlen(password) >= MIN_CHARACTERS_PASSWORD) 
 			{
@@ -202,15 +199,14 @@ void Validations::passwordValidation(char* password)
 void Validations::countryValidation(char* country)
 {
 	bool isValid = false;
-	int len = 0;
 
 	while (!isValid)
 	{
 		cout << "Country (maximum 20 characters, letters and space only): ";
 
-		if (getInput(country, len, MAX_CHARACTERS))
+		if (getInput(country, MAX_CHARACTERS))
 		{
-			if (checkLetters(country))
+			if (checkLettersAndSpace(country))
 			{
 				isValid = true;
 			}
@@ -229,15 +225,14 @@ void Validations::countryValidation(char* country)
 void Validations::cityValidation(char* city)
 {
 	bool isValid = false;
-	int len = 0;
 
 	while (!isValid)
 	{
 		cout << "City (maximum 20 characters, letters and space only): ";
 
-		if (getInput(city, len, MAX_CHARACTERS))
+		if (getInput(city, MAX_CHARACTERS))
 		{
-			if (checkLetters(city))
+			if (checkLettersAndSpace(city))
 			{
 				isValid = true;
 			}
@@ -256,15 +251,14 @@ void Validations::cityValidation(char* city)
 void Validations::streetValidation(char* street)
 {
 	bool isValid = false;
-	int len = 0;
 
 	while (!isValid)
 	{
 		cout << "Street (maximum 20 characters, letters and space only): ";
 
-		if (getInput(street, len, MAX_CHARACTERS))
+		if (getInput(street, MAX_CHARACTERS))
 		{
-			if (checkLetters(street))
+			if (checkLettersAndSpace(street))
 			{
 				isValid = true;
 			}
@@ -318,14 +312,13 @@ void Validations::productNameValidation(char* productName, User* user)
 {
 	Seller* seller = dynamic_cast<Seller*>(user); if (!seller) return;
 	bool isValid = false;
-	int len = 0;
 
 	cleanBuffer();
 	while (!isValid)
 	{
 		cout << "Product name (maximum 30 characters, letters digits and space only): ";
 
-		if (getInput(productName, len, MAX_PRODUCT_NAME_LENGTH))
+		if (getInput(productName, MAX_PRODUCT_NAME_LENGTH))
 		{
 			if (checkLettersDigitsAndSpace(productName))
 			{
@@ -422,7 +415,7 @@ void Validations::categoryValidation(int& category)
 		cout << "Category (choose from the following: 1-Clothing, 2-Kids, 3-Electricity, 4-Office): ";
 		cin >> category;
 
-		if (cinTypeCheck() && (1 <= category && category <= 4))
+		if (cinTypeCheck() && (1 <= category && category <= MAX_CATEGORIES))
 		{
 			isValid = true;
 		}
@@ -453,16 +446,7 @@ bool Validations::searchProductSelectionValidation(int& selection)
 	}
 }
 
-bool Validations::searchProductNameValidation(char* productName)
-{
-	int len = 0;
-
-	// Get a name of a product to search
-	cout << "Product to search: ";
-	return getInput(productName, len, MAX_PRODUCT_NAME_LENGTH);
-}
-
-bool Validations::addProudctToCartValidation(unsigned int& productID, const int numOfAllProducts)
+bool Validations::productSerialNumberValidation(unsigned int& productID, const int numOfAllProducts)
 {
 	cout << "Please provide the serial number of wanted product to add to cart: ";
 	cin >> productID;
@@ -523,7 +507,7 @@ bool Validations::isSellerExists(User* seller, User** sellers, int numOfSellers)
 	{
 		if (sellers[i] == seller)
 		{
-			return true;
+			return true; // Seller already exists
 		}
 	}
 
@@ -540,7 +524,7 @@ void Validations::dateValidation(int& day, int& month, int& year)
 		cout << "Please enter the day: ";
 		cin >> day;
 	}
-	
+
 	cout << "Please enter the month: ";
 	cin >> month;
 	while (!cinTypeCheck() || !(1 <= month && month <= 12))
@@ -552,9 +536,9 @@ void Validations::dateValidation(int& day, int& month, int& year)
 
 	cout << "Please enter the year: ";
 	cin >> year;
-	while (!cinTypeCheck() || !(2000 <= year && year <= 2021))
+	while (!cinTypeCheck() || year != CURRENT_YEAR)
 	{
-		cout << "Invalid year. Our shop only exists since year 2000 and will be closed in the year 2021 due to cash overflow. Try again!" << endl;
+		cout << "Invalid year. Try again!" << endl;
 		cout << "Please enter the year: ";
 		cin >> year;
 	}
@@ -563,14 +547,14 @@ void Validations::dateValidation(int& day, int& month, int& year)
 bool Validations::areValidUsers(User** users, int numOfUsers, int& indexUser1, int& indexUser2)
 {
 	char username1[MAX_CHARACTERS], username2[MAX_CHARACTERS];
-	int len = 0, usersFound = 0;
+	int usersFound = 0;
 	bool isUsername1Valid, isUsername2Valid;
 
 	cleanBuffer();
 	cout << "Please enter the first username of a customer or a seller-customer for comparison:" << endl;
-	isUsername1Valid = getInput(username1, len, MAX_CHARACTERS);
+	isUsername1Valid = getInput(username1, MAX_CHARACTERS);
 	cout << "Please enter the second username of a customer or a seller-customer for comparison:" << endl;
-	isUsername2Valid = getInput(username2, len, MAX_CHARACTERS);
+	isUsername2Valid = getInput(username2, MAX_CHARACTERS);
 	cout << endl;
 
 	// Check for valid input length

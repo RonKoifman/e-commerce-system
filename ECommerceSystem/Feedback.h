@@ -14,7 +14,7 @@ private:
 	char* text;
 
 public:
-	Feedback(User* customer, Product* product, const Date& date, const char* text); // C'tor
+	Feedback(User& customer, Product& product, const Date& date, const char* text); // C'tor
 	Feedback(const Feedback& other) = delete; // Disable copy c'tor
 	const Feedback& operator=(const Feedback& other) = delete; // Disable operator=
 	~Feedback(); // D'tor
@@ -24,8 +24,8 @@ public:
 	// Getters
 	User* getCustomer() const;
 	Product* getProduct() const;
-	Date getDate() const;
-	char* getText() const;
+	const Date& getDate() const;
+	const char* getText() const;
 	// Friend functions
 	friend ostream& operator<<(ostream& os, const Feedback& feedback);
 };

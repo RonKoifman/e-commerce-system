@@ -1,8 +1,8 @@
 #include "Customer.h"
 #include "Checkout.h"
 
-Checkout::Checkout(User* customer) // C'tor
-	: customer(customer), sellers(nullptr), chosenProducts(nullptr), numOfChosenProducts(0), numOfSellers(0), totalPrice(0)
+Checkout::Checkout(User& customer) // C'tor
+	: customer(&customer), sellers(nullptr), chosenProducts(nullptr), numOfChosenProducts(0), numOfSellers(0), totalPrice(0)
 {
 }
 

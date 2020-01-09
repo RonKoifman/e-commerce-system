@@ -32,17 +32,17 @@ void User::setAddress(const Address& address)
 	this->address = address;
 }
 
-char* User::getUsername() const
+const char* User::getUsername() const
 {
 	return username;
 }
 
-char* User::getPassword() const
+const char* User::getPassword() const
 {
 	return password;
 }
 
-Address User::getAddress() const
+const Address& User::getAddress() const
 {
 	return address;
 }

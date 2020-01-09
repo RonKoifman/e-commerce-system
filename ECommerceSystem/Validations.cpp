@@ -294,7 +294,7 @@ void Validations::buildingNumberValidation(int& buildingNumber)
 	}
 }
 
-bool Validations::checkUniqueUsername(char* username, User** users, int numOfUsers)
+bool Validations::checkUniqueUsername(const char* username, User** users, int numOfUsers)
 {
 	for (int i = 0; i < numOfUsers; i++) // Search through all users
 	{
@@ -369,7 +369,7 @@ bool Validations::isProductNameExists(const char* productName, Product** product
 	return false;
 }
 
-bool Validations::isProductBelongsToUser(User* user, const int productSerialNumber)
+bool Validations::isProductBelongsToUser(User* user, int productSerialNumber)
 {
 	SellerCustomer* sc = dynamic_cast<SellerCustomer*>(user); if (!sc) return false;
 	Product** userProducts = sc->getProducts();
@@ -501,7 +501,7 @@ Product* Validations::indexOfCheckoutProductValidation(int& index, Product** car
 	return product;
 }
 
-bool Validations::isSellerExists(User* seller, User** sellers, int numOfSellers)
+bool Validations::isSellerExists(const User* seller, User** sellers, int numOfSellers)
 {
 	for (int i = 0; i < numOfSellers; i++)
 	{

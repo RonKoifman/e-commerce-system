@@ -61,17 +61,17 @@ void Address::setBuildingNumber(int buildingNumber)
 	this->buildingNumber = buildingNumber;
 }
 
-char* Address::getCountry() const
+const char* Address::getCountry() const
 {
 	return country;
 }
 
-char* Address::getCity() const
+const char* Address::getCity() const
 {
 	return city;
 }
 
-char* Address::getStreet() const
+const char* Address::getStreet() const
 {
 	return street;
 }

@@ -20,7 +20,7 @@ private:
 	const unsigned int serialNumber;
 
 public:
-	Product(const char* name, float price, int category, User* seller); // C'tor
+	Product(const char* name, float price, int category, User& seller); // C'tor
 	Product(const Product& other) = delete; // Disable copy c'tor
 	const Product& operator=(const Product& other) = delete; // Disable operator=
 	~Product(); // D'tor
@@ -30,7 +30,7 @@ public:
 	void setPrice(float price);
 	void setCategory(Category category);
 	// Getters
-	char* getName() const;
+	const char* getName() const;
 	float getPrice() const;
 	Category getCategory() const;
 	User* getSeller() const;

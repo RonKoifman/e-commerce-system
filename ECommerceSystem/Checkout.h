@@ -17,7 +17,7 @@ private:
 	User* customer;
 
 public:
-	Checkout(User* customer); // C'tor
+	Checkout(User& customer); // C'tor
 	Checkout(const Checkout& other) = delete; // Disable copy c'tor
 	const Checkout& operator=(const Checkout& other) = delete; // Disable operator=
 	~Checkout(); // D'tor

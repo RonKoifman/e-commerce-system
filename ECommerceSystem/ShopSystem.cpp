@@ -24,7 +24,7 @@ void ShopSystem::setName(const char* name)
 	strcpy(this->name, name);
 }
 
-char* ShopSystem::getName() const
+const char* ShopSystem::getName() const
 {
 	return name;
 }
@@ -573,7 +573,7 @@ void ShopSystem::checkout(User* user)
 	}
 	else
 	{
-		Checkout* order = new Checkout(customer);
+		Checkout* order = new Checkout(*customer);
 
 		order->createNewOrder();
 		if (order->getNumOfChosenProducts() == 0) // No products selected
@@ -655,7 +655,7 @@ void ShopSystem::writeFeedback(User* user)
 				char text[MAX_FEEDBACK_LENGTH];
 
 				readTextForFeedback(text);
-				seller->addFeedback(new Feedback(user, chosenProuct, readDate(), text)); // Add the feedback to its seller
+				seller->addFeedback(new Feedback(*user, *chosenProuct, readDate(), text)); // Add the feedback to its seller
 				cout << endl << "Your feedback to " << chosenProuct->getSeller()->getUsername() << " added successfully!\n" << endl;
 			}
 		}
@@ -744,5 +744,5 @@ Product* ShopSystem::readProductData(User* user)
 	validator.categoryValidation(category);
 
 	cout << endl << "Product added successfully!\n" << endl;
-	return new Product(productName, price, category, user);
+	return new Product(productName, price, category, *user);
 }

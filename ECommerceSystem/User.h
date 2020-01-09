@@ -22,9 +22,9 @@ public:
 	void setPassword(const char* password);
 	void setAddress(const Address& address);
 	// Getters
-	char* getUsername() const;
-	char* getPassword() const;
-	Address getAddress() const;
+	const char* getUsername() const;
+	const char* getPassword() const;
+	const Address& getAddress() const;
 	// Friend functions
 	friend ostream& operator<<(ostream& os, const User& user);
 };

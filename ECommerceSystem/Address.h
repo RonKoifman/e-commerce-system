@@ -22,9 +22,9 @@ public:
 	void setStreet(const char* street);
 	void setBuildingNumber(int buildingNumber);
 	// Getters
-	char* getCountry() const;
-	char* getCity() const;
-	char* getStreet() const;
+	const char* getCountry() const;
+	const char* getCity() const;
+	const char* getStreet() const;
 	int getBuildingNumber() const;
 	// Friend functions
 	friend ostream& operator<<(ostream& os, const Address& address);

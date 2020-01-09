@@ -8,7 +8,7 @@ public:
 	bool getInput(char* str, const int maxLen);
 	bool cinTypeCheck();
 	void usernameValidation(char* username, User** users, int numOfUsers);
-	bool checkUniqueUsername(char* username, User** users, int numOfUsers);
+	bool checkUniqueUsername(const char* username, User** users, int numOfUsers);
 	void passwordValidation(char* password);
 	bool checkLettersAndDigits(const char* str);
 	bool checkSpecialCharacters(const char* str);
@@ -23,11 +23,11 @@ public:
 	void priceValidation(float& price);
 	void categoryValidation(int& category);
 	bool productSerialNumberValidation(unsigned int& productID, int numOfAllProducts);
-	bool isProductExists(const int productSerialNumber, Product** products, int numOfProducts);
-	bool isProductBelongsToUser(User* user, const int productSerialNumber);
+	bool isProductExists(int productSerialNumber, Product** products, int numOfProducts);
+	bool isProductBelongsToUser(User* user, int productSerialNumber);
 	bool searchProductSelectionValidation(int& selection);
 	Product* indexOfCheckoutProductValidation(int& index, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts);
-	bool isSellerExists(User* seller, User** sellers, int numOfSellers);
+	bool isSellerExists(const User* seller, User** sellers, int numOfSellers);
 	void dateValidation(int& day, int& month, int& year);
 	bool areValidUsers(User** users, int numOfUsers, int& indexUser1, int& indexUser2);
 };

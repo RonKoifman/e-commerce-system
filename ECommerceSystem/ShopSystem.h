@@ -70,7 +70,7 @@ public:
 	void writeFeedback(User* user);
 	void compareUsersCartsAmount() const;
 	// Getters
-	char* getName() const;
+	const char* getName() const;
 	User** getUsers() const;
 	int getNumOfUsers() const;
 	Product** getAllProducts() const;

@@ -15,7 +15,7 @@ private:
 	int numOfAllProducts;
 
 public:
-	// enum declarations
+	// Enum declarations
 	enum UserType
 	{
 		TypeSeller = 1, TypeCustomer = 2, TypeSellerCustomer = 3

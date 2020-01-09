@@ -8,6 +8,7 @@ class User;
 class Product
 {
 public:
+	// Enum declarations
 	enum Category { Clothing = 1, Kids = 2, Electricity = 3, Office = 4 };
 
 private:

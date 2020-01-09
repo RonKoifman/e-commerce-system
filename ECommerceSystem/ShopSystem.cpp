@@ -575,7 +575,11 @@ void ShopSystem::checkout(User* user)
 	{
 		Checkout* order = new Checkout(*customer);
 
+		customer->showCart();
+		cout << "Please enter one index at a time of chosen products to order." << endl;
+		cout << "When you are done, enter -1 to continue to place order.\n" << endl;
 		order->createNewOrder();
+
 		if (order->getNumOfChosenProducts() == 0) // No products selected
 		{
 			cout << endl << "Order cancelled!\n" << endl;
@@ -584,9 +588,49 @@ void ShopSystem::checkout(User* user)
 		else
 		{
 			cout << endl << *order;
-			order->placeOrder(); // Place order
+			placeOrder(*order);
 			customer->initCart(); // Initialize customer cart
 			customer->addOrder(order); // Add the new order to customer orders
+		}
+	}
+}
+
+void ShopSystem::placeOrder(const Checkout& order)
+{
+	Validations validator;
+	bool isPayed = false;
+	float payment, res = 0, totalPrice = order.getTotalPrice();
+
+	cout << "The total price of the order is: $" << totalPrice << endl;
+	while (!isPayed)
+	{
+		cout << "Please enter the amount to pay: ";
+		cin >> payment;
+
+		if (!validator.cinTypeCheck() || payment <= 0)
+		{
+			cout << "Invalid amount. Try again!" << endl;
+		}
+		else
+		{
+			res += payment;
+
+			if (res < totalPrice)
+			{
+				cout << "Please add more $" << totalPrice - res << " to complete the order." << endl;
+			}
+			else if (res > totalPrice)
+			{
+				res -= payment;
+				cout << "Add the appropriate amount! ";
+				cout << "Please add more $" << totalPrice - res << " to complete the order." << endl;
+			}
+			else
+			{
+				cout << endl << "Order completed successfully!" << endl;
+				cout << "Thanks for ordering from our shop!\n" << endl;
+				isPayed = true;
+			}
 		}
 	}
 }

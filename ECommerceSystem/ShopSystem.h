@@ -67,6 +67,7 @@ public:
 	void addProductToStock(Product* newProduct);
 	void addProductToUserCart(User* user);
 	void checkout(User* user);
+	void placeOrder(const Checkout& order);
 	void writeFeedback(User* user);
 	void compareUsersCartsAmount() const;
 	// Getters

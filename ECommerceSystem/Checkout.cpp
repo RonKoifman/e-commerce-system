@@ -101,10 +101,6 @@ void Checkout::createNewOrder()
 	int index = 0;
 	bool toContinue = true;
 
-	customer->showCart();
-	cout << "Please enter one index at a time of chosen products to order." << endl;
-	cout << "When you are done, enter -1 to continue to place order.\n" << endl;
-
 	while (toContinue)
 	{
 		product = validator.indexOfCheckoutProductValidation(index, customer->getCart(), customer->getNumOfProductsInCart(), chosenProducts, numOfChosenProducts);
@@ -124,46 +120,6 @@ void Checkout::createNewOrder()
 		}
 	}
 	calculateTotalPrice();
-}
-
-void Checkout::placeOrder() const
-{
-	Validations validator;
-	bool isPayed = false;
-	float payment, res = 0;
-
-	cout << "The total price of the order is: $" << totalPrice << endl;
-	while (!isPayed)
-	{
-		cout << "Please enter the amount to pay: ";
-		cin >> payment;
-
-		if (!validator.cinTypeCheck() || payment <= 0)
-		{
-			cout << "Invalid amount. Try again!" << endl;
-		}
-		else
-		{
-			res += payment;
-
-			if (res < totalPrice)
-			{
-				cout << "Please add more $" << totalPrice - res << " to complete the order." << endl;
-			}
-			else if (res > totalPrice)
-			{
-				res -= payment;
-				cout << "Add the appropriate amount! ";
-				cout << "Please add more $" << totalPrice - res << " to complete the order." << endl;
-			}
-			else
-			{
-				cout << endl << "Order completed successfully!" << endl;
-				cout << "Thanks for ordering from our shop!\n" << endl;
-				isPayed = true;
-			}
-		}
-	}
 }
 
 void Checkout::showSellers() const

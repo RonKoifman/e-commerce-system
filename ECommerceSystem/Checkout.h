@@ -27,7 +27,6 @@ public:
 	void addChosenProduct(Product* newProduct);
 	void addSeller(User* seller);
 	void createNewOrder();
-	void placeOrder() const;
 	// Getters
 	Product** getChosenProducts() const;
 	int getNumOfChosenProducts() const;

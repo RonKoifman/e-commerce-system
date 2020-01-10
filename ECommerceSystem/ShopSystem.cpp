@@ -19,9 +19,8 @@ ShopSystem::~ShopSystem() // D'tor
 
 void ShopSystem::setName(const char* name)
 {
-	delete[] this->name; // Free previous name - if exists
-	this->name = new char[strlen(name) + 1];
-	strcpy(this->name, name);
+	delete[] this->name;
+	this->name = strdup(name);
 }
 
 const char* ShopSystem::getName() const

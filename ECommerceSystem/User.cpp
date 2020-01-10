@@ -15,16 +15,14 @@ User::~User()
 
 void User::setUsername(const char* username)
 {
-	delete[] this->username; // Free the previous username - if exists
-	this->username = new char[strlen(username) + 1];
-	strcpy(this->username, username);
+	delete[] this->username;
+	this->username = strdup(username);
 }
 
 void User::setPassword(const char* password)
 {
-	delete[] this->password; // Free the previous password - if exists
-	this->password = new char[strlen(password) + 1];
-	strcpy(this->password, password);
+	delete[] this->password;
+	this->password = strdup(password);
 }
 
 void User::setAddress(const Address& address)

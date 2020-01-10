@@ -18,9 +18,8 @@ void Feedback::setDate(const Date& date)
 
 void Feedback::setText(const char* text)
 {
-	delete[] this->text; // Free the previous text - if exists
-	this->text = new char[strlen(text) + 1];
-	strcpy(this->text, text);
+	delete[] this->text;
+	this->text = strdup(text);
 }
 
 User& Feedback::getCustomer() const

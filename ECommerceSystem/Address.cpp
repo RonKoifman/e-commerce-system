@@ -36,23 +36,20 @@ const Address& Address::operator=(const Address& other)
 
 void Address::setCountry(const char* country)
 {
-	delete[] this->country; // Free the previous country - if exists
-	this->country = new char[strlen(country) + 1];
-	strcpy(this->country, country);
+	delete[] this->country;
+	this->country = strdup(country);
 }
 
 void Address::setCity(const char* city)
 {
-	delete[] this->city; // Free the previous city - if exists
-	this->city = new char[strlen(city) + 1];
-	strcpy(this->city, city);
+	delete[] this->city;
+	this->city = strdup(city);
 }
 
 void Address::setStreet(const char* street)
 {
-	delete[] this->street; // Free the previous street - if exists
-	this->street = new char[strlen(street) + 1];
-	strcpy(this->street, street);
+	delete[] this->street;
+	this->street = strdup(street);
 }
 
 void Address::setBuildingNumber(int buildingNumber)

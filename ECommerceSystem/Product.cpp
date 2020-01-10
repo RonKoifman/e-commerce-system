@@ -16,9 +16,8 @@ Product::~Product() // D'tor
 
 void Product::setName(const char* name)
 {
-	delete[] this->name; // Free the previous name - if exists
-	this->name = new char[strlen(name) + 1];
-	strcpy(this->name, name);
+	delete[] this->name;
+	this->name = strdup(name);
 }
 
 void Product::setPrice(float price)

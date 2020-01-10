@@ -122,7 +122,7 @@ void Checkout::createNewOrder()
 	calculateTotalPrice();
 }
 
-void Checkout::showSellers() const
+void Checkout::showSellersNames() const
 {
 	cout << "\tSellers names: " << sellers[0]->getUsername();
 	for (int i = 1; i < numOfSellers; i++) 

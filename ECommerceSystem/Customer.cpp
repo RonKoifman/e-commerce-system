@@ -90,7 +90,7 @@ void Customer::showOrders() const
 			cout << i + 1 << ". \t";
 			orders[i]->showProductsNames();
 			cout << "\tPrice: $" << orders[i]->getTotalPrice() << endl;
-			orders[i]->showSellers();
+			orders[i]->showSellersNames();
 		}
 	}
 }

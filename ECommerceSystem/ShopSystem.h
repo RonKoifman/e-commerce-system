@@ -58,17 +58,17 @@ public:
 	bool sellerMenu(User* user);
 	bool customerMenu(User* user);
 	bool sellerCustomerMenu(User* user);
-	User* readUserData(UserType type);
-	Product* readProductData(User* user);
-	Date readDate();
+	User* readUserData(UserType type) const;
+	Product* readProductData(User* user) const;
+	Date readDate() const;
 	void readTextForFeedback(char* text) const;
-	User* loginUser();
+	User* loginUser() const;
 	void searchProducts() const;
 	void addProductToStock(Product* newProduct);
-	void addProductToUserCart(User* user);
-	void checkout(User* user);
-	void placeOrder(const Checkout& order);
-	void writeFeedback(User* user);
+	void addProductToUserCart(User* user) const;
+	void checkout(User* user) const;
+	void placeOrder(const Checkout& order) const;
+	void writeFeedback(User* user) const;
 	void compareUsersCartsAmount() const;
 	// Getters
 	const char* getName() const;

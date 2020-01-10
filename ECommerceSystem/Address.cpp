@@ -1,12 +1,11 @@
 #include "Address.h"
 
 Address::Address(const char* country, const char* city, const char* street, int buildingNumber) // C'tor
-	: country(nullptr), city(nullptr), street(nullptr)
+	: country(nullptr), city(nullptr), street(nullptr), buildingNumber(buildingNumber)
 {
 	setCountry(country);
 	setCity(city);
 	setStreet(street);
-	setBuildingNumber(buildingNumber);
 }
 
 Address::Address(const Address& other) // Copy C'tor

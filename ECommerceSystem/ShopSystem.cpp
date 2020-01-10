@@ -432,7 +432,7 @@ void ShopSystem::addProductToStock(Product* newProduct)
 	allProducts = temp; // Update products array to temp
 }
 
-User* ShopSystem::loginUser()
+User* ShopSystem::loginUser() const
 {
 	Validations validator;
 	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
@@ -521,7 +521,7 @@ void ShopSystem::searchProducts() const
 	}
 }
 
-void ShopSystem::addProductToUserCart(User* user)
+void ShopSystem::addProductToUserCart(User* user) const
 {
 	Customer* customer = dynamic_cast<Customer*>(user); if (!customer) return;
 	Validations validator;
@@ -563,7 +563,7 @@ void ShopSystem::addProductToUserCart(User* user)
 	}
 }
 
-void ShopSystem::checkout(User* user)
+void ShopSystem::checkout(User* user) const
 {
 	Customer* customer = dynamic_cast<Customer*>(user); if (!customer) return;
 
@@ -595,7 +595,7 @@ void ShopSystem::checkout(User* user)
 	}
 }
 
-void ShopSystem::placeOrder(const Checkout& order)
+void ShopSystem::placeOrder(const Checkout& order) const
 {
 	Validations validator;
 	bool isPayed = false;
@@ -635,7 +635,7 @@ void ShopSystem::placeOrder(const Checkout& order)
 	}
 }
 
-Date ShopSystem::readDate()
+Date ShopSystem::readDate() const
 {
 	Validations validator;
 	int day, month, year;
@@ -662,7 +662,7 @@ void ShopSystem::readTextForFeedback(char* text) const
 	} while (!isValid);
 }
 
-void ShopSystem::writeFeedback(User* user)
+void ShopSystem::writeFeedback(User* user) const
 {
 	Customer* customer = dynamic_cast<Customer*>(user); if (!customer) return;
 	Validations validator;
@@ -742,7 +742,7 @@ void ShopSystem::compareUsersCartsAmount() const
 	}
 }
 
-User* ShopSystem::readUserData(UserType type)
+User* ShopSystem::readUserData(UserType type) const
 {
 	Validations validator;
 	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
@@ -775,7 +775,7 @@ User* ShopSystem::readUserData(UserType type)
 	}
 }
 
-Product* ShopSystem::readProductData(User* user)
+Product* ShopSystem::readProductData(User* user) const
 {
 	Validations validator;
 	char productName[MAX_PRODUCT_NAME_LENGTH];
@@ -788,5 +788,5 @@ Product* ShopSystem::readProductData(User* user)
 	validator.categoryValidation(category);
 
 	cout << endl << "Product added successfully!\n" << endl;
-	return new Product(productName, price, category, *user);
+	return new Product(productName, price, (Product::Category)category, *user);
 }

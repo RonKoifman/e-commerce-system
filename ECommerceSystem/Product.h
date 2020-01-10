@@ -20,7 +20,7 @@ private:
 	const unsigned int serialNumber;
 
 public:
-	Product(const char* name, float price, int category, User& seller); // C'tor
+	Product(const char* name, float price, Category category, User& seller); // C'tor
 	Product(const Product& other) = delete; // Disable copy c'tor
 	const Product& operator=(const Product& other) = delete; // Disable operator=
 	~Product(); // D'tor

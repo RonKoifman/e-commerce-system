@@ -3,11 +3,10 @@
 
 unsigned int Product::uniqueID = 1000; // Generate unique id for each serial number of a product
 
-Product::Product(const char* name, float price, int category, User& seller) // C'tor
-	: name(nullptr), serialNumber(uniqueID++), seller(seller), price(price)
+Product::Product(const char* name, float price, Category category, User& seller) // C'tor
+	: name(nullptr), serialNumber(uniqueID++), seller(seller), price(price), category(category)
 {
 	setName(name);
-	setCategory((Category)category);
 }
 
 Product::~Product() // D'tor

@@ -712,7 +712,7 @@ void ShopSystem::compareUsersCartsAmount() const
 
 	if (numOfUsers < 2)
 	{
-		cout << "There are no users to compare yet.\n" << endl;
+		cout << "There are no two users to compare yet.\n" << endl;
 	}
 	else
 	{

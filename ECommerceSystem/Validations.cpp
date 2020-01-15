@@ -491,11 +491,11 @@ Product* Validations::indexOfCheckoutProductValidation(int& index, Product** car
 	return product;
 }
 
-bool Validations::isSellerExists(const User* seller, User** sellers, int numOfSellers)
+bool Validations::isSellerExists(User* seller, User** sellers, int numOfSellers)
 {
 	for (int i = 0; i < numOfSellers; i++)
 	{
-		if (sellers[i] == seller)
+		if (strcmp(sellers[i]->getUsername(), seller->getUsername()) == 0)
 		{
 			return true; // Seller already exists
 		}

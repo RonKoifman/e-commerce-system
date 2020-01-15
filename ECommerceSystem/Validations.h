@@ -35,7 +35,7 @@ public:
 	bool isProductBelongsToUser(User* user, int productSerialNumber);
 	bool searchProductSelectionValidation(int& selection);
 	Product* indexOfCheckoutProductValidation(int& index, Product** cart, int numOfProductsInCart, Product** chosenProducts, int numOfChosenProducts);
-	bool isSellerExists(const User* seller, User** sellers, int numOfSellers);
+	bool isSellerExists(User* seller, User** sellers, int numOfSellers);
 	void dateValidation(int& day, int& month, int& year);
 	bool areValidUsers(User** users, int numOfUsers, int& indexUser1, int& indexUser2);
 };

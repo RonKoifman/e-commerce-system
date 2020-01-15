@@ -1,7 +1,6 @@
 #ifndef __USER_H
 #define __USER_H
 
-#include "OutResources.h"
 #include "Address.h"
 
 class User

@@ -372,18 +372,8 @@ bool Validations::isProductNameExists(const char* productName, Product** product
 bool Validations::isProductBelongsToUser(User* user, int productSerialNumber)
 {
 	SellerCustomer* sc = dynamic_cast<SellerCustomer*>(user); if (!sc) return false;
-	Product** userProducts = sc->getProducts();
-	int numOfProducts = sc->getNumOfProducts();
 
-	for (int i = 0; i < numOfProducts; i++)
-	{
-		if (userProducts[i]->getSerialNumber() == productSerialNumber)
-		{
-			return true; // Product belongs to the user
-		}
-	}
-
-	return false;
+	return isProductExists(productSerialNumber, sc->getProducts(), sc->getNumOfProducts());
 }
 
 void Validations::priceValidation(float& price)
@@ -395,7 +385,7 @@ void Validations::priceValidation(float& price)
 		cout << "Price: ";
 		cin >> price;
 
-		if (cinTypeCheck() && price >= 0)
+		if (cinTypeCheck() && price > 0)
 		{
 			isValid = true;
 		}

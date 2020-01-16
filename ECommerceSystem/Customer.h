@@ -24,8 +24,8 @@ public:
 	virtual void show(ostream& os) const override;
 	void showCart() const;
 	void showOrders() const;
-	void addProductToCart(Product* newProduct);
-	void addOrder(Checkout* newOrder);
+	void addProductToCart(Product& newProduct);
+	void addOrder(Checkout& newOrder);
 	void initCart();
 	// Getters
 	Product** getCart() const;

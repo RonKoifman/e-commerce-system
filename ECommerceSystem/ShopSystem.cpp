@@ -154,8 +154,8 @@ bool ShopSystem::mainMenu()
 	{
 	case SignupNewSeller:
 	{
-		User* newSeller = readUserData(TypeSeller);
-		*this += *newSeller; // Add new seller to users array
+		User& newSeller = readUserData(TypeSeller);
+		*this += newSeller; // Add new seller to users array
 		if (!sellerMenu(newSeller)) // Repeatedly show seller menu until he asks to exit
 		{
 			return false; // Exit from the application
@@ -164,8 +164,8 @@ bool ShopSystem::mainMenu()
 	}
 	case SignupNewCustomer:
 	{
-		User* newCustomer = readUserData(TypeCustomer);
-		*this += *newCustomer; // Add new customer to users array
+		User& newCustomer = readUserData(TypeCustomer);
+		*this += newCustomer; // Add new customer to users array
 		if (!customerMenu(newCustomer)) // Repeatedly show customer menu until he asks to exit
 		{
 			return false; // Exit from the application
@@ -174,8 +174,8 @@ bool ShopSystem::mainMenu()
 	}
 	case SignupNewSC:
 	{
-		User* newSC = readUserData(TypeSellerCustomer);
-		*this += *newSC; // Add new seller-customer to users array
+		User& newSC = readUserData(TypeSellerCustomer);
+		*this += newSC; // Add new seller-customer to users array
 		if (!sellerCustomerMenu(newSC)) // Repeatedly show seller-customer menu until he asks to exit
 		{
 			return false; // Exit from the application
@@ -189,21 +189,21 @@ bool ShopSystem::mainMenu()
 		{
 			if (typeid(*user) == typeid(Seller)) // Seller
 			{
-				if (!sellerMenu(user)) // Repeatedly show seller menu until he asks to exit
+				if (!sellerMenu(*user)) // Repeatedly show seller menu until he asks to exit
 				{
 					return false; // Exit from the application
 				}
 			}
 			else if (typeid(*user) == typeid(Customer)) // Customer
 			{
-				if (!customerMenu(user)) // Repeatedly show customer menu until he asks to exit
+				if (!customerMenu(*user)) // Repeatedly show customer menu until he asks to exit
 				{
 					return false; // Exit from the application
 				}
 			}
 			else // Seller-Customer
 			{
-				if (!sellerCustomerMenu(user)) // Repeatedly show seller-customer menu until he asks to exit
+				if (!sellerCustomerMenu(*user)) // Repeatedly show seller-customer menu until he asks to exit
 				{
 					return false; // Exit from the application
 				}
@@ -240,9 +240,9 @@ bool ShopSystem::mainMenu()
 	return true; // Go back to login menu
 }
 
-bool ShopSystem::sellerMenu(User* user)
+bool ShopSystem::sellerMenu(User& user)
 {
-	Seller* seller = dynamic_cast<Seller*>(user); if (!seller) return false;
+	Seller* seller = dynamic_cast<Seller*>(&user); if (!seller) return false;
 	Validations validator;
 	Menu menu;
 	int selection;
@@ -261,7 +261,7 @@ bool ShopSystem::sellerMenu(User* user)
 		{
 		case AddNewProduct:
 		{
-			Product* newProduct = readProductData(seller);
+			Product& newProduct = readProductData(*seller);
 			seller->addProduct(newProduct); // Add the new product to its seller
 			this->addProductToStock(newProduct); // Add the new product to the general products array
 			break;
@@ -292,12 +292,12 @@ bool ShopSystem::sellerMenu(User* user)
 		}
 	}
 
-	return sellerMenu(seller); // Repeatedly show menu
+	return sellerMenu(*seller); // Repeatedly show menu
 }
 
-bool ShopSystem::customerMenu(User* user)
+bool ShopSystem::customerMenu(User& user)
 {
-	Customer* customer = dynamic_cast<Customer*>(user); if (!customer) return false;
+	Customer* customer = dynamic_cast<Customer*>(&user); if (!customer) return false;
 	Menu menu;
 	Validations validator;
 	int selection;
@@ -321,7 +321,7 @@ bool ShopSystem::customerMenu(User* user)
 		}
 		case AddProductToCart:
 		{
-			addProductToUserCart(customer);
+			addProductToUserCart(*customer);
 			break;
 		}
 		case ViewCart:
@@ -331,12 +331,12 @@ bool ShopSystem::customerMenu(User* user)
 		}
 		case CheckoutAndPlaceOrder:
 		{
-			checkout(customer);
+			checkout(*customer);
 			break;
 		}
 		case WriteFeedback:
 		{
-			writeFeedback(customer);
+			writeFeedback(*customer);
 			break;
 		}
 		case CustomerPreviousMenu:
@@ -348,12 +348,12 @@ bool ShopSystem::customerMenu(User* user)
 		}
 	}
 
-	return customerMenu(customer); // Repeatedly show menu
+	return customerMenu(*customer); // Repeatedly show menu
 }
 
-bool ShopSystem::sellerCustomerMenu(User* user)
+bool ShopSystem::sellerCustomerMenu(User& user)
 {
-	SellerCustomer* sc = dynamic_cast<SellerCustomer*>(user); if (!sc) return false;
+	SellerCustomer* sc = dynamic_cast<SellerCustomer*>(&user); if (!sc) return false;
 	Menu menu;
 	Validations validator;
 	int selection;
@@ -372,7 +372,7 @@ bool ShopSystem::sellerCustomerMenu(User* user)
 		{
 		case ViewCustomerMenu:
 		{
-			if (!customerMenu(sc)) // Repeatedly show customer menu until he asks to exit
+			if (!customerMenu(*sc)) // Repeatedly show customer menu until he asks to exit
 			{
 				return false; // Exit from the application
 			}
@@ -380,7 +380,7 @@ bool ShopSystem::sellerCustomerMenu(User* user)
 		}
 		case ViewSellerMenu:
 		{
-			if (!sellerMenu(sc)) // Repeatedly show seller menu until he asks to exit
+			if (!sellerMenu(*sc)) // Repeatedly show seller menu until he asks to exit
 			{
 				return false;
 			}
@@ -395,7 +395,7 @@ bool ShopSystem::sellerCustomerMenu(User* user)
 		}
 	}
 
-	return sellerCustomerMenu(sc); // Repeatedly show menu
+	return sellerCustomerMenu(*sc); // Repeatedly show menu
 }
 
 const ShopSystem& ShopSystem::operator+=(User& user)
@@ -415,7 +415,7 @@ const ShopSystem& ShopSystem::operator+=(User& user)
 	return *this;
 }
 
-void ShopSystem::addProductToStock(Product* newProduct)
+void ShopSystem::addProductToStock(Product& newProduct)
 {
 	Product** temp = new Product*[numOfAllProducts + 1]; // Create bigger array to add the new product
 
@@ -424,7 +424,7 @@ void ShopSystem::addProductToStock(Product* newProduct)
 	{
 		temp[i] = allProducts[i];
 	}
-	temp[numOfAllProducts] = newProduct; // Add the new product
+	temp[numOfAllProducts] = &newProduct; // Add the new product
 	numOfAllProducts++;
 
 	delete[] allProducts; // Free the current array
@@ -520,9 +520,9 @@ void ShopSystem::searchProducts() const
 	}
 }
 
-void ShopSystem::addProductToUserCart(User* user) const
+void ShopSystem::addProductToUserCart(User& user) const
 {
-	Customer* customer = dynamic_cast<Customer*>(user); if (!customer) return;
+	Customer* customer = dynamic_cast<Customer*>(&user); if (!customer) return;
 	Validations validator;
 	unsigned int productID = 0;
 
@@ -543,7 +543,7 @@ void ShopSystem::addProductToUserCart(User* user) const
 						if (!validator.isProductExists(allProducts[i]->getSerialNumber(), customer->getCart(), customer->getNumOfProductsInCart()))
 						{
 							// Add the chosen product to customer's cart
-							customer->addProductToCart(allProducts[i]);
+							customer->addProductToCart(*allProducts[i]);
 							cout << "The product '" << allProducts[i]->getName() << "' added to cart successfully!\n" << endl;
 						}
 						else
@@ -562,9 +562,9 @@ void ShopSystem::addProductToUserCart(User* user) const
 	}
 }
 
-void ShopSystem::checkout(User* user) const
+void ShopSystem::checkout(User& user) const
 {
-	Customer* customer = dynamic_cast<Customer*>(user); if (!customer) return;
+	Customer* customer = dynamic_cast<Customer*>(&user); if (!customer) return;
 
 	if (customer->getNumOfProductsInCart() == 0) // No products in cart
 	{
@@ -589,7 +589,7 @@ void ShopSystem::checkout(User* user) const
 			cout << endl << *order;
 			placeOrder(*order);
 			customer->initCart(); // Initialize customer cart
-			customer->addOrder(order); // Add the new order to customer orders
+			customer->addOrder(*order); // Add the new order to customer orders
 		}
 	}
 }
@@ -661,9 +661,9 @@ void ShopSystem::readTextForFeedback(char* text) const
 	} while (!isValid);
 }
 
-void ShopSystem::writeFeedback(User* user) const
+void ShopSystem::writeFeedback(User& user) const
 {
-	Customer* customer = dynamic_cast<Customer*>(user); if (!customer) return;
+	Customer* customer = dynamic_cast<Customer*>(&user); if (!customer) return;
 	Validations validator;
 	int index;
 
@@ -698,7 +698,7 @@ void ShopSystem::writeFeedback(User* user) const
 				char text[MAX_FEEDBACK_LENGTH];
 
 				readTextForFeedback(text);
-				seller->addFeedback(new Feedback(*user, *chosenProuct, readDate(), text)); // Add the feedback to its seller
+				seller->addFeedback(*new Feedback(user, *chosenProuct, readDate(), text)); // Add the feedback to its seller
 				cout << endl << "Your feedback to " << chosenProuct->getSeller().getUsername() << " added successfully!\n" << endl;
 			}
 		}
@@ -741,7 +741,7 @@ void ShopSystem::compareUsersCartsAmount() const
 	}
 }
 
-User* ShopSystem::readUserData(UserType type) const
+User& ShopSystem::readUserData(UserType type) const
 {
 	Validations validator;
 	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
@@ -762,19 +762,19 @@ User* ShopSystem::readUserData(UserType type) const
 
 	if (type == TypeSellerCustomer) // Seller-Customer
 	{
-		return new SellerCustomer(username, password, Address(country, city, street, buildingNumber));
+		return *new SellerCustomer(username, password, Address(country, city, street, buildingNumber));
 	}
 	else if (type == TypeSeller) // Seller
 	{
-		return new Seller(username, password, Address(country, city, street, buildingNumber));
+		return *new Seller(username, password, Address(country, city, street, buildingNumber));
 	}
 	else // Customer
 	{
-		return new Customer(username, password, Address(country, city, street, buildingNumber));
+		return *new Customer(username, password, Address(country, city, street, buildingNumber));
 	}
 }
 
-Product* ShopSystem::readProductData(User* user) const
+Product& ShopSystem::readProductData(User& user) const
 {
 	Validations validator;
 	char productName[MAX_PRODUCT_NAME_LENGTH];
@@ -787,5 +787,5 @@ Product* ShopSystem::readProductData(User* user) const
 	validator.categoryValidation(category);
 
 	cout << endl << "Product added successfully!\n" << endl;
-	return new Product(productName, price, (Product::Category)category, *user);
+	return *new Product(productName, price, (Product::Category)category, user);
 }

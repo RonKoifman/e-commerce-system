@@ -1,9 +1,8 @@
 #include "ShopSystem.h"
 
-ShopSystem::ShopSystem(const char* name) // C'tor
-	: name(nullptr), users(nullptr), allProducts(nullptr), numOfUsers(0), numOfAllProducts(0)
+ShopSystem::ShopSystem(const string& name) // C'tor
+	: name(name), users(nullptr), allProducts(nullptr), numOfUsers(0), numOfAllProducts(0)
 {
-	setName(name);
 }
 
 ShopSystem::~ShopSystem() // D'tor
@@ -17,13 +16,12 @@ ShopSystem::~ShopSystem() // D'tor
 	delete[] allProducts; // The pointers already released at each of their seller d'tor
 }
 
-void ShopSystem::setName(const char* name)
+void ShopSystem::setName(const string& name)
 {
-	delete[] this->name;
-	this->name = strdup(name);
+	this->name = name;
 }
 
-const char* ShopSystem::getName() const
+const string& ShopSystem::getName() const
 {
 	return name;
 }
@@ -434,7 +432,7 @@ void ShopSystem::addProductToStock(Product& newProduct)
 User* ShopSystem::loginUser() const
 {
 	Validations validator;
-	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
+	string username, password;
 	bool isValidUsername, isValidPassword;
 
 	cout << "Please login with your credentials.\n" << endl;
@@ -453,9 +451,9 @@ User* ShopSystem::loginUser() const
 	// Check if the entered username and password match to registered user
 	for (int i = 0; i < numOfUsers; i++)
 	{
-		if (strcmp(users[i]->getUsername(), username) == 0)
+		if (users[i]->getUsername().compare(username) == 0)
 		{
-			if (strcmp(users[i]->getPassword(), password) == 0)
+			if (users[i]->getPassword().compare(password) == 0)
 			{
 				cout << "Logged in successfully!\n" << endl;
 				cout << "Welcome back " << users[i]->getUsername() << "!\n" << endl;
@@ -471,7 +469,7 @@ User* ShopSystem::loginUser() const
 void ShopSystem::searchProducts() const
 {
 	Validations validator;
-	char productName[MAX_PRODUCT_NAME_LENGTH];
+	string productName;
 	int selection, numOfMatchingProducts = 0;
 	bool isFound = false;
 
@@ -496,7 +494,7 @@ void ShopSystem::searchProducts() const
 					// Search for matching products in the general products array
 					for (int i = 0; i < numOfAllProducts; i++)
 					{
-						if (strcmp(productName, allProducts[i]->getName()) == 0) // Match
+						if (allProducts[i]->getName().compare(productName) == 0) // Match
 						{
 							if (!isFound)
 							{
@@ -644,7 +642,7 @@ Date ShopSystem::readDate() const
 	return Date(day, month, year);
 }
 
-void ShopSystem::readTextForFeedback(char* text) const
+void ShopSystem::readTextForFeedback(string& text) const
 {
 	Validations validator;
 	bool isValid;
@@ -695,7 +693,7 @@ void ShopSystem::writeFeedback(User& user) const
 			{
 				Product* chosenProuct = selectedOrder->getChosenProducts()[index - 1];
 				Seller* seller = dynamic_cast<Seller*>(&chosenProuct->getSeller()); if (!seller) return;
-				char text[MAX_FEEDBACK_LENGTH];
+				string text;
 
 				readTextForFeedback(text);
 				seller->addFeedback(*new Feedback(user, *chosenProuct, readDate(), text)); // Add the feedback to its seller
@@ -744,8 +742,8 @@ void ShopSystem::compareUsersCartsAmount() const
 User& ShopSystem::readUserData(UserType type) const
 {
 	Validations validator;
-	char username[MAX_CHARACTERS], password[MAX_CHARACTERS];
-	char country[MAX_CHARACTERS], city[MAX_CHARACTERS], street[MAX_CHARACTERS];
+	string username, password;
+	string country, city, street;
 	int buildingNumber;
 
 	cout << "Thanks for joining in!"<< endl;
@@ -777,7 +775,7 @@ User& ShopSystem::readUserData(UserType type) const
 Product& ShopSystem::readProductData(User& user) const
 {
 	Validations validator;
-	char productName[MAX_PRODUCT_NAME_LENGTH];
+	string productName;
 	float price;
 	int category;
 

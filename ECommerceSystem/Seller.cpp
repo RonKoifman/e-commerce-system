@@ -1,7 +1,7 @@
 #include "Product.h"
 #include "Seller.h"
 
-Seller::Seller(const char* username, const char* password, const Address& address) // C'tor
+Seller::Seller(const string& username, const string& password, const Address& address) // C'tor
 	: User(username, password, address), products(nullptr), feedbacks(nullptr), numOfProducts(0), numOfFeedbacks(0)
 {
 }

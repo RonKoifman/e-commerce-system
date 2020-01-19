@@ -13,24 +13,23 @@ public:
 
 private:
 	static unsigned int uniqueID;
-	char* name;
+	string name;
 	float price;
 	Category category;
 	User& seller;
 	const unsigned int serialNumber;
 
 public:
-	Product(const char* name, float price, Category category, User& seller); // C'tor
+	Product(const string& name, float price, Category category, User& seller); // C'tor
 	Product(const Product& other) = delete; // Disable copy c'tor
 	const Product& operator=(const Product& other) = delete; // Disable operator=
-	~Product(); // D'tor
 	void showCategory() const;
 	// Setters
-	void setName(const char* name);
+	void setName(const string& name);
 	void setPrice(float price);
 	void setCategory(Category category);
 	// Getters
-	const char* getName() const;
+	const string& getName() const;
 	float getPrice() const;
 	Category getCategory() const;
 	User& getSeller() const;

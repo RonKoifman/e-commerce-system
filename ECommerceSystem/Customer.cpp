@@ -1,7 +1,7 @@
 #include "Checkout.h"
 #include "Customer.h"
 
-Customer::Customer(const char* username, const char* password, const Address& address) // C'tor
+Customer::Customer(const string& username, const string& password, const Address& address) // C'tor
 	: User(username, password, address), cart(nullptr), orders(nullptr), numOfProductsInCart(0), numOfOrders(0)
 {
 }

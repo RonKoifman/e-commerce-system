@@ -2,10 +2,10 @@
 #define __VALIDATIONS_H
 
 // Consts declaration
-const int MAX_CHARACTERS = 22;
-const int MAX_PRODUCT_NAME_LENGTH = 32;
+const int MAX_CHARACTERS = 20;
+const int MAX_PRODUCT_NAME_LENGTH = 30;
 const int MIN_CHARACTERS_PASSWORD = 6;
-const int MAX_FEEDBACK_LENGTH = 92;
+const int MAX_FEEDBACK_LENGTH = 90;
 const int MAX_CATEGORIES = 4;
 const int CURRENT_YEAR = 2020;
 
@@ -13,21 +13,21 @@ class Validations
 {
 public:
 	void cleanBuffer();
-	bool getInput(char* str, const int maxLen);
+	bool getInput(string& str, const int maxLen);
 	bool cinTypeCheck();
-	void usernameValidation(char* username, User** users, int numOfUsers);
-	bool checkUniqueUsername(const char* username, User** users, int numOfUsers);
-	void passwordValidation(char* password);
-	bool checkLettersAndDigits(const char* str);
-	bool checkSpecialCharacters(const char* str);
-	bool checkLettersAndSpace(const char* str);
-	bool checkLettersDigitsAndSpace(const char* str);
-	void countryValidation(char* country);
-	void cityValidation(char* city);
-	void streetValidation(char* street);
+	void usernameValidation(string& username, User** users, int numOfUsers);
+	bool checkUniqueUsername(const string& username, User** users, int numOfUsers);
+	void passwordValidation(string& password);
+	bool checkLettersAndDigits(const string& str);
+	bool checkSpecialCharacters(const string& str);
+	bool checkLettersAndSpace(const string& str);
+	bool checkLettersDigitsAndSpace(const string& str);
+	void countryValidation(string& country);
+	void cityValidation(string& city);
+	void streetValidation(string& street);
 	void buildingNumberValidation(int& buildingNumber);
-	void productNameValidation(char* productName, User& user);
-	bool isProductNameExists(const char* productName, Product** products, int numOfProducts);
+	void productNameValidation(string& productName, User& user);
+	bool isProductNameExists(const string& productName, Product** products, int numOfProducts);
 	void priceValidation(float& price);
 	void categoryValidation(int& category);
 	bool productSerialNumberValidation(unsigned int& productID, int numOfAllProducts);

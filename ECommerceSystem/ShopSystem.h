@@ -8,7 +8,7 @@
 class ShopSystem
 {
 private:
-	char* name;
+	string name;
 	User** users;
 	int numOfUsers;
 	Product** allProducts;
@@ -44,12 +44,12 @@ public:
 		AllProducts = 1, SpecificProductName = 2
 	};
 
-	ShopSystem(const char* name); // C'tor
+	ShopSystem(const string& name); // C'tor
 	ShopSystem(const ShopSystem& other) = delete; // Disable copy c'tor
 	const ShopSystem& operator=(const ShopSystem& other) = delete; // Disable operator=
 	~ShopSystem(); // D'tor
 	const ShopSystem& operator+=(User& user);
-	void setName(const char* name);
+	void setName(const string& name);
 	void showCustomers() const;
 	void showSellers() const;
 	void showSellerCustomers() const;
@@ -61,7 +61,7 @@ public:
 	User& readUserData(UserType type) const;
 	Product& readProductData(User& user) const;
 	Date readDate() const;
-	void readTextForFeedback(char* text) const;
+	void readTextForFeedback(string& text) const;
 	User* loginUser() const;
 	void searchProducts() const;
 	void addProductToStock(Product& newProduct);
@@ -71,7 +71,7 @@ public:
 	void writeFeedback(User& user) const;
 	void compareUsersCartsAmount() const;
 	// Getters
-	const char* getName() const;
+	const string& getName() const;
 	User** getUsers() const;
 	int getNumOfUsers() const;
 	Product** getAllProducts() const;

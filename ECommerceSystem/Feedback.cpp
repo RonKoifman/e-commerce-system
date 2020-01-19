@@ -1,14 +1,8 @@
 #include "Feedback.h"
 
-Feedback::Feedback(User& customer, Product& product, const Date& date, const char* text) // C'tor
-	: text(nullptr), date(date), customer(customer), product(product)
+Feedback::Feedback(User& customer, Product& product, const Date& date, const string& text) // C'tor
+	: text(text), date(date), customer(customer), product(product)
 {
-	setText(text);
-}
-
-Feedback::~Feedback() // D'tor
-{
-	delete[] text;
 }
 
 void Feedback::setDate(const Date& date)
@@ -16,10 +10,9 @@ void Feedback::setDate(const Date& date)
 	this->date = date;
 }
 
-void Feedback::setText(const char* text)
+void Feedback::setText(const string& text)
 {
-	delete[] this->text;
-	this->text = strdup(text);
+	this->text = text;
 }
 
 User& Feedback::getCustomer() const
@@ -37,7 +30,7 @@ const Date& Feedback::getDate() const
 	return date;
 }
 
-const char* Feedback::getText() const
+const string& Feedback::getText() const
 {
 	return text;
 }

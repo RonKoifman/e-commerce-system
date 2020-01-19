@@ -1,28 +1,22 @@
 #include "User.h"
 
-User::User(const char* username, const char* password, const Address& address)
-	: username(nullptr), password(nullptr), address(address)
+User::User(const string& username, const string& password, const Address& address)
+	: username(username), password(password), address(address)
 {
-	setUsername(username);
-	setPassword(password);
 }
 
 User::~User()
 {
-	delete[] username;
-	delete[] password;
 }
 
-void User::setUsername(const char* username)
+void User::setUsername(const string& username)
 {
-	delete[] this->username;
-	this->username = strdup(username);
+	this->username = username;
 }
 
-void User::setPassword(const char* password)
+void User::setPassword(const string& password)
 {
-	delete[] this->password;
-	this->password = strdup(password);
+	this->password = password;
 }
 
 void User::setAddress(const Address& address)
@@ -30,12 +24,12 @@ void User::setAddress(const Address& address)
 	this->address = address;
 }
 
-const char* User::getUsername() const
+const string& User::getUsername() const
 {
 	return username;
 }
 
-const char* User::getPassword() const
+const string& User::getPassword() const
 {
 	return password;
 }

@@ -1,55 +1,23 @@
 #include "Address.h"
 
-Address::Address(const char* country, const char* city, const char* street, int buildingNumber) // C'tor
-	: country(nullptr), city(nullptr), street(nullptr), buildingNumber(buildingNumber)
+Address::Address(const string& country, const string& city, const string& street, int buildingNumber) // C'tor
+	: country(country), city(city), street(street), buildingNumber(buildingNumber)
 {
-	setCountry(country);
-	setCity(city);
-	setStreet(street);
 }
 
-Address::Address(const Address& other) // Copy C'tor
-	: country(nullptr), city(nullptr), street(nullptr)
+void Address::setCountry(const string& country)
 {
-	*this = other;
+	this->country = country;
 }
 
-Address::~Address() // D'tor
+void Address::setCity(const string& city)
 {
-	delete[] country;
-	delete[] city;
-	delete[] street;
+	this->city = city;
 }
 
-const Address& Address::operator=(const Address& other)
+void Address::setStreet(const string& street)
 {
-	if (this != &other)
-	{
-		setCountry(other.country);
-		setCity(other.city);
-		setStreet(other.street);
-		setBuildingNumber(other.buildingNumber);
-	}
-
-	return *this;
-}
-
-void Address::setCountry(const char* country)
-{
-	delete[] this->country;
-	this->country = strdup(country);
-}
-
-void Address::setCity(const char* city)
-{
-	delete[] this->city;
-	this->city = strdup(city);
-}
-
-void Address::setStreet(const char* street)
-{
-	delete[] this->street;
-	this->street = strdup(street);
+	this->street = street;
 }
 
 void Address::setBuildingNumber(int buildingNumber)
@@ -57,17 +25,17 @@ void Address::setBuildingNumber(int buildingNumber)
 	this->buildingNumber = buildingNumber;
 }
 
-const char* Address::getCountry() const
+const string& Address::getCountry() const
 {
 	return country;
 }
 
-const char* Address::getCity() const
+const string& Address::getCity() const
 {
 	return city;
 }
 
-const char* Address::getStreet() const
+const string& Address::getStreet() const
 {
 	return street;
 }

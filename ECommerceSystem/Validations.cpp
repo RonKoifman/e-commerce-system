@@ -11,24 +11,13 @@ void Validations::cleanBuffer()
 	} while (ch != EOF && ch != '\n');
 }
 
-bool Validations::getInput(char* str, const int maxLen)
+bool Validations::getInput(string& str, const int maxLen)
 {
-	int len = 0;
-	char ch = ' ';
-
-	// Get input from buffer
-	while (len < maxLen - 1 && ch != '\n')
-	{
-		ch = getchar();
-		if (ch != '\n')
-		{
-			str[len++] = ch;
-		}
-	}
-	str[len] = '\0';
+	getline(cin, str);
+	int len = str.length();
 
 	// Invalid string length or an empty string
-	if (len == maxLen - 1 || len == 0)
+	if (len > maxLen || len == 0)
 	{
 		if (len > 0)
 		{
@@ -52,7 +41,7 @@ bool Validations::cinTypeCheck()
 	return true; // Valid type
 }
 
-bool Validations::checkLettersAndDigits(const char* str)
+bool Validations::checkLettersAndDigits(const string& str)
 {
 	int i = 0;
 
@@ -68,7 +57,7 @@ bool Validations::checkLettersAndDigits(const char* str)
 	return true;
 }
 
-bool Validations::checkLettersDigitsAndSpace(const char* str)
+bool Validations::checkLettersDigitsAndSpace(const string& str)
 {
 	int i = 0;
 
@@ -96,7 +85,7 @@ bool Validations::checkLettersDigitsAndSpace(const char* str)
 	return true;
 }
 
-bool Validations::checkSpecialCharacters(const char* str)
+bool Validations::checkSpecialCharacters(const string& str)
 {
 	int i = 0;
 
@@ -112,7 +101,7 @@ bool Validations::checkSpecialCharacters(const char* str)
 	return true;
 }
 
-bool Validations::checkLettersAndSpace(const char* str)
+bool Validations::checkLettersAndSpace(const string& str)
 {
 	int i = 0;
 
@@ -140,7 +129,7 @@ bool Validations::checkLettersAndSpace(const char* str)
 	return true;
 }
 
-void Validations::usernameValidation(char* username, User** users, int numOfUsers)
+void Validations::usernameValidation(string& username, User** users, int numOfUsers)
 {
 	bool isValid = false;
 
@@ -167,7 +156,7 @@ void Validations::usernameValidation(char* username, User** users, int numOfUser
 	}
 }
 
-void Validations::passwordValidation(char* password)
+void Validations::passwordValidation(string& password)
 {
 	bool isValid = false;
 
@@ -177,7 +166,7 @@ void Validations::passwordValidation(char* password)
 
 		if (getInput(password, MAX_CHARACTERS))
 		{
-			if (strlen(password) >= MIN_CHARACTERS_PASSWORD) 
+			if (password.length() >= MIN_CHARACTERS_PASSWORD) 
 			{
 				if (checkSpecialCharacters(password))
 				{
@@ -196,7 +185,7 @@ void Validations::passwordValidation(char* password)
 	}
 }
 
-void Validations::countryValidation(char* country)
+void Validations::countryValidation(string& country)
 {
 	bool isValid = false;
 
@@ -222,7 +211,7 @@ void Validations::countryValidation(char* country)
 	}
 }
 
-void Validations::cityValidation(char* city)
+void Validations::cityValidation(string& city)
 {
 	bool isValid = false;
 
@@ -248,7 +237,7 @@ void Validations::cityValidation(char* city)
 	}
 }
 
-void Validations::streetValidation(char* street)
+void Validations::streetValidation(string& street)
 {
 	bool isValid = false;
 
@@ -294,11 +283,11 @@ void Validations::buildingNumberValidation(int& buildingNumber)
 	}
 }
 
-bool Validations::checkUniqueUsername(const char* username, User** users, int numOfUsers)
+bool Validations::checkUniqueUsername(const string& username, User** users, int numOfUsers)
 {
 	for (int i = 0; i < numOfUsers; i++) // Search through all users
 	{
-		if (strcmp(users[i]->getUsername(), username) == 0) // Username taken
+		if (users[i]->getUsername().compare(username) == 0) // Username taken
 		{
 			cout << "Username taken! Please choose a different username." << endl;
 			return false;
@@ -308,7 +297,7 @@ bool Validations::checkUniqueUsername(const char* username, User** users, int nu
 	return true;
 }
 
-void Validations::productNameValidation(char* productName, User& user)
+void Validations::productNameValidation(string& productName, User& user)
 {
 	Seller* seller = dynamic_cast<Seller*>(&user); if (!seller) return;
 	bool isValid = false;
@@ -356,11 +345,11 @@ bool Validations::isProductExists(int productSerialNumber, Product** products, i
 	return false;
 }
 
-bool Validations::isProductNameExists(const char* productName, Product** products, int numOfProducts)
+bool Validations::isProductNameExists(const string& productName, Product** products, int numOfProducts)
 {
 	for (int i = 0; i < numOfProducts; i++)
 	{
-		if (strcmp(productName, products[i]->getName()) == 0)
+		if (products[i]->getName().compare(productName) == 0)
 		{
 			return true; // Product name already exists
 		}
@@ -495,7 +484,7 @@ bool Validations::isSellerExists(const User& seller, User** sellers, int numOfSe
 {
 	for (int i = 0; i < numOfSellers; i++)
 	{
-		if (strcmp(sellers[i]->getUsername(), seller.getUsername()) == 0)
+		if (sellers[i]->getUsername().compare(seller.getUsername()) == 0)
 		{
 			return true; // Seller already exists
 		}
@@ -536,7 +525,7 @@ void Validations::dateValidation(int& day, int& month, int& year)
 
 bool Validations::areValidUsers(User** users, int numOfUsers, int& indexUser1, int& indexUser2)
 {
-	char username1[MAX_CHARACTERS], username2[MAX_CHARACTERS];
+	string username1, username2;
 	int usersFound = 0;
 	bool isUsername1Valid, isUsername2Valid;
 
@@ -555,12 +544,12 @@ bool Validations::areValidUsers(User** users, int numOfUsers, int& indexUser1, i
 
 	for (int i = 0; i < numOfUsers && usersFound < 2; i++)
 	{
-		if (strcmp(username1, users[i]->getUsername()) == 0)
+		if (users[i]->getUsername().compare(username1) == 0)
 		{
 			indexUser1 = i;
 			usersFound++;
 		}
-		if (strcmp(username2, users[i]->getUsername()) == 0)
+		if (users[i]->getUsername().compare(username2) == 0)
 		{
 			indexUser2 = i;
 			usersFound++;

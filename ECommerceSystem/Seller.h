@@ -16,7 +16,7 @@ protected:
 	int numOfProducts;
 
 public:
-	Seller(const char* username, const char* password, const Address& address); // C'tor
+	Seller(const string& username, const string& password, const Address& address); // C'tor
 	Seller(const Seller& other) = delete; // Disable copy c'tor
 	const Seller& operator=(const Seller& other) = delete; // Disable operator=
 	virtual ~Seller(); // D'tor

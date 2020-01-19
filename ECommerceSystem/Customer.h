@@ -15,7 +15,7 @@ protected:
 	int numOfOrders;
 
 public:
-	Customer(const char* username, const char* password, const Address& address); // C'tor
+	Customer(const string& username, const string& password, const Address& address); // C'tor
 	Customer(const Customer& other) = delete; // Disable copy c'tor
 	const Customer& operator=(const Customer& other) = delete; // Disable operator=
 	virtual ~Customer(); // D'tor

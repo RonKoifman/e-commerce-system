@@ -11,21 +11,20 @@ private:
 	User& customer;
 	Product& product;
 	Date date;
-	char* text;
+	string text;
 
 public:
-	Feedback(User& customer, Product& product, const Date& date, const char* text); // C'tor
+	Feedback(User& customer, Product& product, const Date& date, const string& text); // C'tor
 	Feedback(const Feedback& other) = delete; // Disable copy c'tor
 	const Feedback& operator=(const Feedback& other) = delete; // Disable operator=
-	~Feedback(); // D'tor
 	// Setters
 	void setDate(const Date& date);
-	void setText(const char* text);
+	void setText(const string& text);
 	// Getters
 	User& getCustomer() const;
 	Product& getProduct() const;
 	const Date& getDate() const;
-	const char* getText() const;
+	const string& getText() const;
 	// Friend functions
 	friend ostream& operator<<(ostream& os, const Feedback& feedback);
 };

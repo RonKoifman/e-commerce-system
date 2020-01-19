@@ -6,25 +6,22 @@
 class Address 
 {
 private:
-	char* country;
-	char* city;
-	char* street;
+	string country;
+	string city;
+	string street;
 	int buildingNumber;
 
 public:
-	Address(const char* country, const char* city, const char* street, int buildingNumber); // C'tor
-	Address(const Address& other); // Copy C'tor
-	~Address(); // D'tor
-	const Address& operator=(const Address& other);
+	Address(const string& country, const string& city, const string& street, int buildingNumber); // C'tor
 	// Setters
-	void setCountry(const char* country);
-	void setCity(const char* city);
-	void setStreet(const char* street);
+	void setCountry(const string& country);
+	void setCity(const string& city);
+	void setStreet(const string& street);
 	void setBuildingNumber(int buildingNumber);
 	// Getters
-	const char* getCountry() const;
-	const char* getCity() const;
-	const char* getStreet() const;
+	const string& getCountry() const;
+	const string& getCity() const;
+	const string& getStreet() const;
 	int getBuildingNumber() const;
 	// Friend functions
 	friend ostream& operator<<(ostream& os, const Address& address);

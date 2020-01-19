@@ -8,13 +8,10 @@
 
 class Product;
 
-
-
 class Seller : virtual public User
 {
 protected:
-	Array<Feedback> feedbacks;
-	//int numOfFeedbacks;
+	Array<Feedback*> feedbacks;
 	Product** products;
 	int numOfProducts;
 
@@ -27,11 +24,9 @@ public:
 	void showFeedbacks() const;
 	void showProducts() const;
 	void addProduct(Product& newProduct);
-	//void addFeedback(Feedback& newFeedback);
-
 	// Getters
-	Array<Feedback>& getFeedbacks();
-	const Array<Feedback>& getFeedbacks() const;
+	Array<Feedback*>& getFeedbacks();
+	const Array<Feedback*>& getFeedbacks() const;
 	int getNumOfFeedbacks() const;
 	Product** getProducts() const;
 	int getNumOfProducts() const;

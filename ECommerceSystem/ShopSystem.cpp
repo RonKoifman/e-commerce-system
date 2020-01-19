@@ -696,7 +696,9 @@ void ShopSystem::writeFeedback(User& user) const
 				string text;
 
 				readTextForFeedback(text);
-				seller->getFeedbacks() += *new Feedback(user, *chosenProuct, readDate(), text); // Add the feedback to its seller
+				Feedback* newFeedback = new Feedback(user, *chosenProuct, readDate(), text);
+
+				seller->getFeedbacks() += newFeedback; // Add the feedback to its seller
 				cout << endl << "Your feedback to " << chosenProuct->getSeller().getUsername() << " added successfully!\n" << endl;
 			}
 		}

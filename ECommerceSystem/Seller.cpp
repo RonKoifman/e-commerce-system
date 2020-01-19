@@ -14,19 +14,18 @@ Seller::~Seller() // D'tor
 	}
 	for (int i = 0; i < feedbacks.getSize(); i++)
 	{
-		delete &feedbacks[i];
+		delete feedbacks[i];
 	}
 
 	delete[] products;
-	//delete[] feedbacks;
 }
 
-Array<Feedback>& Seller::getFeedbacks()
+Array<Feedback*>& Seller::getFeedbacks()
 {
 	return feedbacks;
 }
 
-const Array<Feedback>& Seller::getFeedbacks() const
+const Array<Feedback*>& Seller::getFeedbacks() const
 {
 	return feedbacks;
 }
@@ -51,21 +50,6 @@ void Seller::show(ostream& os) const
 void Seller::showFeedbacks() const
 {
 	cout << feedbacks;
-	/*cout << "Feedbacks: ";
-
-	if (numOfFeedbacks == 0)
-	{
-		cout << "None." << endl;
-	}
-	else
-	{
-		cout << endl;
-		for (int i = 0; i < numOfFeedbacks; i++)
-		{
-			cout << i + 1 << ".";
-			cout << *feedbacks[i] << endl;
-		}
-	}*/
 }
 
 void Seller::showProducts() const
@@ -74,7 +58,7 @@ void Seller::showProducts() const
 
 	if (numOfProducts == 0)
 	{
-		cout << "None." << endl;
+		cout << "none." << endl;
 	}
 	else
 	{
@@ -107,8 +91,3 @@ void Seller::addProduct(Product& newProduct)
 	delete[] products; // Free the current array
 	products = temp; // Update products array to temp
 }
-
-//void Seller::addFeedback(Feedback& newFeedback)
-//{
-//	feedbacks += newFeedback;
-//}

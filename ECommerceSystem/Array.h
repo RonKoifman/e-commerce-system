@@ -1,41 +1,35 @@
-#pragma once
-
+#ifndef __ARRAY_H
+#define __ARRAY
 
 #include "OutResources.h"
-#include <typeinfo>
 
-/***************************************************************************
-
-This template Array class types must have a "<<" operator.
-(We are using it only for feedback class and it has the relevant operator.)
-
-****************************************************************************/
+// This template Array class accepts a pointer type which its class must has an operator<<
 
 template<class T>
 class Array
 {
+private:
+	T* arr;
 	int size;
-	T** arr;
-public:
-	Array() { arr = nullptr; size = 0; }
-	Array(const Array& other) = delete;
-	T& operator[](int index) { return *arr[index]; }
-	const T& operator[](int index) const { return arr[index]; }
-	const Array& operator+=(T& newVal);
-	
-	//getters
-	const int getSize() const { return size; }
 
+public:
+	Array() : arr(nullptr), size(0) {} // C'tor
+	~Array() { delete[] arr; } // D'tor
+	Array(const Array& other) = delete; // Disable copy c'tor
+	const Array& operator=(const Array& other) = delete; // Disable operator=
+	T& operator[](int index) { return arr[index]; }
+	const Array& operator+=(T& newVal);
+	// Getters
+	T* getArr() const { return arr; }
+	int getSize() const { return size; }
+
+	// Friend functions
 	friend ostream& operator<<(ostream& os, const Array& arr)
 	{
 		os << typeid(**arr.arr).name() + 6 << "s: ";
-
-		/*for (int i = 0; i < arr.size; i++)
-			os << arr.arr[i];*/
-
 		if (arr.size == 0)
 		{
-			os << "None." << endl;
+			os << "none." << endl;
 		}
 		else
 		{
@@ -46,7 +40,6 @@ public:
 				os << *arr.arr[i] << endl;
 			}
 		}
-
 		return os;
 	}
 };
@@ -54,17 +47,19 @@ public:
 template<class T>
 const Array<T>& Array<T>::operator+=(T& newVal)
 {
-	T** temp = new T*[size + 1]; // Create bigger array to add the new user
+	T* temp = new T[size + 1]; // Create bigger array to add the new value
 
 	// Move the pointers from the current array to temp
 	for (int i = 0; i < size; i++)
 	{
 		temp[i] = arr[i];
 	}
-	temp[size] = &newVal; // Add the new user
+	temp[size] = newVal; // Add the new value
 	size++;
 
 	delete[] arr; // Free the current array
-	arr = temp; // Update users array to temp
+	arr = temp; // Update array to temp
 	return *this;
 }
+
+#endif // __ARRAY_H

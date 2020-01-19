@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 #endif // __OUT_RESOURCES_H

@@ -2,7 +2,7 @@
 #include "Seller.h"
 
 Seller::Seller(const string& username, const string& password, const Address& address) // C'tor
-	: User(username, password, address), products(nullptr), feedbacks(nullptr), numOfProducts(0)
+	: User(username, password, address), products(nullptr), numOfProducts(0)
 {
 }
 

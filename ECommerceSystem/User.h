@@ -12,7 +12,7 @@ protected:
 
 public:
 	User(const string& username, const string& password, const Address& address); // C'tor
-	virtual ~User(); // D'tor
+	virtual ~User() {}; // D'tor
 	User(const User& other) = delete; // Disable copy c'tor
 	const User& operator=(const User& other) = delete; // Disable operator=
 	virtual void show(ostream& os) const = 0; // Make user class an abstract class

@@ -8,14 +8,10 @@
 
 class Product;
 
-
 class Seller : virtual public User
 {
 protected:
-	Array<Feedback> feedbacks;
-	//int numOfFeedbacks;
-	/*Product** products;
-	int numOfProducts;*/
+	Array<Feedback*> feedbacks;
 	vector<Product*> products;
 
 public:
@@ -26,15 +22,11 @@ public:
 	virtual void show(ostream& os) const override;
 	void showFeedbacks() const;
 	void showProducts() const;
-	//void addProduct(Product& newProduct);
-	//void addFeedback(Feedback& newFeedback);
-
 	// Getters
-	Array<Feedback*>& getFeedbacks();
 	const Array<Feedback*>& getFeedbacks() const;
-	int getNumOfFeedbacks() const;
-	vector<Product*> getProducts() const;
-	int getNumOfProducts() const;
+	Array<Feedback*>& getFeedbacks();
+	const vector<Product*>& getProducts() const;
+	vector<Product*>& getProducts();
 };
 
 #endif // __SELLER_H

@@ -9,10 +9,8 @@ class ShopSystem
 {
 private:
 	string name;
-	User** users;
-	int numOfUsers;
-	Product** allProducts;
-	int numOfAllProducts;
+	vector<User*> users;
+	vector<Product*> allProducts;
 
 public:
 	// Enum declarations
@@ -72,10 +70,8 @@ public:
 	void compareUsersCartsAmount() const;
 	// Getters
 	const string& getName() const;
-	User** getUsers() const;
-	int getNumOfUsers() const;
-	Product** getAllProducts() const;
-	int getNumOfAllProducts() const;
+	vector<User*> getUsers() const;
+	vector<Product*> getAllProducts() const;
 };
 
 #endif // __SHOP_SYSTEM_H

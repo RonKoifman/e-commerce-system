@@ -1,16 +1,16 @@
 #ifndef __ARRAY_H
-#define __ARRAY
+#define __ARRAY_H
 
 #include "OutResources.h"
 
-// This template Array class accepts a pointer type which its class must has an operator<<
+// This template Array class accepts a pointer type which its class must have an operator<<
 
 template<class T>
 class Array
 {
 private:
 	T* arr;
-	int size;
+	unsigned int size;
 
 public:
 	Array() : arr(nullptr), size(0) {} // C'tor
@@ -21,7 +21,7 @@ public:
 	const Array& operator+=(T& newVal);
 	// Getters
 	T* getArr() const { return arr; }
-	int getSize() const { return size; }
+	unsigned int getSize() const { return size; }
 
 	// Friend functions
 	friend ostream& operator<<(ostream& os, const Array& arr)
@@ -34,7 +34,7 @@ public:
 		else
 		{
 			os << endl;
-			for (int i = 0; i < arr.size; i++)
+			for (unsigned int i = 0; i < arr.size; i++)
 			{
 				os << i + 1 << ".";
 				os << *arr.arr[i] << endl;
@@ -50,7 +50,7 @@ const Array<T>& Array<T>::operator+=(T& newVal)
 	T* temp = new T[size + 1]; // Create bigger array to add the new value
 
 	// Move the pointers from the current array to temp
-	for (int i = 0; i < size; i++)
+	for (unsigned int i = 0; i < size; i++)
 	{
 		temp[i] = arr[i];
 	}

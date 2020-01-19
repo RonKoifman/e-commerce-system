@@ -5,10 +5,6 @@ User::User(const string& username, const string& password, const Address& addres
 {
 }
 
-User::~User()
-{
-}
-
 void User::setUsername(const string& username)
 {
 	this->username = username;

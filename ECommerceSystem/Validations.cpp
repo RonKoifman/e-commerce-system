@@ -129,7 +129,7 @@ bool Validations::checkLettersAndSpace(const string& str)
 	return true;
 }
 
-void Validations::usernameValidation(string& username, vector<User*> users, int numOfUsers)
+void Validations::usernameValidation(string& username, vector<User*> users)
 {
 	bool isValid = false;
 
@@ -142,7 +142,7 @@ void Validations::usernameValidation(string& username, vector<User*> users, int 
 		{
 			if (checkLettersAndDigits(username))
 			{
-				isValid = checkUniqueUsername(username, users, numOfUsers);
+				isValid = checkUniqueUsername(username, users);
 			}
 			else
 			{
@@ -283,9 +283,9 @@ void Validations::buildingNumberValidation(int& buildingNumber)
 	}
 }
 
-bool Validations::checkUniqueUsername(const string& username, vector<User*> users, int numOfUsers)
+bool Validations::checkUniqueUsername(const string& username, vector<User*> users)
 {
-	for (int i = 0; i < numOfUsers; i++) // Search through all users
+	for (unsigned int i = 0; i < users.size(); i++) // Search through all users
 	{
 		if (users[i]->getUsername().compare(username) == 0) // Username taken
 		{
@@ -311,7 +311,7 @@ void Validations::productNameValidation(string& productName, User& user)
 		{
 			if (checkLettersDigitsAndSpace(productName))
 			{
-				if (!isProductNameExists(productName, seller->getProducts(), seller->getNumOfProducts()))
+				if (!isProductNameExists(productName, seller->getProducts()))
 				{
 					isValid = true;
 				}
@@ -332,9 +332,9 @@ void Validations::productNameValidation(string& productName, User& user)
 	}
 }
 
-bool Validations::isProductExists(int productSerialNumber, vector<Product*> products, int numOfProducts)
+bool Validations::isProductExists(int productSerialNumber, vector<Product*> products)
 {
-	for (int i = 0; i < numOfProducts; i++)
+	for (unsigned int i = 0; i < products.size(); i++)
 	{
 		if (productSerialNumber == products[i]->getSerialNumber())
 		{
@@ -345,9 +345,9 @@ bool Validations::isProductExists(int productSerialNumber, vector<Product*> prod
 	return false;
 }
 
-bool Validations::isProductNameExists(const string& productName, vector<Product*> products, int numOfProducts)
+bool Validations::isProductNameExists(const string& productName, vector<Product*> products)
 {
-	for (int i = 0; i < numOfProducts; i++)
+	for (unsigned int i = 0; i < products.size(); i++)
 	{
 		if (products[i]->getName().compare(productName) == 0)
 		{
@@ -362,7 +362,7 @@ bool Validations::isProductBelongsToUser(User& user, int productSerialNumber)
 {
 	SellerCustomer* sc = dynamic_cast<SellerCustomer*>(&user); if (!sc) return false;
 
-	return isProductExists(productSerialNumber, sc->getProducts(), sc->getNumOfProducts());
+	return isProductExists(productSerialNumber, sc->getProducts());
 }
 
 void Validations::priceValidation(float& price)
@@ -442,7 +442,7 @@ bool Validations::productSerialNumberValidation(unsigned int& productID, const i
 	}
 }
 
-Product* Validations::indexOfCheckoutProductValidation(int& index, vector<Product*> cart, int numOfProductsInCart, vector<Product*> chosenProducts, int numOfChosenProducts)
+Product* Validations::indexOfCheckoutProductValidation(unsigned int& index, vector<Product*> cart, vector<Product*> chosenProducts)
 {
 	bool isValidIndex = false;
 	Product* product = nullptr;
@@ -452,7 +452,7 @@ Product* Validations::indexOfCheckoutProductValidation(int& index, vector<Produc
 		cout << "Chosen product index: ";
 		cin >> index;
 
-		if (!cinTypeCheck() || !(1 <= index && index <= numOfProductsInCart))
+		if (!cinTypeCheck() || !(1 <= index && index <= cart.size()))
 		{
 			if (index == -1)
 			{
@@ -466,7 +466,7 @@ Product* Validations::indexOfCheckoutProductValidation(int& index, vector<Produc
 		else
 		{
 			product = cart[index - 1];
-			if (!isProductExists(product->getSerialNumber(), chosenProducts, numOfChosenProducts))
+			if (!isProductExists(product->getSerialNumber(), chosenProducts))
 			{
 				isValidIndex = true;
 			}
@@ -480,9 +480,9 @@ Product* Validations::indexOfCheckoutProductValidation(int& index, vector<Produc
 	return product;
 }
 
-bool Validations::isSellerExists(const User& seller, vector<User*> sellers, int numOfSellers)
+bool Validations::isSellerExists(const User& seller, vector<User*> sellers)
 {
-	for (int i = 0; i < numOfSellers; i++)
+	for (unsigned int i = 0; i < sellers.size(); i++)
 	{
 		if (sellers[i]->getUsername().compare(seller.getUsername()) == 0)
 		{
@@ -523,7 +523,7 @@ void Validations::dateValidation(int& day, int& month, int& year)
 	}
 }
 
-bool Validations::areValidUsers(vector<User*> users, int numOfUsers, int& indexUser1, int& indexUser2)
+bool Validations::areValidUsers(vector<User*> users, int& indexUser1, int& indexUser2)
 {
 	string username1, username2;
 	int usersFound = 0;
@@ -542,7 +542,7 @@ bool Validations::areValidUsers(vector<User*> users, int numOfUsers, int& indexU
 		return false;
 	}
 
-	for (int i = 0; i < numOfUsers && usersFound < 2; i++)
+	for (unsigned int i = 0; i < users.size() && usersFound < 2; i++)
 	{
 		if (users[i]->getUsername().compare(username1) == 0)
 		{

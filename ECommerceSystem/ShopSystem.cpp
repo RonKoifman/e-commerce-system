@@ -1,19 +1,16 @@
 #include "ShopSystem.h"
 
 ShopSystem::ShopSystem(const string& name) // C'tor
-	: name(name), users(nullptr), allProducts(nullptr), numOfUsers(0), numOfAllProducts(0)
+	: name(name)
 {
 }
 
 ShopSystem::~ShopSystem() // D'tor
 {
-	for (int i = 0; i < numOfUsers; i++)
+	for (unsigned int i = 0; i < users.size(); i++)
 	{
 		delete users[i];
 	}
-
-	delete[] users;
-	delete[] allProducts; // The pointers already released at each of their seller d'tor
 }
 
 void ShopSystem::setName(const string& name)
@@ -26,31 +23,21 @@ const string& ShopSystem::getName() const
 	return name;
 }
 
-User** ShopSystem::getUsers() const
+vector<User*> ShopSystem::getUsers() const
 {
 	return users;
 }
 
-int ShopSystem::getNumOfUsers() const
-{
-	return numOfUsers;
-}
-
-Product** ShopSystem::getAllProducts() const
+vector<Product*> ShopSystem::getAllProducts() const
 {
 	return allProducts;
-}
-
-int ShopSystem::getNumOfAllProducts() const
-{
-	return numOfAllProducts;
 }
 
 void ShopSystem::showCustomers() const
 {
 	bool isFound = false;
 
-	for (int i = 0; i < numOfUsers; i++)
+	for (unsigned int i = 0; i < users.size(); i++)
 	{
 		if (typeid(*users[i]) == typeid(Customer)) // Print only customers
 		{
@@ -73,7 +60,7 @@ void ShopSystem::showSellers() const
 {
 	bool isFound = false;
 
-	for (int i = 0; i < numOfUsers; i++)
+	for (unsigned int i = 0; i < users.size(); i++)
 	{
 		if (typeid(*users[i]) == typeid(Seller)) // Print only sellers
 		{
@@ -96,7 +83,7 @@ void ShopSystem::showSellerCustomers() const
 {
 	bool isFound = false;
 
-	for (int i = 0; i < numOfUsers; i++)
+	for (unsigned int i = 0; i < users.size(); i++)
 	{
 		if (typeid(*users[i]) == typeid(SellerCustomer)) // Print only seller-customers
 		{
@@ -117,14 +104,14 @@ void ShopSystem::showSellerCustomers() const
 
 void ShopSystem::showAllProducts() const
 {
-	if (numOfAllProducts == 0)
+	if (allProducts.size() == 0)
 	{
 		cout << "There are no products in the shop yet.\n" << endl;
 	}
 	else
 	{
 		cout << name << " products:\n" << endl;
-		for (int i = 0; i < numOfAllProducts; i++)
+		for (unsigned int i = 0; i < allProducts.size(); i++)
 		{
 			cout << i + 1 << "." << *allProducts[i] << endl;
 			cout << endl;
@@ -260,7 +247,7 @@ bool ShopSystem::sellerMenu(User& user)
 		case AddNewProduct:
 		{
 			Product& newProduct = readProductData(*seller);
-			seller->addProduct(newProduct); // Add the new product to its seller
+			seller->getProducts().push_back(&newProduct); // Add the new product to its seller
 			this->addProductToStock(newProduct); // Add the new product to the general products array
 			break;
 		}
@@ -398,35 +385,13 @@ bool ShopSystem::sellerCustomerMenu(User& user)
 
 const ShopSystem& ShopSystem::operator+=(User& user)
 {
-	User** temp = new User*[numOfUsers + 1]; // Create bigger array to add the new user
-
-	// Move the pointers from the current array to temp
-	for (int i = 0; i < numOfUsers; i++)
-	{
-		temp[i] = users[i];
-	}
-	temp[numOfUsers] = &user; // Add the new user
-	numOfUsers++;
-
-	delete[] users; // Free the current array
-	users = temp; // Update users array to temp
+	users.push_back(&user);
 	return *this;
 }
 
 void ShopSystem::addProductToStock(Product& newProduct)
 {
-	Product** temp = new Product*[numOfAllProducts + 1]; // Create bigger array to add the new product
-
-	// Move the pointers from the current array to temp
-	for (int i = 0; i < numOfAllProducts; i++)
-	{
-		temp[i] = allProducts[i];
-	}
-	temp[numOfAllProducts] = &newProduct; // Add the new product
-	numOfAllProducts++;
-
-	delete[] allProducts; // Free the current array
-	allProducts = temp; // Update products array to temp
+	allProducts.push_back(&newProduct);
 }
 
 User* ShopSystem::loginUser() const
@@ -449,7 +414,7 @@ User* ShopSystem::loginUser() const
 	}
 
 	// Check if the entered username and password match to registered user
-	for (int i = 0; i < numOfUsers; i++)
+	for (unsigned int i = 0; i < users.size(); i++)
 	{
 		if (users[i]->getUsername().compare(username) == 0)
 		{
@@ -473,7 +438,7 @@ void ShopSystem::searchProducts() const
 	int selection, numOfMatchingProducts = 0;
 	bool isFound = false;
 
-	if (numOfAllProducts == 0) // No products in the shop
+	if (allProducts.size() == 0) // No products in the shop
 	{
 		cout << "There are no products in the shop yet.\n" << endl;
 	}
@@ -492,7 +457,7 @@ void ShopSystem::searchProducts() const
 				if (validator.getInput(productName, MAX_PRODUCT_NAME_LENGTH))
 				{
 					// Search for matching products in the general products array
-					for (int i = 0; i < numOfAllProducts; i++)
+					for (unsigned int i = 0; i < allProducts.size(); i++)
 					{
 						if (allProducts[i]->getName().compare(productName) == 0) // Match
 						{
@@ -524,24 +489,24 @@ void ShopSystem::addProductToUserCart(User& user) const
 	Validations validator;
 	unsigned int productID = 0;
 
-	if (numOfAllProducts == 0) // No products in the shop
+	if (allProducts.size() == 0) // No products in the shop
 	{
 		cout << "There are no available products at the moment in the shop.\n" << endl;
 	}
 	else
 	{
-		if (validator.productSerialNumberValidation(productID, numOfAllProducts)) // Valid product ID
+		if (validator.productSerialNumberValidation(productID, allProducts.size())) // Valid product ID
 		{
-			for (int i = 0; i < numOfAllProducts; i++)
+			for (unsigned int i = 0; i < allProducts.size(); i++)
 			{
 				if (productID == allProducts[i]->getSerialNumber()) // Match
 				{
 					if (!validator.isProductBelongsToUser(user, allProducts[i]->getSerialNumber()))
 					{
-						if (!validator.isProductExists(allProducts[i]->getSerialNumber(), customer->getCart(), customer->getNumOfProductsInCart()))
+						if (!validator.isProductExists(allProducts[i]->getSerialNumber(), customer->getCart()))
 						{
 							// Add the chosen product to customer's cart
-							customer->addProductToCart(*allProducts[i]);
+							customer->getCart().push_back(allProducts[i]);
 							cout << "The product '" << allProducts[i]->getName() << "' added to cart successfully!\n" << endl;
 						}
 						else
@@ -564,7 +529,7 @@ void ShopSystem::checkout(User& user) const
 {
 	Customer* customer = dynamic_cast<Customer*>(&user); if (!customer) return;
 
-	if (customer->getNumOfProductsInCart() == 0) // No products in cart
+	if (customer->getCart().size() == 0) // No products in cart
 	{
 		cout << "Please add products to your cart before checkout.\n" << endl;
 	}
@@ -577,7 +542,7 @@ void ShopSystem::checkout(User& user) const
 		cout << "When you are done, enter -1 to continue to place order.\n" << endl;
 		order->createNewOrder();
 
-		if (order->getNumOfChosenProducts() == 0) // No products selected
+		if (order->getChosenProducts().size() == 0) // No products selected
 		{
 			cout << endl << "Order cancelled!\n" << endl;
 			delete order;
@@ -587,7 +552,7 @@ void ShopSystem::checkout(User& user) const
 			cout << endl << *order;
 			placeOrder(*order);
 			customer->initCart(); // Initialize customer cart
-			customer->addOrder(*order); // Add the new order to customer orders
+			customer->getOrders().push_back(order); // Add the new order to customer orders
 		}
 	}
 }
@@ -663,9 +628,9 @@ void ShopSystem::writeFeedback(User& user) const
 {
 	Customer* customer = dynamic_cast<Customer*>(&user); if (!customer) return;
 	Validations validator;
-	int index;
+	unsigned int index;
 
-	if (customer->getNumOfOrders() == 0)
+	if (customer->getOrders().size() == 0)
 	{
 		cout << "You have 0 orders made. Make an order so you could leave a feedback.\n" << endl;
 	}
@@ -674,7 +639,7 @@ void ShopSystem::writeFeedback(User& user) const
 		customer->showOrders();
 		cout << endl << "Choose the index of the order you wish to make the feedback about: ";
 		cin >> index;
-		if (!validator.cinTypeCheck() || !(1 <= index && index <= customer->getNumOfOrders()))
+		if (!validator.cinTypeCheck() || !(1 <= index && index <= customer->getOrders().size()))
 		{
 			cout << "You don't have such order.\n" << endl;
 		}
@@ -685,7 +650,7 @@ void ShopSystem::writeFeedback(User& user) const
 			cout << *selectedOrder;
 			cout << "Pick the index of the product to write its seller the feedback: ";
 			cin >> index;
-			if (!validator.cinTypeCheck() || !(1 <= index && index <= selectedOrder->getNumOfChosenProducts()))
+			if (!validator.cinTypeCheck() || !(1 <= index && index <= selectedOrder->getChosenProducts().size()))
 			{
 				cout << "You don't have such product in this order.\n" << endl;
 			}
@@ -696,9 +661,8 @@ void ShopSystem::writeFeedback(User& user) const
 				string text;
 
 				readTextForFeedback(text);
-				Feedback* newFeedback = new Feedback(user, *chosenProuct, readDate(), text);
-
-				seller->getFeedbacks() += newFeedback; // Add the feedback to its seller
+				Feedback* feedback = new Feedback(user, *chosenProuct, readDate(), text);
+				seller->getFeedbacks() += feedback; // Add the feedback to its seller
 				cout << endl << "Your feedback to " << chosenProuct->getSeller().getUsername() << " added successfully!\n" << endl;
 			}
 		}
@@ -710,13 +674,13 @@ void ShopSystem::compareUsersCartsAmount() const
 	Validations validator;
 	int indexUser1 = 0, indexUser2 = 0;
 
-	if (numOfUsers < 2)
+	if (users.size() < 2)
 	{
 		cout << "There are no two users to compare yet.\n" << endl;
 	}
 	else
 	{
-		if (validator.areValidUsers(users, numOfUsers, indexUser1, indexUser2))
+		if (validator.areValidUsers(users, indexUser1, indexUser2))
 		{
 			Customer* customer1 = dynamic_cast<Customer*>(users[indexUser1]);
 			Customer* customer2 = dynamic_cast<Customer*>(users[indexUser2]);
@@ -752,7 +716,7 @@ User& ShopSystem::readUserData(UserType type) const
 	cout << "We are using an universal and decentralized authentication." << endl;
 	cout << "Please fill in the following fields:\n" << endl;
 
-	validator.usernameValidation(username, users, numOfUsers);
+	validator.usernameValidation(username, users);
 	validator.passwordValidation(password);
 	validator.countryValidation(country);
 	validator.cityValidation(city);

@@ -8,22 +8,15 @@ Seller::Seller(const string& username, const string& password, const Address& ad
 
 Seller::~Seller() // D'tor
 {
-	for (int i = 0; i < products.size(); i++)
+	for (unsigned int i = 0; i < products.size(); i++)
 	{
 		delete products[i];
 	}
-	for (int i = 0; i < feedbacks.getSize(); i++)
+
+	for (unsigned int i = 0; i < feedbacks.getSize(); i++)
 	{
 		delete feedbacks[i];
 	}
-
-	delete[] products;
-	//delete[] feedbacks;
-}
-
-Array<Feedback*>& Seller::getFeedbacks()
-{
-	return feedbacks;
 }
 
 const Array<Feedback*>& Seller::getFeedbacks() const
@@ -31,14 +24,19 @@ const Array<Feedback*>& Seller::getFeedbacks() const
 	return feedbacks;
 }
 
-int Seller::getNumOfFeedbacks() const
+Array<Feedback*>& Seller::getFeedbacks()
 {
-	return feedbacks.getSize();
+	return feedbacks;
 }
 
-int Seller::getNumOfProducts() const
+const vector<Product*>& Seller::getProducts() const
 {
-	return products.size();
+	return products;
+}
+
+vector<Product*>& Seller::getProducts()
+{
+	return products;
 }
 
 void Seller::show(ostream& os) const
@@ -64,36 +62,10 @@ void Seller::showProducts() const
 	else
 	{
 		cout << endl;
-		for (int i = 0; i < products.size(); i++)
+		for (unsigned int i = 0; i < products.size(); i++)
 		{
 			cout << i + 1 << ". ";
 			cout << *products[i] << endl;
 		}
 	}
 }
-
-vector<Product*> Seller::getProducts() const
-{
-	return products;
-}
-
-void Seller::addProduct(Product& newProduct)
-{
-	Product** temp = new Product*[numOfProducts + 1]; // Create bigger array to add the new product
-
-	// Move the pointers from the current array to temp
-	for (int i = 0; i < numOfProducts; i++)
-	{
-		temp[i] = products[i];
-	}
-	temp[numOfProducts] = &newProduct; // Add the new product
-	numOfProducts++;
-
-	delete[] products; // Free the current array
-	products = temp; // Update products array to temp
-}
-
-//void Seller::addFeedback(Feedback& newFeedback)
-//{
-//	feedbacks += newFeedback;
-//}

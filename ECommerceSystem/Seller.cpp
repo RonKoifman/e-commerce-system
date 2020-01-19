@@ -2,7 +2,7 @@
 #include "Seller.h"
 
 Seller::Seller(const char* username, const char* password, const Address& address) // C'tor
-	: User(username, password, address), products(nullptr), feedbacks(nullptr), numOfProducts(0), numOfFeedbacks(0)
+	: User(username, password, address), products(nullptr), numOfProducts(0), numOfFeedbacks(0)
 {
 }
 
@@ -14,14 +14,14 @@ Seller::~Seller() // D'tor
 	}
 	for (int i = 0; i < numOfFeedbacks; i++)
 	{
-		delete feedbacks[i];
+		delete &feedbacks[i];
 	}
 
 	delete[] products;
-	delete[] feedbacks;
+	//delete[] feedbacks;
 }
 
-Feedback** Seller::getFeedbacks() const
+const Array<Feedback>& Seller::getFeedbacks() const
 {
 	return feedbacks;
 }
@@ -45,11 +45,12 @@ void Seller::show(ostream& os) const
 
 void Seller::showFeedbacks() const
 {
-	cout << "Feedbacks: ";
+	cout << feedbacks;
+	/*cout << "Feedbacks: ";
 
 	if (numOfFeedbacks == 0)
 	{
-		cout << "none." << endl;
+		cout << "None." << endl;
 	}
 	else
 	{
@@ -59,7 +60,7 @@ void Seller::showFeedbacks() const
 			cout << i + 1 << ".";
 			cout << *feedbacks[i] << endl;
 		}
-	}
+	}*/
 }
 
 void Seller::showProducts() const
@@ -68,7 +69,7 @@ void Seller::showProducts() const
 
 	if (numOfProducts == 0)
 	{
-		cout << "none." << endl;
+		cout << "None." << endl;
 	}
 	else
 	{
@@ -104,16 +105,5 @@ void Seller::addProduct(Product* newProduct)
 
 void Seller::addFeedback(Feedback* newFeedback)
 {
-	Feedback** temp = new Feedback*[numOfFeedbacks + 1]; // Create bigger array to add the new feedback
-
-	// Move the pointers from the current array to temp
-	for (int i = 0; i < numOfFeedbacks; i++)
-	{
-		temp[i] = feedbacks[i];
-	}
-	temp[numOfFeedbacks] = newFeedback; // Add the new feedback
-	numOfFeedbacks++;
-
-	delete[] feedbacks; // Free the current array
-	feedbacks = temp; // Update feedbacks array to temp
+	feedbacks += newFeedback;
 }

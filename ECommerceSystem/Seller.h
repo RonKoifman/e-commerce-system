@@ -4,14 +4,17 @@
 #include "Feedback.h"
 #include "Validations.h"
 #include "User.h"
+#include "Array.h"
 
 class Product;
+
+
 
 class Seller : virtual public User
 {
 protected:
-	Feedback** feedbacks;
-	int numOfFeedbacks;
+	Array<Feedback> feedbacks;
+	//int numOfFeedbacks;
 	Product** products;
 	int numOfProducts;
 
@@ -26,7 +29,7 @@ public:
 	void addProduct(Product* newProduct);
 	void addFeedback(Feedback* newFeedback);
 	// Getters
-	Feedback** getFeedbacks() const;
+	const Array<Feedback>& getFeedbacks() const;
 	int getNumOfFeedbacks() const;
 	Product** getProducts() const;
 	int getNumOfProducts() const;

@@ -87,7 +87,7 @@ Product** Seller::getProducts() const
 	return products;
 }
 
-void Seller::addProduct(Product* newProduct)
+void Seller::addProduct(Product& newProduct)
 {
 	Product** temp = new Product*[numOfProducts + 1]; // Create bigger array to add the new product
 
@@ -96,14 +96,14 @@ void Seller::addProduct(Product* newProduct)
 	{
 		temp[i] = products[i];
 	}
-	temp[numOfProducts] = newProduct; // Add the new product
+	temp[numOfProducts] = &newProduct; // Add the new product
 	numOfProducts++;
 
 	delete[] products; // Free the current array
 	products = temp; // Update products array to temp
 }
 
-void Seller::addFeedback(Feedback* newFeedback)
+void Seller::addFeedback(Feedback& newFeedback)
 {
 	feedbacks += newFeedback;
 }

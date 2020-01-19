@@ -95,7 +95,7 @@ void Customer::showOrders() const
 	}
 }
 
-void Customer::addProductToCart(Product* newProduct)
+void Customer::addProductToCart(Product& newProduct)
 {
 	Product** temp = new Product*[numOfProductsInCart + 1]; // Create bigger array to add the new product
 
@@ -104,14 +104,14 @@ void Customer::addProductToCart(Product* newProduct)
 	{
 		temp[i] = cart[i];
 	}
-	temp[numOfProductsInCart] = newProduct; // Add the new product
+	temp[numOfProductsInCart] = &newProduct; // Add the new product
 	numOfProductsInCart++;
 
 	delete[] cart; // Free the current array
 	cart = temp; // Update products array to temp
 }
 
-void Customer::addOrder(Checkout* newOrder)
+void Customer::addOrder(Checkout& newOrder)
 {
 	Checkout** temp = new Checkout*[numOfOrders + 1]; // Create bigger array to add the new order
 
@@ -120,7 +120,7 @@ void Customer::addOrder(Checkout* newOrder)
 	{
 		temp[i] = orders[i];
 	}
-	temp[numOfOrders] = newOrder; // Add the new order
+	temp[numOfOrders] = &newOrder; // Add the new order
 	numOfOrders++;
 
 	delete[] orders; // Free the current array

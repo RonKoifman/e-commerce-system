@@ -26,8 +26,8 @@ public:
 	virtual void show(ostream& os) const override;
 	void showFeedbacks() const;
 	void showProducts() const;
-	void addProduct(Product* newProduct);
-	void addFeedback(Feedback* newFeedback);
+	void addProduct(Product& newProduct);
+	void addFeedback(Feedback& newFeedback);
 	// Getters
 	const Array<Feedback>& getFeedbacks() const;
 	int getNumOfFeedbacks() const;

@@ -24,8 +24,8 @@ public:
 	void showSellersNames() const;
 	void showProductsNames() const;
 	void calculateTotalPrice();
-	void addChosenProduct(Product* newProduct);
-	void addSeller(User* seller);
+	void addChosenProduct(Product& newProduct);
+	void addSeller(User& seller);
 	void createNewOrder();
 	// Getters
 	Product** getChosenProducts() const;

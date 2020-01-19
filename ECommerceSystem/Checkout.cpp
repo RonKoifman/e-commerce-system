@@ -61,7 +61,7 @@ void Checkout::calculateTotalPrice()
 	}
 }
 
-void Checkout::addChosenProduct(Product* newProduct)
+void Checkout::addChosenProduct(Product& newProduct)
 {
 	Product** temp = new Product*[numOfChosenProducts + 1]; // Create bigger array to add the new product
 
@@ -70,14 +70,14 @@ void Checkout::addChosenProduct(Product* newProduct)
 	{
 		temp[i] = chosenProducts[i];
 	}
-	temp[numOfChosenProducts] = newProduct; // Add the new product
+	temp[numOfChosenProducts] = &newProduct; // Add the new product
 	numOfChosenProducts++;
 
 	delete[] chosenProducts; // Free the current array
 	chosenProducts = temp; // Update products array to temp
 }
 
-void Checkout::addSeller(User* seller)
+void Checkout::addSeller(User& seller)
 {
 	User** temp = new User*[numOfSellers + 1]; // Create bigger array to add the new seller
 
@@ -86,7 +86,7 @@ void Checkout::addSeller(User* seller)
 	{
 		temp[i] = sellers[i];
 	}
-	temp[numOfSellers] = seller; // Add the new seller
+	temp[numOfSellers] = &seller; // Add the new seller
 	numOfSellers++;
 
 	delete[] sellers; // Free the current array
@@ -111,11 +111,11 @@ void Checkout::createNewOrder()
 		else
 		{
 			// Add product to the chosen products array
-			addChosenProduct(product);
+			addChosenProduct(*product);
 			// Only if seller not exists already - add product's seller to the sellers array
-			if (!validator.isSellerExists(&product->getSeller(), sellers, numOfSellers))
+			if (!validator.isSellerExists(product->getSeller(), sellers, numOfSellers))
 			{
-				addSeller(&product->getSeller());
+				addSeller(product->getSeller());
 			}
 		}
 	}

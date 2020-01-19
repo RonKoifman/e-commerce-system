@@ -2,7 +2,7 @@
 #include "Seller.h"
 
 Seller::Seller(const string& username, const string& password, const Address& address) // C'tor
-	: User(username, password, address), products(nullptr), feedbacks(nullptr), numOfProducts(0), numOfFeedbacks(0)
+	: User(username, password, address), products(nullptr), feedbacks(nullptr), numOfProducts(0)
 {
 }
 
@@ -12,23 +12,28 @@ Seller::~Seller() // D'tor
 	{
 		delete products[i];
 	}
-	for (int i = 0; i < numOfFeedbacks; i++)
+	for (int i = 0; i < feedbacks.getSize(); i++)
 	{
-		delete feedbacks[i];
+		delete &feedbacks[i];
 	}
 
 	delete[] products;
-	delete[] feedbacks;
+	//delete[] feedbacks;
 }
 
-Feedback** Seller::getFeedbacks() const
+Array<Feedback>& Seller::getFeedbacks()
+{
+	return feedbacks;
+}
+
+const Array<Feedback>& Seller::getFeedbacks() const
 {
 	return feedbacks;
 }
 
 int Seller::getNumOfFeedbacks() const
 {
-	return numOfFeedbacks;
+	return feedbacks.getSize();
 }
 
 int Seller::getNumOfProducts() const
@@ -45,11 +50,12 @@ void Seller::show(ostream& os) const
 
 void Seller::showFeedbacks() const
 {
-	cout << "Feedbacks: ";
+	cout << feedbacks;
+	/*cout << "Feedbacks: ";
 
 	if (numOfFeedbacks == 0)
 	{
-		cout << "none." << endl;
+		cout << "None." << endl;
 	}
 	else
 	{
@@ -59,7 +65,7 @@ void Seller::showFeedbacks() const
 			cout << i + 1 << ".";
 			cout << *feedbacks[i] << endl;
 		}
-	}
+	}*/
 }
 
 void Seller::showProducts() const
@@ -68,7 +74,7 @@ void Seller::showProducts() const
 
 	if (numOfProducts == 0)
 	{
-		cout << "none." << endl;
+		cout << "None." << endl;
 	}
 	else
 	{
@@ -102,18 +108,7 @@ void Seller::addProduct(Product& newProduct)
 	products = temp; // Update products array to temp
 }
 
-void Seller::addFeedback(Feedback& newFeedback)
-{
-	Feedback** temp = new Feedback*[numOfFeedbacks + 1]; // Create bigger array to add the new feedback
-
-	// Move the pointers from the current array to temp
-	for (int i = 0; i < numOfFeedbacks; i++)
-	{
-		temp[i] = feedbacks[i];
-	}
-	temp[numOfFeedbacks] = &newFeedback; // Add the new feedback
-	numOfFeedbacks++;
-
-	delete[] feedbacks; // Free the current array
-	feedbacks = temp; // Update feedbacks array to temp
-}
+//void Seller::addFeedback(Feedback& newFeedback)
+//{
+//	feedbacks += newFeedback;
+//}

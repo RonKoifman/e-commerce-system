@@ -9,10 +9,12 @@ class Checkout;
 class Customer : virtual public User
 {
 protected:
-	Product** cart;
-	int numOfProductsInCart;
-	Checkout** orders;
-	int numOfOrders;
+	//Product** cart;
+	//int numOfProductsInCart;
+	vector<Product*> cart;
+	//Checkout** orders;
+	//int numOfOrders;
+	vector<Checkout*> orders;
 
 public:
 	Customer(const string& username, const string& password, const Address& address); // C'tor
@@ -24,13 +26,13 @@ public:
 	virtual void show(ostream& os) const override;
 	void showCart() const;
 	void showOrders() const;
-	void addProductToCart(Product& newProduct);
-	void addOrder(Checkout& newOrder);
+	/*void addProductToCart(Product& newProduct);
+	void addOrder(Checkout& newOrder);*/
 	void initCart();
 	// Getters
-	Product** getCart() const;
+	vector<Product*> getCart() const;
 	int getNumOfProductsInCart() const;
-	Checkout** getOrders() const;
+	vector<Checkout*> getOrders() const;
 	int getNumOfOrders() const;
 };
 

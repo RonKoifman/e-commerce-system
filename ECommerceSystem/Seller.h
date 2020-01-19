@@ -8,12 +8,15 @@
 
 class Product;
 
+
 class Seller : virtual public User
 {
 protected:
-	Array<Feedback*> feedbacks;
-	Product** products;
-	int numOfProducts;
+	Array<Feedback> feedbacks;
+	//int numOfFeedbacks;
+	/*Product** products;
+	int numOfProducts;*/
+	vector<Product*> products;
 
 public:
 	Seller(const string& username, const string& password, const Address& address); // C'tor
@@ -23,12 +26,14 @@ public:
 	virtual void show(ostream& os) const override;
 	void showFeedbacks() const;
 	void showProducts() const;
-	void addProduct(Product& newProduct);
+	//void addProduct(Product& newProduct);
+	//void addFeedback(Feedback& newFeedback);
+
 	// Getters
 	Array<Feedback*>& getFeedbacks();
 	const Array<Feedback*>& getFeedbacks() const;
 	int getNumOfFeedbacks() const;
-	Product** getProducts() const;
+	vector<Product*> getProducts() const;
 	int getNumOfProducts() const;
 };
 

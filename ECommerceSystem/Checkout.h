@@ -9,12 +9,14 @@ class User;
 class Checkout
 {
 private:
-	Product** chosenProducts;
-	int numOfChosenProducts;
-	float totalPrice; 
-	User** sellers;
-	int numOfSellers;
+	/*Product** chosenProducts;
+	int numOfChosenProducts;*/
+	vector<Product*> chosenProducts;
+	/*User** sellers;
+	int numOfSellers;*/
+	vector<User*> sellers;
 	User& customer;
+	float totalPrice; 
 
 public:
 	Checkout(User& customer); // C'tor
@@ -24,16 +26,16 @@ public:
 	void showSellersNames() const;
 	void showProductsNames() const;
 	void calculateTotalPrice();
-	void addChosenProduct(Product& newProduct);
-	void addSeller(User& seller);
+	/*void addChosenProduct(Product& newProduct);
+	void addSeller(User& seller);*/
 	void createNewOrder();
 	// Getters
-	Product** getChosenProducts() const;
+	vector<Product*> getChosenProducts() const;
 	int getNumOfChosenProducts() const;
 	float getTotalPrice() const;
 	int getNumOfSellers() const;
 	User& getCustomer() const;
-	User** getSellers() const;
+	vector<User*> getSellers() const;
 	// Friend functions
 	friend ostream& operator<<(ostream& os, const Checkout& checkout);
 };

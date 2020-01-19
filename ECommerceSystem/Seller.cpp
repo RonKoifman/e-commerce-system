@@ -2,7 +2,7 @@
 #include "Seller.h"
 
 Seller::Seller(const char* username, const char* password, const Address& address) // C'tor
-	: User(username, password, address), products(nullptr), numOfProducts(0), numOfFeedbacks(0)
+	: User(username, password, address), products(nullptr), numOfProducts(0)
 {
 }
 
@@ -12,13 +12,18 @@ Seller::~Seller() // D'tor
 	{
 		delete products[i];
 	}
-	for (int i = 0; i < numOfFeedbacks; i++)
+	for (int i = 0; i < feedbacks.getSize(); i++)
 	{
 		delete &feedbacks[i];
 	}
 
 	delete[] products;
 	//delete[] feedbacks;
+}
+
+Array<Feedback>& Seller::getFeedbacks()
+{
+	return feedbacks;
 }
 
 const Array<Feedback>& Seller::getFeedbacks() const
@@ -28,7 +33,7 @@ const Array<Feedback>& Seller::getFeedbacks() const
 
 int Seller::getNumOfFeedbacks() const
 {
-	return numOfFeedbacks;
+	return feedbacks.getSize();
 }
 
 int Seller::getNumOfProducts() const
@@ -103,7 +108,7 @@ void Seller::addProduct(Product& newProduct)
 	products = temp; // Update products array to temp
 }
 
-void Seller::addFeedback(Feedback& newFeedback)
-{
-	feedbacks += newFeedback;
-}
+//void Seller::addFeedback(Feedback& newFeedback)
+//{
+//	feedbacks += newFeedback;
+//}

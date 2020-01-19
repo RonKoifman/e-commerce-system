@@ -19,18 +19,16 @@ class Array
 public:
 	Array() { arr = nullptr; size = 0; }
 	Array(const Array& other) = delete;
-	T& operator[](int index) { return arr[index]; }
+	T& operator[](int index) { return *arr[index]; }
 	const T& operator[](int index) const { return arr[index]; }
-	const Array& operator+=(const T& newVal);
+	const Array& operator+=(T& newVal);
 	
 	//getters
 	const int getSize() const { return size; }
 
-
-
 	friend ostream& operator<<(ostream& os, const Array& arr)
 	{
-		os << typeid(arr.arr + 6) << ": ";
+		os << typeid(**arr.arr).name() + 6 << "s: ";
 
 		/*for (int i = 0; i < arr.size; i++)
 			os << arr.arr[i];*/
@@ -45,7 +43,7 @@ public:
 			for (int i = 0; i < arr.size; i++)
 			{
 				os << i + 1 << ".";
-				os << *arr[i] << endl;
+				os << *arr.arr[i] << endl;
 			}
 		}
 
@@ -54,7 +52,7 @@ public:
 };
 
 template<class T>
-const Array<T>& Array<T>::operator+=(const T& newVal)
+const Array<T>& Array<T>::operator+=(T& newVal)
 {
 	T** temp = new T*[size + 1]; // Create bigger array to add the new user
 

@@ -27,8 +27,10 @@ public:
 	void showFeedbacks() const;
 	void showProducts() const;
 	void addProduct(Product& newProduct);
-	void addFeedback(Feedback& newFeedback);
+	//void addFeedback(Feedback& newFeedback);
+
 	// Getters
+	Array<Feedback>& getFeedbacks();
 	const Array<Feedback>& getFeedbacks() const;
 	int getNumOfFeedbacks() const;
 	Product** getProducts() const;

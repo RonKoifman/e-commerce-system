@@ -17,7 +17,7 @@ Seller::~Seller() // D'tor
 		delete feedbacks[i];
 	}
 
-	//delete[] products;
+	delete[] products;
 	//delete[] feedbacks;
 }
 
@@ -77,21 +77,21 @@ vector<Product*> Seller::getProducts() const
 	return products;
 }
 
-//void Seller::addProduct(Product& newProduct)
-//{
-//	Product** temp = new Product*[numOfProducts + 1]; // Create bigger array to add the new product
-//
-//	// Move the pointers from the current array to temp
-//	for (int i = 0; i < numOfProducts; i++)
-//	{
-//		temp[i] = products[i];
-//	}
-//	temp[numOfProducts] = &newProduct; // Add the new product
-//	numOfProducts++;
-//
-//	delete[] products; // Free the current array
-//	products = temp; // Update products array to temp
-//}
+void Seller::addProduct(Product& newProduct)
+{
+	Product** temp = new Product*[numOfProducts + 1]; // Create bigger array to add the new product
+
+	// Move the pointers from the current array to temp
+	for (int i = 0; i < numOfProducts; i++)
+	{
+		temp[i] = products[i];
+	}
+	temp[numOfProducts] = &newProduct; // Add the new product
+	numOfProducts++;
+
+	delete[] products; // Free the current array
+	products = temp; // Update products array to temp
+}
 
 //void Seller::addFeedback(Feedback& newFeedback)
 //{

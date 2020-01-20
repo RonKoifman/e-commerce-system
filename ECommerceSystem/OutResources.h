@@ -10,4 +10,6 @@
 
 using namespace std;
 
+const int MAX_CHARACTERS = 20;
+
 #endif // __OUT_RESOURCES_H

@@ -2,7 +2,7 @@
 #define __VALIDATIONS_H
 
 // Consts declaration
-const int MAX_CHARACTERS = 20;
+//const int MAX_CHARACTERS = 20;
 const int MAX_PRODUCT_NAME_LENGTH = 30;
 const int MIN_CHARACTERS_PASSWORD = 6;
 const int MAX_FEEDBACK_LENGTH = 90;

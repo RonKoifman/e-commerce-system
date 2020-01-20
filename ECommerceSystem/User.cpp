@@ -9,18 +9,17 @@ User::User(ifstream& inFile)
 	: address(Address(inFile))
 {
 	int len;
+	char temp[MAX_CHARACTERS];
+
 	//USERNAME
 	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&username, len); 
-	//username[len] = '\0';
+	inFile.read((char*)&temp, len); temp[len] = '\0';
+	username = temp;
 
 	//PASSWORD
 	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&password, len);
-	//password[len] = '\0';
-
-	//ADDRESS
-	//address = Address(inFile);
+	inFile.read((char*)&temp, len); temp[len] = '\0';
+	password = temp;
 }
 
 void User::setUsername(const string& username)

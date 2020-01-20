@@ -658,11 +658,6 @@ void ShopSystem::compareUsersCartsAmount() const
 	}
 }
 
-//User* ShopSystem::loadUser(ifstream& inFile)
-//{
-//	return nullptr;
-//}
-
 void ShopSystem::loadAllUsers(const char* fileName)
 {
 	int numOfUsers;

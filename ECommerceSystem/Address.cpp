@@ -8,20 +8,21 @@ Address::Address(const string& country, const string& city, const string& street
 Address::Address(ifstream& inFile)
 {
 	int len;
+	char temp[MAX_CHARACTERS];
 	//COUNTRY
 	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&country, len);
-	//country[len] = '\0';
+	inFile.read((char*)&temp, len); temp[len] = '\0';
+	country = temp;
 
 	//CITY
 	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&city, len);
-	//city[len] = '\0';
+	inFile.read((char*)&temp, len); temp[len] = '\0';
+	city = temp;
 
 	//STREET
 	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&street, len);
-	//street[len] = '\0';
+	inFile.read((char*)&temp, len); temp[len] = '\0';
+	street = temp;
 
 	//BUILDINGNUMBER
 	inFile.read((char*)&buildingNumber, sizeof(buildingNumber));

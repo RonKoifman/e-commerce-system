@@ -5,7 +5,7 @@ SellerCustomer::SellerCustomer(const string& username, const string& password, c
 {
 }
 
-SellerCustomer::SellerCustomer(ifstream& inFile)
+SellerCustomer::SellerCustomer(ifstream& inFile) // C'tor for file
 	: User(inFile), Seller(inFile), Customer(inFile)
 {
 }

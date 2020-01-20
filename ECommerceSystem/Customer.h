@@ -14,7 +14,7 @@ protected:
 
 public:
 	Customer(const string& username, const string& password, const Address& address); // C'tor
-	Customer(ifstream& inFile);
+	Customer(ifstream& inFile); // C'tor for file
 	Customer(const Customer& other) = delete; // Disable copy c'tor
 	const Customer& operator=(const Customer& other) = delete; // Disable operator=
 	virtual ~Customer(); // D'tor

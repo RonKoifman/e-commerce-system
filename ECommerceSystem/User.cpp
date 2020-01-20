@@ -1,22 +1,22 @@
 #include "User.h"
 
-User::User(const string& username, const string& password, const Address& address)
+User::User(const string& username, const string& password, const Address& address) // C'tor
 	: username(username), password(password), address(address)
 {
 }
 
-User::User(ifstream& inFile)
+User::User(ifstream& inFile) // C'tor for file
 	: address(Address(inFile))
 {
 	int len;
 	char temp[MAX_CHARACTERS];
 
-	//USERNAME
+	// USERNAME
 	inFile.read((char*)&len, sizeof(len));
 	inFile.read((char*)&temp, len); temp[len] = '\0';
 	username = temp;
 
-	//PASSWORD
+	// PASSWORD
 	inFile.read((char*)&len, sizeof(len));
 	inFile.read((char*)&temp, len); temp[len] = '\0';
 	password = temp;
@@ -60,24 +60,23 @@ void User::show(ostream& os) const
 
 void User::saveType(ofstream& outFile) const
 {
-	UserAnalyzer::userType type = UserAnalyzer::getType(this);
-	outFile.write((const char*)&type, sizeof(UserAnalyzer::userType));
+	UserAnalyzer::UserType type = UserAnalyzer::getType(*this);
+	outFile.write((const char*)&type, sizeof(UserAnalyzer::UserType));
 }
 
 void User::save(ofstream& outFile) const
 {
 	address.save(outFile);
 
-	//USERNAME
+	// USERNAME
 	int len = username.length();
 	outFile.write((const char*)&len, sizeof(len));
 	outFile.write((const char*)username.c_str(), len);
 
-	//PASSWORD
+	// PASSWORD
 	len = password.length();
 	outFile.write((const char*)&len, sizeof(len));
 	outFile.write((const char*)password.c_str(), len);
-
 }
 
 ostream& operator<<(ostream& os, const User& user)

@@ -6,8 +6,8 @@ Seller::Seller(const string& username, const string& password, const Address& ad
 {
 }
 
-Seller::Seller(ifstream& inFile)
-: User(inFile)
+Seller::Seller(ifstream& inFile) // C'tor for file
+	: User(inFile)
 {
 }
 

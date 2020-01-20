@@ -15,10 +15,6 @@ private:
 
 public:
 	// Enum declarations
-	enum UserType
-	{
-		TypeSeller = 1, TypeCustomer = 2, TypeSellerCustomer = 3
-	};
 	enum LoginOptions
 	{
 		SignupNewSeller = 1, SignupNewCustomer = 2, SignupNewSC = 3, Login = 4,
@@ -55,7 +51,7 @@ public:
 	bool sellerMenu(User& user);
 	bool customerMenu(User& user);
 	bool sellerCustomerMenu(User& user);
-	User& readUserData(UserType type) const;
+	User& readUserData(UserAnalyzer::UserType type) const;
 	Product& readProductData(User& user) const;
 	Date readDate() const;
 	void readTextForFeedback(string& text) const;
@@ -67,9 +63,8 @@ public:
 	void placeOrder(const Checkout& order) const;
 	void writeFeedback(User& user) const;
 	void compareUsersCartsAmount() const;
-	void loadAllUsers(const char* fileName);
+	void loadUsers(const char* fileName);
 	void saveUsers(const char* fileName);
-
 	// Getters
 	const string& getName() const;
 	const vector<User*>& getUsers() const;

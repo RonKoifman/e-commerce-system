@@ -1,42 +1,41 @@
-#include "UserAnalyzer.h"
 #include "SellerCustomer.h"
+#include "UserAnalyzer.h"
 
 User* UserAnalyzer::loadUser(ifstream& inFile)
 {
-	User* temp;
-	userType type;
-	inFile.read((char*)&type, sizeof(userType));
+	UserType type;
+
+	inFile.read((char*)&type, sizeof(UserType));
+
 	switch (type)
 	{
-		case SELLER:
-		{
-			temp = new Seller(inFile);
-			break;
-		}
-		case CUSTOMER:
-		{
-			temp = new Customer(inFile);
-			break;
-		}
-		case SELLERCUSTOMER:
-		{
-			temp = new SellerCustomer(inFile);
-			break;
-		}
-		default:
-			temp = nullptr;
+	case SELLER:
+		return new Seller(inFile);
+	case CUSTOMER:
+		return new Customer(inFile);
+	case SELLER_CUSTOMER:
+		return new SellerCustomer(inFile);
+	default:
+		return nullptr;
 	}
-	return temp;
 }
 
-UserAnalyzer::userType UserAnalyzer::getType(const User* user)
+UserAnalyzer::UserType UserAnalyzer::getType(const User& user)
 {
-	if (typeid(*user) == typeid(Seller))
+	if (typeid(user) == typeid(Seller))
+	{
 		return SELLER;
-	else if (typeid(*user) == typeid(Customer))
+	}
+	else if (typeid(user) == typeid(Customer))
+	{
 		return CUSTOMER;
-	else if (typeid(*user) == typeid(SellerCustomer))
-		return SELLERCUSTOMER;
+	}
+	else if (typeid(user) == typeid(SellerCustomer))
+	{
+		return SELLER_CUSTOMER;
+	}
 	else
+	{
 		return UNKNOWN;
+	}
 }

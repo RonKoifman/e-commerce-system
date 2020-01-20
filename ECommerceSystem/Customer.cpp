@@ -6,7 +6,7 @@ Customer::Customer(const string& username, const string& password, const Address
 {
 }
 
-Customer::Customer(ifstream& inFile)
+Customer::Customer(ifstream& inFile) // C'tor for file
 	: User(inFile)
 {
 }

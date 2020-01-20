@@ -49,13 +49,12 @@ void Checkout::createNewOrder()
 {
 	Customer* customer = dynamic_cast<Customer*>(&this->customer); if (!customer) return;
 	Product* product;
-	Validations validator;
 	unsigned int index = 0;
 	bool toContinue = true;
 
 	while (toContinue)
 	{
-		product = validator.indexOfCheckoutProductValidation(index, customer->getCart(), chosenProducts);
+		product = Validations::indexOfCheckoutProductValidation(index, customer->getCart(), chosenProducts);
 		if (index == -1) // Customer finished to add products to order
 		{
 			toContinue = false;
@@ -65,7 +64,7 @@ void Checkout::createNewOrder()
 			// Add product to the chosen products array
 			chosenProducts.push_back(product);
 			// Only if seller not exists already - add product's seller to the sellers array
-			if (!validator.isSellerExists(product->getSeller(), sellers))
+			if (!Validations::isSellerExists(product->getSeller(), sellers))
 			{
 				sellers.push_back(&product->getSeller());
 			}

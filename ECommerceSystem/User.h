@@ -13,13 +13,13 @@ protected:
 
 public:
 	User(const string& username, const string& password, const Address& address); // C'tor
+	User(ifstream& inFile); // C'tor for file
 	User(const User& other) = delete; // Disable copy c'tor
-	User(ifstream& inFile);
 	virtual ~User() {}; // D'tor
 	const User& operator=(const User& other) = delete; // Disable operator=
 	virtual void show(ostream& os) const = 0; // Make user class an abstract class
 	void saveType(ofstream& outFile) const;
-	virtual void save(ofstream& outFile) const;
+	void save(ofstream& outFile) const;
 	// Setters
 	void setUsername(const string& username);
 	void setPassword(const string& password);
@@ -30,6 +30,9 @@ public:
 	const Address& getAddress() const;
 	// Friends
 	friend ostream& operator<<(ostream& os, const User& user);
+
+private:
+	static const int MAX_CHARACTERS = 20;
 };
 
 #endif // __USER_H

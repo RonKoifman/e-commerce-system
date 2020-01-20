@@ -3,12 +3,13 @@
 ShopSystem::ShopSystem(const string& name) // C'tor
 	: name(name)
 {
-	loadAllUsers("database.dat");
+	loadUsers("database.dat"); // Load users data if exists
 }
 
 ShopSystem::~ShopSystem() // D'tor
 {
-	saveUsers("database.dat");
+	saveUsers("database.dat"); // Save users data
+
 	for (unsigned int i = 0; i < users.size(); i++)
 	{
 		delete users[i];
@@ -77,15 +78,13 @@ void ShopSystem::showAllProducts() const
 
 bool ShopSystem::mainMenu()
 {
-	Menu menu;
-	Validations validator;
 	int selection;
 
-	menu.printMainMenu();
+	Menu::printMainMenu();
 	cin >> selection;
 	cout << endl;
 
-	if (!validator.cinTypeCheck())
+	if (!Validations::cinTypeCheck())
 	{
 		cout << "Please choose from one of the following options!\n" << endl;
 		return true; // cin failed - wrong input type. Go back to login menu
@@ -95,7 +94,7 @@ bool ShopSystem::mainMenu()
 	{
 	case SignupNewSeller:
 	{
-		User& newSeller = readUserData(TypeSeller);
+		User& newSeller = readUserData(UserAnalyzer::SELLER);
 		*this += newSeller; // Add new seller to users array
 		if (!sellerMenu(newSeller)) // Repeatedly show seller menu until he asks to exit
 		{
@@ -105,7 +104,7 @@ bool ShopSystem::mainMenu()
 	}
 	case SignupNewCustomer:
 	{
-		User& newCustomer = readUserData(TypeCustomer);
+		User& newCustomer = readUserData(UserAnalyzer::CUSTOMER);
 		*this += newCustomer; // Add new customer to users array
 		if (!customerMenu(newCustomer)) // Repeatedly show customer menu until he asks to exit
 		{
@@ -115,7 +114,7 @@ bool ShopSystem::mainMenu()
 	}
 	case SignupNewSC:
 	{
-		User& newSC = readUserData(TypeSellerCustomer);
+		User& newSC = readUserData(UserAnalyzer::SELLER_CUSTOMER);
 		*this += newSC; // Add new seller-customer to users array
 		if (!sellerCustomerMenu(newSC)) // Repeatedly show seller-customer menu until he asks to exit
 		{
@@ -184,15 +183,13 @@ bool ShopSystem::mainMenu()
 bool ShopSystem::sellerMenu(User& user)
 {
 	Seller* seller = dynamic_cast<Seller*>(&user); if (!seller) return false;
-	Validations validator;
-	Menu menu;
 	int selection;
 
-	menu.printSellerMenu();
+	Menu::printSellerMenu();
 	cin >> selection;
 	cout << endl;
 
-	if (!validator.cinTypeCheck()) // cin failed - ask again for valid type
+	if (!Validations::cinTypeCheck()) // cin failed - ask again for valid type
 	{
 		cout << "Please choose from one of the following options!\n" << endl;
 	}
@@ -240,15 +237,13 @@ bool ShopSystem::sellerMenu(User& user)
 bool ShopSystem::customerMenu(User& user)
 {
 	Customer* customer = dynamic_cast<Customer*>(&user); if (!customer) return false;
-	Menu menu;
-	Validations validator;
 	int selection;
 
-	menu.printCustomerMenu();
+	Menu::printCustomerMenu();
 	cin >> selection;
 	cout << endl;
 
-	if (!validator.cinTypeCheck()) // cin failed - ask again for valid type
+	if (!Validations::cinTypeCheck()) // cin failed - ask again for valid type
 	{
 		cout << "Please choose from one of the following options!\n" << endl;
 	}
@@ -296,15 +291,13 @@ bool ShopSystem::customerMenu(User& user)
 bool ShopSystem::sellerCustomerMenu(User& user)
 {
 	SellerCustomer* sc = dynamic_cast<SellerCustomer*>(&user); if (!sc) return false;
-	Menu menu;
-	Validations validator;
 	int selection;
 
-	menu.printSellerCustomerMenu();
+	Menu::printSellerCustomerMenu();
 	cin >> selection;
 	cout << endl;
 
-	if (!validator.cinTypeCheck()) // cin failed - ask again for valid type
+	if (!Validations::cinTypeCheck()) // cin failed - ask again for valid type
 	{
 		cout << "Please choose from one of the following options!\n" << endl;
 	}
@@ -353,16 +346,15 @@ void ShopSystem::addProductToStock(Product& newProduct)
 
 User* ShopSystem::loginUser() const
 {
-	Validations validator;
 	string username, password;
 	bool isValidUsername, isValidPassword;
 
 	cout << "Please login with your credentials.\n" << endl;
-	validator.cleanBuffer();
+	Validations::cleanBuffer();
 	cout << "Username: ";
-	isValidUsername = validator.getInput(username, MAX_CHARACTERS);
+	isValidUsername = Validations::getInput(username, MAX_CHARACTERS);
 	cout << "Password: ";
-	isValidPassword = validator.getInput(password, MAX_CHARACTERS);
+	isValidPassword = Validations::getInput(password, MAX_CHARACTERS);
 
 	if (isValidUsername && isValidPassword) // Both inputs are valid
 	{
@@ -387,7 +379,6 @@ User* ShopSystem::loginUser() const
 
 void ShopSystem::searchProducts() const
 {
-	Validations validator;
 	string productName;
 	int selection, numOfMatchingProducts = 0;
 	bool areFound = false;
@@ -398,7 +389,7 @@ void ShopSystem::searchProducts() const
 	}
 	else
 	{
-		if (validator.searchProductSelectionValidation(selection)) // Selection validation
+		if (Validations::searchProductSelectionValidation(selection)) // Selection validation
 		{
 			if ((SearchProductOptions)selection == AllProducts)
 			{
@@ -407,8 +398,8 @@ void ShopSystem::searchProducts() const
 			else // SpecificProductName
 			{
 				cout << "Product to search: ";
-				validator.cleanBuffer();
-				if (validator.getInput(productName, MAX_PRODUCT_NAME_LENGTH))
+				Validations::cleanBuffer();
+				if (Validations::getInput(productName, MAX_PRODUCT_NAME_LENGTH))
 				{
 					// Search for matching products in the general products array
 					for (unsigned int i = 0; i < allProducts.size(); i++)
@@ -440,7 +431,6 @@ void ShopSystem::searchProducts() const
 void ShopSystem::addProductToUserCart(User& user) const
 {
 	Customer* customer = dynamic_cast<Customer*>(&user); if (!customer) return;
-	Validations validator;
 	unsigned int productID = 0;
 
 	if (allProducts.size() == 0) // No products in the shop
@@ -449,15 +439,15 @@ void ShopSystem::addProductToUserCart(User& user) const
 	}
 	else
 	{
-		if (validator.productSerialNumberValidation(productID, allProducts.size())) // Valid product ID
+		if (Validations::productSerialNumberValidation(productID, allProducts.size())) // Valid product ID
 		{
 			for (unsigned int i = 0; i < allProducts.size(); i++)
 			{
 				if (productID == allProducts[i]->getSerialNumber()) // Match
 				{
-					if (!validator.isProductBelongsToUser(user, allProducts[i]->getSerialNumber()))
+					if (!Validations::isProductBelongsToUser(user, allProducts[i]->getSerialNumber()))
 					{
-						if (!validator.isProductExists(allProducts[i]->getSerialNumber(), customer->getCart()))
+						if (!Validations::isProductExists(allProducts[i]->getSerialNumber(), customer->getCart()))
 						{
 							// Add the chosen product to customer's cart
 							customer->addProductToCart(*allProducts[i]);
@@ -513,7 +503,6 @@ void ShopSystem::checkout(User& user) const
 
 void ShopSystem::placeOrder(const Checkout& order) const
 {
-	Validations validator;
 	bool isPayed = false;
 	float payment, res = 0, totalPrice = order.getTotalPrice();
 
@@ -523,7 +512,7 @@ void ShopSystem::placeOrder(const Checkout& order) const
 		cout << "Please enter the amount to pay: ";
 		cin >> payment;
 
-		if (!validator.cinTypeCheck() || payment <= 0)
+		if (!Validations::cinTypeCheck() || payment <= 0)
 		{
 			cout << "Invalid amount. Try again!" << endl;
 		}
@@ -553,24 +542,22 @@ void ShopSystem::placeOrder(const Checkout& order) const
 
 Date ShopSystem::readDate() const
 {
-	Validations validator;
 	int day, month, year;
 
 	cout << endl << "Fill in the date details.\n" << endl;
-	validator.dateValidation(day, month, year);
+	Validations::dateValidation(day, month, year);
 	return Date(day, month, year);
 }
 
 void ShopSystem::readTextForFeedback(string& text) const
 {
-	Validations validator;
 	bool isValid;
 
-	validator.cleanBuffer();
+	Validations::cleanBuffer();
 	do
 	{
 		cout << endl << "Please write your feedback here (up to 90 characters):" << endl;
-		isValid = validator.getInput(text, MAX_FEEDBACK_LENGTH);
+		isValid = Validations::getInput(text, MAX_FEEDBACK_LENGTH);
 		if (!isValid)
 		{
 			cout << "Invalid input length. Please write again!" << endl;
@@ -581,7 +568,6 @@ void ShopSystem::readTextForFeedback(string& text) const
 void ShopSystem::writeFeedback(User& user) const
 {
 	Customer* customer = dynamic_cast<Customer*>(&user); if (!customer) return;
-	Validations validator;
 	unsigned int index;
 
 	if (customer->getOrders().size() == 0)
@@ -593,7 +579,7 @@ void ShopSystem::writeFeedback(User& user) const
 		customer->showOrders();
 		cout << endl << "Choose the index of the order you wish to make the feedback about: ";
 		cin >> index;
-		if (!validator.cinTypeCheck() || !(1 <= index && index <= customer->getOrders().size()))
+		if (!Validations::cinTypeCheck() || !(1 <= index && index <= customer->getOrders().size()))
 		{
 			cout << "You don't have such order.\n" << endl;
 		}
@@ -604,7 +590,7 @@ void ShopSystem::writeFeedback(User& user) const
 			cout << *selectedOrder;
 			cout << "Pick the index of the product to write its seller the feedback: ";
 			cin >> index;
-			if (!validator.cinTypeCheck() || !(1 <= index && index <= selectedOrder->getChosenProducts().size()))
+			if (!Validations::cinTypeCheck() || !(1 <= index && index <= selectedOrder->getChosenProducts().size()))
 			{
 				cout << "You don't have such product in this order.\n" << endl;
 			}
@@ -624,7 +610,6 @@ void ShopSystem::writeFeedback(User& user) const
 
 void ShopSystem::compareUsersCartsAmount() const
 {
-	Validations validator;
 	int indexUser1 = 0, indexUser2 = 0;
 
 	if (users.size() < 2)
@@ -633,7 +618,7 @@ void ShopSystem::compareUsersCartsAmount() const
 	}
 	else
 	{
-		if (validator.areValidUsers(users, indexUser1, indexUser2))
+		if (Validations::areValidUsers(users, indexUser1, indexUser2))
 		{
 			Customer* customer1 = dynamic_cast<Customer*>(users[indexUser1]);
 			Customer* customer2 = dynamic_cast<Customer*>(users[indexUser2]);
@@ -658,15 +643,17 @@ void ShopSystem::compareUsersCartsAmount() const
 	}
 }
 
-void ShopSystem::loadAllUsers(const char* fileName)
+void ShopSystem::loadUsers(const char* fileName)
 {
 	int numOfUsers;
 	ifstream inFile(fileName, ios::binary | ios::in);
+
 	inFile.read((char*)&numOfUsers, sizeof(numOfUsers));
 	for (int i = 0; i < numOfUsers; i++)
 	{
 		users.push_back(UserAnalyzer::loadUser(inFile));
 	}
+
 	inFile.close();
 }
 
@@ -674,18 +661,19 @@ void ShopSystem::saveUsers(const char* fileName)
 {
 	int size = users.size();
 	ofstream outFile(fileName, ios::binary | ios::trunc);
+
 	outFile.write((const char*)&size, sizeof(size));
 	for (int i = 0; i < size; i++)
 	{
 		users[i]->saveType(outFile);
 		users[i]->save(outFile);
 	}
+
 	outFile.close();
 }
 
-User& ShopSystem::readUserData(UserType type) const
+User& ShopSystem::readUserData(UserAnalyzer::UserType type) const
 {
-	Validations validator;
 	string username, password;
 	string country, city, street;
 	int buildingNumber;
@@ -694,19 +682,19 @@ User& ShopSystem::readUserData(UserType type) const
 	cout << "We are using an universal and decentralized authentication." << endl;
 	cout << "Please fill in the following fields:\n" << endl;
 
-	validator.usernameValidation(username, users);
-	validator.passwordValidation(password);
-	validator.countryValidation(country);
-	validator.cityValidation(city);
-	validator.streetValidation(street);
-	validator.buildingNumberValidation(buildingNumber);
+	Validations::usernameValidation(username, users);
+	Validations::passwordValidation(password);
+	Validations::countryValidation(country);
+	Validations::cityValidation(city);
+	Validations::streetValidation(street);
+	Validations::buildingNumberValidation(buildingNumber);
 	cout << endl << "Registration completed successfully!\n" << endl;
 
 	switch (type)
 	{
-	case TypeSeller: // New seller
+	case UserAnalyzer::SELLER: // New seller
 		return *new Seller(username, password, Address(country, city, street, buildingNumber));
-	case TypeCustomer: // New customer
+	case UserAnalyzer::CUSTOMER: // New customer
 		return *new Customer(username, password, Address(country, city, street, buildingNumber));
 	default: // New seller-customer
 		return *new SellerCustomer(username, password, Address(country, city, street, buildingNumber));
@@ -715,15 +703,14 @@ User& ShopSystem::readUserData(UserType type) const
 
 Product& ShopSystem::readProductData(User& user) const
 {
-	Validations validator;
 	string productName;
 	float price;
 	int category;
 
 	cout << "Please fill in the following fields.\n" << endl;
-	validator.productNameValidation(productName, user);
-	validator.priceValidation(price);
-	validator.categoryValidation(category);
+	Validations::productNameValidation(productName, user);
+	Validations::priceValidation(price);
+	Validations::categoryValidation(category);
 	cout << endl << "Product added successfully!\n" << endl;
 
 	return *new Product(productName, price, (Product::Category)category, user);

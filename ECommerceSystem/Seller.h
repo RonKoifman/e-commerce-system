@@ -16,7 +16,7 @@ protected:
 
 public:
 	Seller(const string& username, const string& password, const Address& address); // C'tor
-	Seller(ifstream& inFile);
+	Seller(ifstream& inFile); // C'tor for file
 	Seller(const Seller& other) = delete; // Disable copy c'tor
 	const Seller& operator=(const Seller& other) = delete; // Disable operator=
 	virtual ~Seller(); // D'tor

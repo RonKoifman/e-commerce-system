@@ -5,47 +5,48 @@ Address::Address(const string& country, const string& city, const string& street
 {
 }
 
-Address::Address(ifstream& inFile)
+Address::Address(ifstream& inFile) // C'tor for file
 {
 	int len;
 	char temp[MAX_CHARACTERS];
-	//COUNTRY
+
+	// COUNTRY
 	inFile.read((char*)&len, sizeof(len));
 	inFile.read((char*)&temp, len); temp[len] = '\0';
 	country = temp;
 
-	//CITY
+	// CITY
 	inFile.read((char*)&len, sizeof(len));
 	inFile.read((char*)&temp, len); temp[len] = '\0';
 	city = temp;
 
-	//STREET
+	// STREET
 	inFile.read((char*)&len, sizeof(len));
 	inFile.read((char*)&temp, len); temp[len] = '\0';
 	street = temp;
 
-	//BUILDINGNUMBER
+	// BUILDING NUMBER
 	inFile.read((char*)&buildingNumber, sizeof(buildingNumber));
 }
 
 void Address::save(ofstream& outFile) const
 {
-	//COUNTRY
+	// COUNTRY
 	int len = country.length();
 	outFile.write((const char*)&len, sizeof(len));
 	outFile.write((const char*)country.c_str(), len);
 
-	//CITY
+	// CITY
 	len = city.length();
 	outFile.write((const char*)&len, sizeof(len));
 	outFile.write((const char*)city.c_str(), len);
 
-	//STREET
+	// STREET
 	len = street.length();
 	outFile.write((const char*)&len, sizeof(len));
 	outFile.write((const char*)street.c_str(), len);
 
-	//BUILDINGNUMBER
+	// BUILDING NUMBER
 	outFile.write((const char*)&buildingNumber, sizeof(buildingNumber));
 }
 

@@ -23,11 +23,11 @@ public:
 	void showCart() const;
 	void showOrders() const;
 	void initCart();
+	void addProductToCart(Product& chosenProduct);
+	void addOrder(Checkout& newOrder);
 	// Getters
 	const vector<Product*>& getCart() const;
-	vector<Product*>& getCart();
 	const vector<Checkout*>& getOrders() const;
-	vector<Checkout*>& getOrders();
 };
 
 #endif // __CUSTOMER_H

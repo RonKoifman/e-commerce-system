@@ -22,11 +22,11 @@ public:
 	virtual void show(ostream& os) const override;
 	void showFeedbacks() const;
 	void showProducts() const;
+	void addFeedback(Feedback& newFeedback);
+	void addProduct(Product& newProduct);
 	// Getters
 	const Array<Feedback*>& getFeedbacks() const;
-	Array<Feedback*>& getFeedbacks();
 	const vector<Product*>& getProducts() const;
-	vector<Product*>& getProducts();
 };
 
 #endif // __SELLER_H

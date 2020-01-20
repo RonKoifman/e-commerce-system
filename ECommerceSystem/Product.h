@@ -34,7 +34,7 @@ public:
 	Category getCategory() const;
 	User& getSeller() const;
 	const unsigned int getSerialNumber() const;
-	// Friend functions and classes
+	// Friends
 	friend class Validations;
 	friend ostream& operator<<(ostream& os, const Product& product);
 };

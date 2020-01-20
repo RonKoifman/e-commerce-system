@@ -17,13 +17,14 @@ public:
 	~Array() { delete[] arr; } // D'tor
 	Array(const Array& other) = delete; // Disable copy c'tor
 	const Array& operator=(const Array& other) = delete; // Disable operator=
-	T& operator[](int index) { return arr[index]; }
-	const Array& operator+=(T& newVal);
+	void push_back(const T& newItem); // Add item to array
+	T& operator[](int index) { return arr[index]; } // operator[]
+
 	// Getters
 	T* getArr() const { return arr; }
 	unsigned int getSize() const { return size; }
 
-	// Friend functions
+	// Friends
 	friend ostream& operator<<(ostream& os, const Array& arr)
 	{
 		os << typeid(**arr.arr).name() + 6 << "s: ";
@@ -45,21 +46,20 @@ public:
 };
 
 template<class T>
-const Array<T>& Array<T>::operator+=(T& newVal)
+void Array<T>::push_back(const T& newItem)
 {
-	T* temp = new T[size + 1]; // Create bigger array to add the new value
+	T* temp = new T[size + 1]; // Create bigger array to add the new item
 
 	// Move the pointers from the current array to temp
 	for (unsigned int i = 0; i < size; i++)
 	{
 		temp[i] = arr[i];
 	}
-	temp[size] = newVal; // Add the new value
+	temp[size] = newItem; // Add the new item
 	size++;
 
 	delete[] arr; // Free the current array
 	arr = temp; // Update array to temp
-	return *this;
 }
 
 #endif // __ARRAY_H

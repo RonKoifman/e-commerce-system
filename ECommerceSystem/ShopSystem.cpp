@@ -23,12 +23,12 @@ const string& ShopSystem::getName() const
 	return name;
 }
 
-vector<User*> ShopSystem::getUsers() const
+const vector<User*>& ShopSystem::getUsers() const
 {
 	return users;
 }
 
-vector<Product*> ShopSystem::getAllProducts() const
+const vector<Product*>& ShopSystem::getAllProducts() const
 {
 	return allProducts;
 }
@@ -247,7 +247,8 @@ bool ShopSystem::sellerMenu(User& user)
 		case AddNewProduct:
 		{
 			Product& newProduct = readProductData(*seller);
-			seller->getProducts().push_back(&newProduct); // Add the new product to its seller
+			seller->addProduct(newProduct);
+			//seller->getProducts().push_back(&newProduct); // Add the new product to its seller
 			this->addProductToStock(newProduct); // Add the new product to the general products array
 			break;
 		}
@@ -506,7 +507,7 @@ void ShopSystem::addProductToUserCart(User& user) const
 						if (!validator.isProductExists(allProducts[i]->getSerialNumber(), customer->getCart()))
 						{
 							// Add the chosen product to customer's cart
-							customer->getCart().push_back(allProducts[i]);
+							customer->addProductToCart(*allProducts[i]);
 							cout << "The product '" << allProducts[i]->getName() << "' added to cart successfully!\n" << endl;
 						}
 						else
@@ -552,7 +553,7 @@ void ShopSystem::checkout(User& user) const
 			cout << endl << *order;
 			placeOrder(*order);
 			customer->initCart(); // Initialize customer cart
-			customer->getOrders().push_back(order); // Add the new order to customer orders
+			customer->addOrder(*order); // Add the new order to customer orders
 		}
 	}
 }
@@ -661,8 +662,7 @@ void ShopSystem::writeFeedback(User& user) const
 				string text;
 
 				readTextForFeedback(text);
-				Feedback* feedback = new Feedback(user, *chosenProuct, readDate(), text);
-				seller->getFeedbacks() += feedback; // Add the feedback to its seller
+				seller->addFeedback(*new Feedback(user, *chosenProuct, readDate(), text)); // Add the feedback to its seller
 				cout << endl << "Your feedback to " << chosenProuct->getSeller().getUsername() << " added successfully!\n" << endl;
 			}
 		}

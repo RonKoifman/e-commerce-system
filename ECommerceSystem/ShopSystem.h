@@ -70,8 +70,8 @@ public:
 	void compareUsersCartsAmount() const;
 	// Getters
 	const string& getName() const;
-	vector<User*> getUsers() const;
-	vector<Product*> getAllProducts() const;
+	const vector<User*>& getUsers() const;
+	const vector<Product*>& getAllProducts() const;
 };
 
 #endif // __SHOP_SYSTEM_H

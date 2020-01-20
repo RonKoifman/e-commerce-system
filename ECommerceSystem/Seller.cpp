@@ -24,17 +24,7 @@ const Array<Feedback*>& Seller::getFeedbacks() const
 	return feedbacks;
 }
 
-Array<Feedback*>& Seller::getFeedbacks()
-{
-	return feedbacks;
-}
-
 const vector<Product*>& Seller::getProducts() const
-{
-	return products;
-}
-
-vector<Product*>& Seller::getProducts()
 {
 	return products;
 }
@@ -68,4 +58,14 @@ void Seller::showProducts() const
 			cout << *products[i] << endl;
 		}
 	}
+}
+
+void Seller::addFeedback(Feedback& newFeedback)
+{
+	feedbacks.push_back(&newFeedback);
+}
+
+void Seller::addProduct(Product& newProduct)
+{
+	products.push_back(&newProduct);
 }

@@ -11,17 +11,7 @@ const vector<Product*>& Checkout::getChosenProducts() const
 	return chosenProducts;
 }
 
-vector<Product*>& Checkout::getChosenProducts()
-{
-	return chosenProducts;
-}
-
 const vector<User*>& Checkout::getSellers() const
-{
-	return sellers;
-}
-
-vector<User*>& Checkout::getSellers()
 {
 	return sellers;
 }

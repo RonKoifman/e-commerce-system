@@ -25,7 +25,7 @@ public:
 	Product& getProduct() const;
 	const Date& getDate() const;
 	const string& getText() const;
-	// Friend functions
+	// Friends
 	friend ostream& operator<<(ostream& os, const Feedback& feedback);
 };
 

@@ -8,7 +8,7 @@ Address::Address(const string& country, const string& city, const string& street
 Address::Address(ifstream& inFile) // C'tor for file
 {
 	int len;
-	char temp[MAX_CHARACTERS];
+	char temp[MAX_CHARACTERS_TO_READ];
 
 	// COUNTRY
 	inFile.read((char*)&len, sizeof(len));

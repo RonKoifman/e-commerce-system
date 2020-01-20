@@ -32,7 +32,7 @@ public:
 	friend ostream& operator<<(ostream& os, const User& user);
 
 private:
-	static const int MAX_CHARACTERS = 20;
+	static const int MAX_CHARACTERS_TO_READ = 20;
 };
 
 #endif // __USER_H

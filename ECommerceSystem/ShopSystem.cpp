@@ -200,8 +200,7 @@ bool ShopSystem::sellerMenu(User& user)
 		case AddNewProduct:
 		{
 			Product& newProduct = readProductData(*seller);
-			seller->addProduct(newProduct);
-			//seller->getProducts().push_back(&newProduct); // Add the new product to its seller
+			seller->addProduct(newProduct); // Add the new product to its seller
 			this->addProductToStock(newProduct); // Add the new product to the general products array
 			break;
 		}

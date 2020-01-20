@@ -87,7 +87,7 @@ bool Validations::checkSpecialCharacters(const string& str)
 
 	while (str[i] != '\0')
 	{
-		if ((str[i] < '!') || (str[i] > '~'))  // All characters from '!' to '~'y' are allowed (excluding whitespaces and few extra chars)
+		if ((str[i] < '!') || (str[i] > '~')) // All characters from '!' to '~'y' are allowed (excluding whitespaces and few extra chars)
 		{
 			cout << "Invalid character found: '" << str[i] << "'" << ". Try again!" << endl;
 			return false;

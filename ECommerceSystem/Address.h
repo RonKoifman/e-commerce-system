@@ -25,7 +25,7 @@ public:
 	const string& getCity() const;
 	const string& getStreet() const;
 	int getBuildingNumber() const;
-	// Friend functions
+	// Friends
 	friend ostream& operator<<(ostream& os, const Address& address);
 };
 

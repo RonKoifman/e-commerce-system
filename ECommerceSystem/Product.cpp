@@ -60,7 +60,7 @@ ostream& operator<<(ostream& os, const Product& product)
 
 void Product::showCategory() const
 {
-	switch ((Category)category)
+	switch (category)
 	{
 	case Clothing:
 		cout << "Clothing" << endl;

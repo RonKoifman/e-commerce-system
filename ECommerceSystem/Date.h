@@ -20,7 +20,7 @@ public:
 	int getDay() const;
 	int getMonth() const;
 	int getYear() const;
-	// Friend functions
+	// Friends
 	friend ostream& operator<<(ostream& os, const Date& date);
 };
 

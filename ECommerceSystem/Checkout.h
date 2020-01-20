@@ -24,12 +24,10 @@ public:
 	void createNewOrder();
 	// Getters
 	const vector<Product*>& getChosenProducts() const;
-	vector<Product*>& getChosenProducts();
 	const vector<User*>& getSellers() const;
-	vector<User*>& getSellers();
 	User& getCustomer() const;
 	float getTotalPrice() const;
-	// Friend functions
+	// Friends
 	friend ostream& operator<<(ostream& os, const Checkout& checkout);
 };
 

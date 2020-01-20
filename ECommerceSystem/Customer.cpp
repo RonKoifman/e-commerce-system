@@ -41,17 +41,7 @@ const vector<Product*>& Customer::getCart() const
 	return cart;
 }
 
-vector<Product*>& Customer::getCart()
-{
-	return cart;
-}
-
 const vector<Checkout*>& Customer::getOrders() const
-{
-	return orders;
-}
-
-vector<Checkout*>& Customer::getOrders()
 {
 	return orders;
 }
@@ -100,4 +90,14 @@ void Customer::showOrders() const
 void Customer::initCart()
 {
 	cart.clear();
+}
+
+void Customer::addProductToCart(Product& chosenProduct)
+{
+	cart.push_back(&chosenProduct);
+}
+
+void Customer::addOrder(Checkout& newOrder)
+{
+	orders.push_back(&newOrder);
 }

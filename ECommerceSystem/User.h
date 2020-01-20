@@ -28,7 +28,7 @@ public:
 	const string& getUsername() const;
 	const string& getPassword() const;
 	const Address& getAddress() const;
-	// Friend functions
+	// Friends
 	friend ostream& operator<<(ostream& os, const User& user);
 };
 

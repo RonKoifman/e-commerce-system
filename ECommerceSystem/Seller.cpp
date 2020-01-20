@@ -6,6 +6,11 @@ Seller::Seller(const string& username, const string& password, const Address& ad
 {
 }
 
+Seller::Seller(ifstream& inFile)
+: User(inFile)
+{
+}
+
 Seller::~Seller() // D'tor
 {
 	for (unsigned int i = 0; i < products.size(); i++)

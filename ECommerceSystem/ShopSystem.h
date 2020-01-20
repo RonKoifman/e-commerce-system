@@ -4,6 +4,7 @@
 #include "Menu.h"
 #include "Checkout.h"
 #include "SellerCustomer.h"
+#include "UserAnalyzer.h"
 
 class ShopSystem
 {
@@ -68,6 +69,9 @@ public:
 	void placeOrder(const Checkout& order) const;
 	void writeFeedback(User& user) const;
 	void compareUsersCartsAmount() const;
+	void loadAllUsers(const char* fileName);
+	void saveUsers(const char* fileName);
+
 	// Getters
 	const string& getName() const;
 	vector<User*> getUsers() const;

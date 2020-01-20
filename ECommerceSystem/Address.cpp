@@ -5,6 +5,49 @@ Address::Address(const string& country, const string& city, const string& street
 {
 }
 
+Address::Address(ifstream& inFile)
+{
+	int len;
+	//COUNTRY
+	inFile.read((char*)&len, sizeof(len));
+	inFile.read((char*)&country, len);
+	//country[len] = '\0';
+
+	//CITY
+	inFile.read((char*)&len, sizeof(len));
+	inFile.read((char*)&city, len);
+	//city[len] = '\0';
+
+	//STREET
+	inFile.read((char*)&len, sizeof(len));
+	inFile.read((char*)&street, len);
+	//street[len] = '\0';
+
+	//BUILDINGNUMBER
+	inFile.read((char*)&buildingNumber, sizeof(buildingNumber));
+}
+
+void Address::save(ofstream& outFile) const
+{
+	//COUNTRY
+	int len = country.length();
+	outFile.write((const char*)&len, sizeof(len));
+	outFile.write((const char*)country.c_str(), len);
+
+	//CITY
+	len = city.length();
+	outFile.write((const char*)&len, sizeof(len));
+	outFile.write((const char*)city.c_str(), len);
+
+	//STREET
+	len = street.length();
+	outFile.write((const char*)&len, sizeof(len));
+	outFile.write((const char*)street.c_str(), len);
+
+	//BUILDINGNUMBER
+	outFile.write((const char*)&buildingNumber, sizeof(buildingNumber));
+}
+
 void Address::setCountry(const string& country)
 {
 	this->country = country;

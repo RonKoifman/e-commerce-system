@@ -3,10 +3,12 @@
 ShopSystem::ShopSystem(const string& name) // C'tor
 	: name(name)
 {
+	loadAllUsers("database.dat");
 }
 
 ShopSystem::~ShopSystem() // D'tor
 {
+	saveUsers("database.dat");
 	for (unsigned int i = 0; i < users.size(); i++)
 	{
 		delete users[i];
@@ -703,6 +705,36 @@ void ShopSystem::compareUsersCartsAmount() const
 			cout << "Invalid users selection!\n" << endl;
 		}
 	}
+}
+
+//User* ShopSystem::loadUser(ifstream& inFile)
+//{
+//	return nullptr;
+//}
+
+void ShopSystem::loadAllUsers(const char* fileName)
+{
+	int numOfUsers;
+	ifstream inFile(fileName, ios::binary | ios::in);
+	inFile.read((char*)&numOfUsers, sizeof(numOfUsers));
+	for (int i = 0; i < numOfUsers; i++)
+	{
+		users.push_back(UserAnalyzer::loadUser(inFile));
+	}
+	inFile.close();
+}
+
+void ShopSystem::saveUsers(const char* fileName)
+{
+	int size = users.size();
+	ofstream outFile(fileName, ios::binary | ios::trunc);
+	outFile.write((const char*)&size, sizeof(size));
+	for (int i = 0; i < size; i++)
+	{
+		users[i]->saveType(outFile);
+		users[i]->save(outFile);
+	}
+	outFile.close();
 }
 
 User& ShopSystem::readUserData(UserType type) const

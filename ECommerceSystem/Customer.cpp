@@ -6,6 +6,11 @@ Customer::Customer(const string& username, const string& password, const Address
 {
 }
 
+Customer::Customer(ifstream& inFile)
+	: User(inFile)
+{
+}
+
 Customer::~Customer() // D'tor
 {
 	for (unsigned int i = 0; i < orders.size(); i++)

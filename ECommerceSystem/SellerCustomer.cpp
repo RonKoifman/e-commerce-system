@@ -5,6 +5,11 @@ SellerCustomer::SellerCustomer(const string& username, const string& password, c
 {
 }
 
+SellerCustomer::SellerCustomer(ifstream& inFile)
+	: User(inFile), Seller(inFile), Customer(inFile)
+{
+}
+
 void SellerCustomer::show(ostream& os) const
 {
 	Seller::show(os);

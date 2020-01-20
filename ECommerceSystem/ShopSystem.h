@@ -48,9 +48,7 @@ public:
 	~ShopSystem(); // D'tor
 	const ShopSystem& operator+=(User& user);
 	void setName(const string& name);
-	void showCustomers() const;
-	void showSellers() const;
-	void showSellerCustomers() const;
+	void showSelectedUsers(const string& selectedUsersType) const;
 	void showAllProducts() const;
 	bool mainMenu();
 	bool sellerMenu(User& user);

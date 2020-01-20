@@ -4,9 +4,9 @@
 #pragma warning(disable: 4996)
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
-#include <fstream>
 using namespace std;
 
 #endif // __OUT_RESOURCES_H

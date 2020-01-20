@@ -18,6 +18,29 @@ void ShopSystem::setName(const string& name)
 	this->name = name;
 }
 
+void ShopSystem::showSelectedUsers(const string& selectedUsersType) const
+{
+	bool areFound = false;
+
+	for (unsigned int i = 0; i < users.size(); i++)
+	{
+		if (selectedUsersType.compare(typeid(*users[i]).name() + 6) == 0) // Match
+		{
+			if (!areFound)
+			{
+				cout << "Selected users:\n" << endl;
+				areFound = true;
+			}
+			cout << *users[i] << endl;
+		}
+	}
+
+	if (!areFound) // No users from the selected type were found
+	{
+		cout << "There are no registered users from this type yet.\n" << endl;
+	}
+}
+
 const string& ShopSystem::getName() const
 {
 	return name;
@@ -31,75 +54,6 @@ const vector<User*>& ShopSystem::getUsers() const
 const vector<Product*>& ShopSystem::getAllProducts() const
 {
 	return allProducts;
-}
-
-void ShopSystem::showCustomers() const
-{
-	bool isFound = false;
-
-	for (unsigned int i = 0; i < users.size(); i++)
-	{
-		if (typeid(*users[i]) == typeid(Customer)) // Print only customers
-		{
-			if (!isFound)
-			{
-				cout << ShopSystem::name << " customers:\n" << endl;
-				isFound = true;
-			}
-			cout << *users[i] << endl;
-		}
-	}
-
-	if (!isFound) // No customers found
-	{
-		cout << "There are no registered customers yet.\n" << endl;
-	}
-}
-
-void ShopSystem::showSellers() const
-{
-	bool isFound = false;
-
-	for (unsigned int i = 0; i < users.size(); i++)
-	{
-		if (typeid(*users[i]) == typeid(Seller)) // Print only sellers
-		{
-			if (!isFound)
-			{
-				cout << ShopSystem::name << " sellers:\n" << endl;
-				isFound = true;
-			}
-			cout << *users[i] << endl;
-		}
-	}
-
-	if (!isFound) // No sellers found
-	{
-		cout << "There are no registered sellers yet.\n" << endl;
-	}
-}
-
-void ShopSystem::showSellerCustomers() const
-{
-	bool isFound = false;
-
-	for (unsigned int i = 0; i < users.size(); i++)
-	{
-		if (typeid(*users[i]) == typeid(SellerCustomer)) // Print only seller-customers
-		{
-			if (!isFound)
-			{
-				cout << ShopSystem::name << " seller-customers:\n" << endl;
-				isFound = true;
-			}
-			cout << *users[i] << endl;
-		}
-	}
-
-	if (!isFound) // No seller-customers found
-	{
-		cout << "There are no registered seller-customers yet.\n" << endl;
-	}
 }
 
 void ShopSystem::showAllProducts() const
@@ -198,17 +152,17 @@ bool ShopSystem::mainMenu()
 	}
 	case ViewCustomers:
 	{
-		showCustomers();
+		showSelectedUsers("Customer");
 		break;
 	}
 	case ViewSellers:
 	{
-		showSellers();
+		showSelectedUsers("Seller");
 		break;
 	}
 	case ViewSC:
 	{
-		showSellerCustomers();
+		showSelectedUsers("SellerCustomer");
 		break;
 	}
 	case CompareCarts:
@@ -408,28 +362,25 @@ User* ShopSystem::loginUser() const
 	cout << "Password: ";
 	isValidPassword = validator.getInput(password, MAX_CHARACTERS);
 
-	if (!(isValidUsername && isValidPassword)) // One of the inputs not valid
+	if (isValidUsername && isValidPassword) // Both inputs are valid
 	{
-		cout << endl << "Wrong details. Login failed!\n" << endl;
-		return nullptr; // Invalid input - login failed
-	}
-
-	// Check if the entered username and password match to registered user
-	for (unsigned int i = 0; i < users.size(); i++)
-	{
-		if (users[i]->getUsername().compare(username) == 0)
+		// Check if the entered username and password match to registered user
+		for (unsigned int i = 0; i < users.size(); i++)
 		{
-			if (users[i]->getPassword().compare(password) == 0)
+			if (users[i]->getUsername().compare(username) == 0)
 			{
-				cout << "Logged in successfully!\n" << endl;
-				cout << "Welcome back " << users[i]->getUsername() << "!\n" << endl;
-				return users[i]; // User found
+				if (users[i]->getPassword().compare(password) == 0)
+				{
+					cout << "Logged in successfully!\n" << endl;
+					cout << "Welcome back " << users[i]->getUsername() << "!\n" << endl;
+					return users[i]; // User found
+				}
 			}
 		}
 	}
 
 	cout << endl << "Wrong details. Login failed!\n" << endl;
-	return nullptr; // User not found - login failed
+	return nullptr; // User not found or invalid input - login failed
 }
 
 void ShopSystem::searchProducts() const
@@ -437,7 +388,7 @@ void ShopSystem::searchProducts() const
 	Validations validator;
 	string productName;
 	int selection, numOfMatchingProducts = 0;
-	bool isFound = false;
+	bool areFound = false;
 
 	if (allProducts.size() == 0) // No products in the shop
 	{
@@ -462,10 +413,10 @@ void ShopSystem::searchProducts() const
 					{
 						if (allProducts[i]->getName().compare(productName) == 0) // Match
 						{
-							if (!isFound)
+							if (!areFound)
 							{
 								cout << "Products found:\n" << endl;
-								isFound = true;
+								areFound = true;
 							}
 
 							cout << numOfMatchingProducts + 1 << "." << *allProducts[i] << endl;
@@ -724,17 +675,14 @@ User& ShopSystem::readUserData(UserType type) const
 	validator.buildingNumberValidation(buildingNumber);
 	cout << endl << "Registration completed successfully!\n" << endl;
 
-	if (type == TypeSellerCustomer) // Seller-Customer
+	switch (type)
 	{
-		return *new SellerCustomer(username, password, Address(country, city, street, buildingNumber));
-	}
-	else if (type == TypeSeller) // Seller
-	{
+	case TypeSeller: // New seller
 		return *new Seller(username, password, Address(country, city, street, buildingNumber));
-	}
-	else // Customer
-	{
+	case TypeCustomer: // New customer
 		return *new Customer(username, password, Address(country, city, street, buildingNumber));
+	default: // New seller-customer
+		return *new SellerCustomer(username, password, Address(country, city, street, buildingNumber));
 	}
 }
 
@@ -749,7 +697,7 @@ Product& ShopSystem::readProductData(User& user) const
 	validator.productNameValidation(productName, user);
 	validator.priceValidation(price);
 	validator.categoryValidation(category);
-
 	cout << endl << "Product added successfully!\n" << endl;
+
 	return *new Product(productName, price, (Product::Category)category, user);
 }

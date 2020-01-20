@@ -19,10 +19,6 @@ bool Validations::getInput(string& str, const int maxLen)
 	// Invalid string length or an empty string
 	if (len > maxLen || len == 0)
 	{
-		if (len > 0)
-		{
-			cleanBuffer();
-		}
 		return false;
 	}
 
@@ -517,7 +513,7 @@ void Validations::dateValidation(int& day, int& month, int& year)
 	cin >> year;
 	while (!cinTypeCheck() || year != CURRENT_YEAR)
 	{
-		cout << "Invalid year. Try again!" << endl;
+		cout << "Invalid year. Enter the current year and try again!" << endl;
 		cout << "Please enter the year: ";
 		cin >> year;
 	}

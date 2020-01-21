@@ -11,15 +11,36 @@ User::User(ifstream& inFile) // C'tor for file
 	int len;
 	char temp[MAX_CHARACTERS_TO_READ + 1];
 
-	// USERNAME
+	// Username
 	inFile.read((char*)&len, sizeof(len));
 	inFile.read((char*)&temp, len); temp[len] = '\0';
 	username = temp;
 
-	// PASSWORD
+	// Password
 	inFile.read((char*)&len, sizeof(len));
 	inFile.read((char*)&temp, len); temp[len] = '\0';
 	password = temp;
+}
+
+void User::saveType(ofstream& outFile) const
+{
+	UserAnalyzer::UserType type = UserAnalyzer::getType(*this);
+	outFile.write((const char*)&type, sizeof(UserAnalyzer::UserType));
+}
+
+void User::save(ofstream& outFile) const
+{
+	address.save(outFile);
+
+	// Username
+	int len = username.length();
+	outFile.write((const char*)&len, sizeof(len));
+	outFile.write((const char*)username.c_str(), len);
+
+	// Password
+	len = password.length();
+	outFile.write((const char*)&len, sizeof(len));
+	outFile.write((const char*)password.c_str(), len);
 }
 
 void User::setUsername(const string& username)
@@ -56,27 +77,6 @@ void User::show(ostream& os) const
 {
 	os << "Username: " << username << endl;
 	os << "Address: " << address << endl;
-}
-
-void User::saveType(ofstream& outFile) const
-{
-	UserAnalyzer::UserType type = UserAnalyzer::getType(*this);
-	outFile.write((const char*)&type, sizeof(UserAnalyzer::UserType));
-}
-
-void User::save(ofstream& outFile) const
-{
-	address.save(outFile);
-
-	// USERNAME
-	int len = username.length();
-	outFile.write((const char*)&len, sizeof(len));
-	outFile.write((const char*)username.c_str(), len);
-
-	// PASSWORD
-	len = password.length();
-	outFile.write((const char*)&len, sizeof(len));
-	outFile.write((const char*)password.c_str(), len);
 }
 
 ostream& operator<<(ostream& os, const User& user)

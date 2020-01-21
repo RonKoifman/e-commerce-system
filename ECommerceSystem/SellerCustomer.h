@@ -1,5 +1,5 @@
-#ifndef __SELLERCUSTOMER_H
-#define __SELLERCUSTOMER_H
+#ifndef __SELLER_CUSTOMER_H
+#define __SELLER_CUSTOMER_H
 
 #include "Seller.h"
 #include "Customer.h"
@@ -14,4 +14,4 @@ public:
 	virtual void show(ostream& os) const override;
 };
 
-#endif // __SELLERCUSTOMER_H
+#endif // __SELLER_CUSTOMER_H

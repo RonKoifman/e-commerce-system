@@ -493,7 +493,7 @@ void ShopSystem::checkout(User& user) const
 		else
 		{
 			cout << endl << *order;
-			placeOrder(*order);
+			placeOrder(*order); // Place order
 			customer->initCart(); // Initialize customer cart
 			customer->addOrder(*order); // Add the new order to customer orders
 		}
@@ -691,11 +691,11 @@ User& ShopSystem::readUserData(UserAnalyzer::UserType type) const
 
 	switch (type)
 	{
-	case UserAnalyzer::SELLER: // New seller
+	case UserAnalyzer::SELLER:
 		return *new Seller(username, password, Address(country, city, street, buildingNumber));
-	case UserAnalyzer::CUSTOMER: // New customer
+	case UserAnalyzer::CUSTOMER:
 		return *new Customer(username, password, Address(country, city, street, buildingNumber));
-	default: // New seller-customer
+	default:
 		return *new SellerCustomer(username, password, Address(country, city, street, buildingNumber));
 	}
 }

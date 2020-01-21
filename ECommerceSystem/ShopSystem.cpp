@@ -650,7 +650,7 @@ void ShopSystem::loadUsers(const char* fileName)
 	inFile.read((char*)&numOfUsers, sizeof(numOfUsers));
 	for (int i = 0; i < numOfUsers; i++)
 	{
-		users.push_back(UserAnalyzer::loadUser(inFile));
+		users.push_back(&UserAnalyzer::loadUser(inFile));
 	}
 
 	inFile.close();

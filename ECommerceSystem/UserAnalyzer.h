@@ -6,8 +6,8 @@ class User;
 class UserAnalyzer
 {
 public:
-	enum UserType { SELLER, CUSTOMER, SELLER_CUSTOMER, UNKNOWN };
-	static User* loadUser(ifstream& inFile);
+	enum UserType { SELLER, CUSTOMER, SELLER_CUSTOMER };
+	static User& loadUser(ifstream& inFile);
 	static UserType getType(const User& user);
 };
 

@@ -1,7 +1,7 @@
 #include "SellerCustomer.h"
 #include "UserAnalyzer.h"
 
-User* UserAnalyzer::loadUser(ifstream& inFile)
+User& UserAnalyzer::loadUser(ifstream& inFile)
 {
 	UserType type;
 
@@ -10,13 +10,11 @@ User* UserAnalyzer::loadUser(ifstream& inFile)
 	switch (type)
 	{
 	case SELLER:
-		return new Seller(inFile);
+		return *new Seller(inFile);
 	case CUSTOMER:
-		return new Customer(inFile);
-	case SELLER_CUSTOMER:
-		return new SellerCustomer(inFile);
+		return *new Customer(inFile);
 	default:
-		return nullptr;
+		return *new SellerCustomer(inFile);
 	}
 }
 
@@ -30,12 +28,8 @@ UserAnalyzer::UserType UserAnalyzer::getType(const User& user)
 	{
 		return CUSTOMER;
 	}
-	else if (typeid(user) == typeid(SellerCustomer))
-	{
-		return SELLER_CUSTOMER;
-	}
 	else
 	{
-		return UNKNOWN;
+		return SELLER_CUSTOMER;
 	}
 }

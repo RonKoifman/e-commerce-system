@@ -9,7 +9,7 @@ User::User(ifstream& inFile) // C'tor for file
 	: address(Address(inFile))
 {
 	int len;
-	char temp[MAX_CHARACTERS_TO_READ];
+	char temp[MAX_CHARACTERS_TO_READ + 1];
 
 	// USERNAME
 	inFile.read((char*)&len, sizeof(len));

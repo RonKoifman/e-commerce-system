@@ -1,32 +1,34 @@
-1. Operator << was implemented in the following classes: address, checkout, date, feedback, product and user.
+1. We implemented Array template class as a pointers array. We use it as the feedbacks pointers array inside the seller class.
+
+2. Operator << was implemented in the following classes: address, checkout, date, feedback, product and user.
     The operator's test is reflected by any print during the program of these classes. 
 
-2. Operator += was implemented in shop-system class inside mainMenu function.
+3. Operator += was implemented in shop-system class inside mainMenu function.
     The operator's test is reflected by printing the users of the appropriate type and make sure that the new user is successfully added.
 
-3. Operator > was implemented in customer class.
+4. Operator > was implemented in customer class.
     The operator's test is reflected by a dedicated option in the main menu.
 
-4. In the printing functions of all the sellers and all the customers of the shop, seller-customer users are not included, with the aim of separating the types.
+5. In the printing functions of all the sellers and all the customers of the shop, seller-customer users are not included, with the aim of separating the types.
     There is an appropriate option in the main menu to view all the seller-customer users.
 
-5. We prevent seller-customer user from adding his own products to the cart, make an order with his own products or to write a feedback to himself
+6. We prevent seller-customer user from adding his own products to the cart, make an order with his own products or to write a feedback to himself
     because logically it's incorrect.
 
-6. We chose to implement users login to enter the system. There is an option to register as a new seller, new customer, new seller-customer
+7. We chose to implement users login to enter the system. There is an option to register as a new seller, new customer, new seller-customer
     or to sign in as an existing user.
 
-7. According to project instructions, there is no need to manage seller's stock. As a result of that, we don't allow a seller to add products with the same name.
+8. According to project instructions, there is no need to manage seller's stock. As a result of that, we don't allow a seller to add products with the same name.
     However, different sellers can add products with identical names but each of them will have unique serial number.
     Additionally, for the same reason we don't allow customers to add the same product (same serial number) to their cart or their order, although they can add
     products with identical names from different sellers.
 
-8. We decided to add both seller and customer the option of search a product by name and view all products in the shop.
+9. We decided to add both seller and customer the option of search a product by name and view all products in the shop.
     The reason is that customers need to know which products offered for sale so they can choose items to purchase, and logically sellers need to know
     their competitors products to do market survey and prices comparison.
    
-9. The option to place an order is available inside the checkout.
+10. The option to place an order is available inside the checkout.
 
-10. The options of view all existing sellers, customers and seller-customers available at the main login menu. 
+11. The options of view all existing sellers, customers and seller-customers available at the main login menu. 
 
-11. To create a reliable system there are a lot of validations we chose to do, so we created a separate class with all the validation functions.
+12. To create a reliable system there are a lot of validations we chose to do, so we created a separate class with all the validation functions.

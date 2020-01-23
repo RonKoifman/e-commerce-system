@@ -644,7 +644,7 @@ void ShopSystem::compareUsersCartsAmount() const
 
 void ShopSystem::loadUsers(const char* fileName)
 {
-	int numOfUsers;
+	int numOfUsers = 0;
 	ifstream inFile(fileName, ios::binary | ios::in);
 
 	inFile.read((char*)&numOfUsers, sizeof(numOfUsers));

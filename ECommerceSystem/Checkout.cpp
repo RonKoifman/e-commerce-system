@@ -28,8 +28,10 @@ User& Checkout::getCustomer() const
 
 ostream& operator<<(ostream& os, const Checkout& checkout)
 {
+	unsigned int numOfChosenProducts = checkout.chosenProducts.size();
+
 	os << "Chosen products:\n" << endl;
-	for (unsigned int i = 0; i < checkout.chosenProducts.size(); i++)
+	for (unsigned int i = 0; i < numOfChosenProducts; i++)
 	{
 		os << i + 1 << "." << *checkout.chosenProducts[i] << endl;
 		os << endl;
@@ -39,7 +41,9 @@ ostream& operator<<(ostream& os, const Checkout& checkout)
 
 void Checkout::calculateTotalPrice()
 {
-	for (unsigned int i = 0; i < chosenProducts.size(); i++)
+	unsigned int numOfChosenProducts = chosenProducts.size();
+
+	for (unsigned int i = 0; i < numOfChosenProducts; i++)
 	{
 		totalPrice += chosenProducts[i]->getPrice();
 	}
@@ -75,8 +79,10 @@ void Checkout::createNewOrder()
 
 void Checkout::showSellersNames() const
 {
+	unsigned int numOfSellers = sellers.size();
+
 	cout << "\tSellers names: " << sellers[0]->getUsername();
-	for (unsigned int i = 1; i < sellers.size(); i++)
+	for (unsigned int i = 1; i < numOfSellers; i++)
 	{
 		cout << ", " << sellers[i]->getUsername();
 	}
@@ -85,8 +91,10 @@ void Checkout::showSellersNames() const
 
 void Checkout::showProductsNames() const
 {
+	unsigned int numOfChosenProducts = chosenProducts.size();
+
 	cout << "Products names: " << chosenProducts[0]->getName();
-	for (unsigned int i = 1; i < chosenProducts.size(); i++) 
+	for (unsigned int i = 1; i < numOfChosenProducts; i++) 
 	{
 		cout << ", " << chosenProducts[i]->getName();
 	}

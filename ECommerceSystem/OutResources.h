@@ -2,6 +2,7 @@
 #define __OUT_RESOURCES_H
 
 #pragma warning(disable: 4996)
+#pragma warning(disable: 26812)
 
 #include <iostream>
 #include <fstream>

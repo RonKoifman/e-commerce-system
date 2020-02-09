@@ -20,18 +20,18 @@ private:
 	const unsigned int serialNumber;
 
 public:
-	Product(const string& name, float price, Category category, User& seller); // C'tor
+	Product(const string& name, float price, Product::Category category, User& seller); // C'tor
 	Product(const Product& other) = delete; // Disable copy c'tor
 	const Product& operator=(const Product& other) = delete; // Disable operator=
 	void showCategory() const;
 	// Setters
 	void setName(const string& name);
 	void setPrice(float price);
-	void setCategory(Category category);
+	void setCategory(Product::Category category);
 	// Getters
 	const string& getName() const;
 	float getPrice() const;
-	Category getCategory() const;
+	Product::Category getCategory() const;
 	User& getSeller() const;
 	const unsigned int getSerialNumber() const;
 	// Friends

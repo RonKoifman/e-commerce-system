@@ -3,15 +3,15 @@
 
 User& UserAnalyzer::loadUser(ifstream& inFile)
 {
-	UserType type;
+	UserAnalyzer::UserType type;
 
-	inFile.read((char*)&type, sizeof(UserType));
+	inFile.read((char*)&type, sizeof(UserAnalyzer::UserType));
 
 	switch (type)
 	{
-	case SELLER:
+	case TypeSeller:
 		return *new Seller(inFile);
-	case CUSTOMER:
+	case TypeCustomer:
 		return *new Customer(inFile);
 	default:
 		return *new SellerCustomer(inFile);
@@ -22,14 +22,14 @@ UserAnalyzer::UserType UserAnalyzer::getType(const User& user)
 {
 	if (typeid(user) == typeid(Seller))
 	{
-		return SELLER;
+		return UserType::TypeSeller;
 	}
 	else if (typeid(user) == typeid(Customer))
 	{
-		return CUSTOMER;
+		return UserType::TypeCustomer;
 	}
 	else
 	{
-		return SELLER_CUSTOMER;
+		return UserType::TypeSellerCustomer;
 	}
 }

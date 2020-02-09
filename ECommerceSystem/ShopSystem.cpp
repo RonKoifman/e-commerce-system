@@ -8,9 +8,11 @@ ShopSystem::ShopSystem(const string& name) // C'tor
 
 ShopSystem::~ShopSystem() // D'tor
 {
+	unsigned int numOfUsers = users.size();
+
 	saveUsers("database.dat"); // Save users data
 
-	for (unsigned int i = 0; i < users.size(); i++)
+	for (unsigned int i = 0; i < numOfUsers; i++)
 	{
 		delete users[i];
 	}
@@ -24,8 +26,9 @@ void ShopSystem::setName(const string& name)
 void ShopSystem::showSelectedUsers(const string& selectedUsersType) const
 {
 	bool areFound = false;
+	unsigned int numOfUsers = users.size();
 
-	for (unsigned int i = 0; i < users.size(); i++)
+	for (unsigned int i = 0; i < numOfUsers; i++)
 	{
 		if (selectedUsersType.compare(typeid(*users[i]).name() + 6) == 0) // Match
 		{
@@ -61,14 +64,16 @@ const vector<Product*>& ShopSystem::getAllProducts() const
 
 void ShopSystem::showAllProducts() const
 {
-	if (allProducts.size() == 0)
+	unsigned int numOfAllProducts = allProducts.size();
+
+	if (numOfAllProducts == 0)
 	{
 		cout << "There are no products in the shop yet.\n" << endl;
 	}
 	else
 	{
 		cout << name << " products:\n" << endl;
-		for (unsigned int i = 0; i < allProducts.size(); i++)
+		for (unsigned int i = 0; i < numOfAllProducts; i++)
 		{
 			cout << i + 1 << "." << *allProducts[i] << endl;
 			cout << endl;
@@ -90,11 +95,11 @@ bool ShopSystem::mainMenu()
 		return true; // cin failed - wrong input type. Go back to login menu
 	}
 
-	switch ((LoginOptions)selection)
+	switch ((ShopSystem::LoginOptions)selection)
 	{
 	case SignupNewSeller:
 	{
-		User& newSeller = readUserData(UserAnalyzer::SELLER);
+		User& newSeller = readUserData(UserAnalyzer::UserType::TypeSeller);
 		*this += newSeller; // Add new seller to users array
 		if (!sellerMenu(newSeller)) // Repeatedly show seller menu until he asks to exit
 		{
@@ -104,7 +109,7 @@ bool ShopSystem::mainMenu()
 	}
 	case SignupNewCustomer:
 	{
-		User& newCustomer = readUserData(UserAnalyzer::CUSTOMER);
+		User& newCustomer = readUserData(UserAnalyzer::UserType::TypeCustomer);
 		*this += newCustomer; // Add new customer to users array
 		if (!customerMenu(newCustomer)) // Repeatedly show customer menu until he asks to exit
 		{
@@ -114,7 +119,7 @@ bool ShopSystem::mainMenu()
 	}
 	case SignupNewSC:
 	{
-		User& newSC = readUserData(UserAnalyzer::SELLER_CUSTOMER);
+		User& newSC = readUserData(UserAnalyzer::UserType::TypeSellerCustomer);
 		*this += newSC; // Add new seller-customer to users array
 		if (!sellerCustomerMenu(newSC)) // Repeatedly show seller-customer menu until he asks to exit
 		{
@@ -195,7 +200,7 @@ bool ShopSystem::sellerMenu(User& user)
 	}
 	else // Valid type
 	{
-		switch ((SellerOptions)selection)
+		switch ((ShopSystem::SellerOptions)selection)
 		{
 		case AddNewProduct:
 		{
@@ -248,7 +253,7 @@ bool ShopSystem::customerMenu(User& user)
 	}
 	else
 	{
-		switch ((CustomerOptions)selection)
+		switch ((ShopSystem::CustomerOptions)selection)
 		{
 		case CustomerSearchProduct:
 		{
@@ -302,7 +307,7 @@ bool ShopSystem::sellerCustomerMenu(User& user)
 	}
 	else
 	{
-		switch ((SellerCustomerOptions)selection)
+		switch ((ShopSystem::SellerCustomerOptions)selection)
 		{
 		case ViewCustomerMenu:
 		{
@@ -347,6 +352,7 @@ User* ShopSystem::loginUser() const
 {
 	string username, password;
 	bool isValidUsername, isValidPassword;
+	unsigned int numOfUsers = users.size();
 
 	cout << "Please login with your credentials.\n" << endl;
 	Validations::cleanBuffer();
@@ -358,7 +364,7 @@ User* ShopSystem::loginUser() const
 	if (isValidUsername && isValidPassword) // Both inputs are valid
 	{
 		// Check if the entered username and password match to registered user
-		for (unsigned int i = 0; i < users.size(); i++)
+		for (unsigned int i = 0; i < numOfUsers; i++)
 		{
 			if (users[i]->getUsername().compare(username) == 0)
 			{
@@ -381,8 +387,9 @@ void ShopSystem::searchProducts() const
 	string productName;
 	int selection, numOfMatchingProducts = 0;
 	bool areFound = false;
+	unsigned int numOfAllProducts = allProducts.size();
 
-	if (allProducts.size() == 0) // No products in the shop
+	if (numOfAllProducts == 0) // No products in the shop
 	{
 		cout << "There are no products in the shop yet.\n" << endl;
 	}
@@ -390,7 +397,7 @@ void ShopSystem::searchProducts() const
 	{
 		if (Validations::searchProductSelectionValidation(selection)) // Selection validation
 		{
-			if ((SearchProductOptions)selection == AllProducts)
+			if ((ShopSystem::SearchProductOptions)selection == AllProducts)
 			{
 				showAllProducts(); // Show all the products in the shop
 			}
@@ -401,7 +408,7 @@ void ShopSystem::searchProducts() const
 				if (Validations::getInput(productName, MAX_PRODUCT_NAME_LENGTH))
 				{
 					// Search for matching products in the general products array
-					for (unsigned int i = 0; i < allProducts.size(); i++)
+					for (unsigned int i = 0; i < numOfAllProducts; i++)
 					{
 						if (allProducts[i]->getName().compare(productName) == 0) // Match
 						{
@@ -431,16 +438,17 @@ void ShopSystem::addProductToUserCart(User& user) const
 {
 	Customer* customer = dynamic_cast<Customer*>(&user); if (!customer) return;
 	unsigned int productID = 0;
+	unsigned int numOfAllProducts = allProducts.size();
 
-	if (allProducts.size() == 0) // No products in the shop
+	if (numOfAllProducts == 0) // No products in the shop
 	{
 		cout << "There are no available products at the moment in the shop.\n" << endl;
 	}
 	else
 	{
-		if (Validations::productSerialNumberValidation(productID, allProducts.size())) // Valid product ID
+		if (Validations::productSerialNumberValidation(productID, numOfAllProducts)) // Valid product ID
 		{
-			for (unsigned int i = 0; i < allProducts.size(); i++)
+			for (unsigned int i = 0; i < numOfAllProducts; i++)
 			{
 				if (productID == allProducts[i]->getSerialNumber()) // Match
 				{
@@ -644,11 +652,11 @@ void ShopSystem::compareUsersCartsAmount() const
 
 void ShopSystem::loadUsers(const char* fileName)
 {
-	int numOfUsers = 0;
+	unsigned int numOfUsers = 0;
 	ifstream inFile(fileName, ios::binary | ios::in);
 
 	inFile.read((char*)&numOfUsers, sizeof(numOfUsers));
-	for (int i = 0; i < numOfUsers; i++)
+	for (unsigned int i = 0; i < numOfUsers; i++)
 	{
 		users.push_back(&UserAnalyzer::loadUser(inFile));
 	}
@@ -658,11 +666,11 @@ void ShopSystem::loadUsers(const char* fileName)
 
 void ShopSystem::saveUsers(const char* fileName)
 {
-	int size = users.size();
+	unsigned int numOfUsers = users.size();
 	ofstream outFile(fileName, ios::binary | ios::trunc);
 
-	outFile.write((const char*)&size, sizeof(size));
-	for (int i = 0; i < size; i++)
+	outFile.write((const char*)&numOfUsers, sizeof(numOfUsers));
+	for (unsigned int i = 0; i < numOfUsers; i++)
 	{
 		users[i]->saveType(outFile);
 		users[i]->save(outFile);
@@ -691,9 +699,9 @@ User& ShopSystem::readUserData(UserAnalyzer::UserType type) const
 
 	switch (type)
 	{
-	case UserAnalyzer::SELLER:
+	case UserAnalyzer::UserType::TypeSeller:
 		return *new Seller(username, password, Address(country, city, street, buildingNumber));
-	case UserAnalyzer::CUSTOMER:
+	case UserAnalyzer::UserType::TypeCustomer:
 		return *new Customer(username, password, Address(country, city, street, buildingNumber));
 	default:
 		return *new SellerCustomer(username, password, Address(country, city, street, buildingNumber));

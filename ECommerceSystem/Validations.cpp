@@ -281,7 +281,9 @@ void Validations::buildingNumberValidation(int& buildingNumber)
 
 bool Validations::checkUniqueUsername(const string& username, const vector<User*>& users)
 {
-	for (unsigned int i = 0; i < users.size(); i++) // Search through all users
+	unsigned int numOfUsers = users.size();
+
+	for (unsigned int i = 0; i < numOfUsers; i++) // Search through all users
 	{
 		if (users[i]->getUsername().compare(username) == 0) // Username taken
 		{
@@ -330,7 +332,9 @@ void Validations::productNameValidation(string& productName, User& user)
 
 bool Validations::isProductExists(int productSerialNumber, const vector<Product*>& products)
 {
-	for (unsigned int i = 0; i < products.size(); i++)
+	unsigned int numOfProducts = products.size();
+
+	for (unsigned int i = 0; i < numOfProducts; i++)
 	{
 		if (productSerialNumber == products[i]->getSerialNumber())
 		{
@@ -343,7 +347,9 @@ bool Validations::isProductExists(int productSerialNumber, const vector<Product*
 
 bool Validations::isProductNameExists(const string& productName, const vector<Product*>& products)
 {
-	for (unsigned int i = 0; i < products.size(); i++)
+	unsigned int numOfProducts = products.size();
+
+	for (unsigned int i = 0; i < numOfProducts; i++)
 	{
 		if (products[i]->getName().compare(productName) == 0)
 		{
@@ -410,7 +416,7 @@ bool Validations::searchProductSelectionValidation(int& selection)
 	cin >> selection;
 	cout << endl;
 
-	if (cinTypeCheck() && (selection == ShopSystem::AllProducts || selection == ShopSystem::SpecificProductName))
+	if (cinTypeCheck() && (selection == ShopSystem::SearchProductOptions::AllProducts || selection == ShopSystem::SearchProductOptions::SpecificProductName))
 	{
 		return true;
 	}
@@ -442,13 +448,14 @@ Product* Validations::indexOfCheckoutProductValidation(unsigned int& index, cons
 {
 	bool isValidIndex = false;
 	Product* product = nullptr;
+	unsigned int numOfProductsInCart = cart.size();
 
 	while (!isValidIndex)
 	{
 		cout << "Chosen product index: ";
 		cin >> index;
 
-		if (!cinTypeCheck() || !(1 <= index && index <= cart.size()))
+		if (!cinTypeCheck() || !(1 <= index && index <= numOfProductsInCart))
 		{
 			if (index == -1)
 			{
@@ -478,7 +485,9 @@ Product* Validations::indexOfCheckoutProductValidation(unsigned int& index, cons
 
 bool Validations::isSellerExists(const User& seller, const vector<User*>& sellers)
 {
-	for (unsigned int i = 0; i < sellers.size(); i++)
+	unsigned int numOfSellers = sellers.size();
+
+	for (unsigned int i = 0; i < numOfSellers; i++)
 	{
 		if (sellers[i]->getUsername().compare(seller.getUsername()) == 0)
 		{
@@ -524,6 +533,7 @@ bool Validations::areValidUsers(const vector<User*>& users, int& indexUser1, int
 	string username1, username2;
 	int usersFound = 0;
 	bool isUsername1Valid, isUsername2Valid;
+	unsigned int numOfUsers = users.size();
 
 	cleanBuffer();
 	cout << "Please enter the first username of a customer or a seller-customer for comparison:" << endl;
@@ -538,7 +548,7 @@ bool Validations::areValidUsers(const vector<User*>& users, int& indexUser1, int
 		return false;
 	}
 
-	for (unsigned int i = 0; i < users.size() && usersFound < 2; i++)
+	for (unsigned int i = 0; i < numOfUsers && usersFound < 2; i++)
 	{
 		if (users[i]->getUsername().compare(username1) == 0)
 		{

@@ -13,7 +13,9 @@ Customer::Customer(ifstream& inFile) // C'tor for file
 
 Customer::~Customer() // D'tor
 {
-	for (unsigned int i = 0; i < orders.size(); i++)
+	unsigned int numOfOrders = orders.size();
+
+	for (unsigned int i = 0; i < numOfOrders; i++)
 	{
 		delete orders[i];
 	}
@@ -27,8 +29,9 @@ bool Customer::operator>(const Customer& other) const
 float Customer::calculateCartTotalAmount() const
 {
 	float res = 0;
+	unsigned int numOfProductsInCart = cart.size();
 
-	for (unsigned int i = 0; i < cart.size(); i++)
+	for (unsigned int i = 0; i < numOfProductsInCart; i++)
 	{
 		res += cart[i]->getPrice();
 	}
@@ -53,14 +56,16 @@ void Customer::show(ostream& os) const
 
 void Customer::showCart() const
 {
-	if (cart.size() == 0)
+	unsigned int numOfProductsInCart = cart.size();
+
+	if (numOfProductsInCart == 0)
 	{
 		cout << "No products in the cart.\n" << endl;
 	}
 	else
 	{
 		cout << "Your cart:\n" << endl;
-		for (unsigned int i = 0; i < cart.size(); i++)
+		for (unsigned int i = 0; i < numOfProductsInCart; i++)
 		{
 			cout << i + 1 << "." << *cart[i] << endl;
 			cout << endl;
@@ -70,14 +75,16 @@ void Customer::showCart() const
 
 void Customer::showOrders() const
 {
-	if (orders.size() == 0)
+	unsigned int numOfOrders = orders.size();
+
+	if (numOfOrders == 0)
 	{
 		cout << "No orders yet.\n" << endl;
 	}
 	else
 	{
 		cout << "Your orders:\n" << endl;
-		for (unsigned int i = 0; i < orders.size(); i++)
+		for (unsigned int i = 0; i < numOfOrders; i++)
 		{
 			cout << i + 1 << ". \t";
 			orders[i]->showProductsNames();

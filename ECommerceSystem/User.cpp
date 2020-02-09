@@ -30,6 +30,7 @@ void User::saveType(ofstream& outFile) const
 
 void User::save(ofstream& outFile) const
 {
+	// Address
 	address.save(outFile);
 
 	// Username

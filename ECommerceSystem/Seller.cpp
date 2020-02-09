@@ -13,12 +13,15 @@ Seller::Seller(ifstream& inFile) // C'tor for file
 
 Seller::~Seller() // D'tor
 {
-	for (unsigned int i = 0; i < products.size(); i++)
+	unsigned int numOfProducts = products.size();
+	unsigned int numOfFeedbacks = feedbacks.getSize();
+
+	for (unsigned int i = 0; i < numOfProducts; i++)
 	{
 		delete products[i];
 	}
 
-	for (unsigned int i = 0; i < feedbacks.getSize(); i++)
+	for (unsigned int i = 0; i < numOfFeedbacks; i++)
 	{
 		delete feedbacks[i];
 	}
@@ -48,16 +51,18 @@ void Seller::showFeedbacks() const
 
 void Seller::showProducts() const
 {
+	unsigned int numOfProducts = products.size();
+
 	cout << "Products: ";
 
-	if (products.size() == 0)
+	if (numOfProducts == 0)
 	{
 		cout << "none." << endl;
 	}
 	else
 	{
 		cout << endl;
-		for (unsigned int i = 0; i < products.size(); i++)
+		for (unsigned int i = 0; i < numOfProducts; i++)
 		{
 			cout << i + 1 << ". ";
 			cout << *products[i] << endl;

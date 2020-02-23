@@ -1,7 +1,7 @@
 #ifndef __PRODUCT_H
 #define __PRODUCT_H
 
-#include "OutResources.h"
+#include "Utils.h"
 
 class User;
 

@@ -1,7 +1,7 @@
 #ifndef __ARRAY_H
 #define __ARRAY_H
 
-#include "OutResources.h"
+#include "Utils.h"
 
 // This template Array class accepts a pointer type which its class must have an operator<<
 

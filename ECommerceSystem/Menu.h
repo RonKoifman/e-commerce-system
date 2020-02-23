@@ -1,7 +1,7 @@
 #ifndef __MENU_H
 #define __MENU_H
 
-#include "OutResources.h"
+#include "Utils.h"
 
 class Menu
 {

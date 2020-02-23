@@ -1,5 +1,5 @@
-#ifndef __OUT_RESOURCES_H
-#define __OUT_RESOURCES_H
+#ifndef __UTILS_H
+#define __UTILS_H
 
 #pragma warning(disable: 4996)
 #pragma warning(disable: 26812)
@@ -10,4 +10,4 @@
 #include <vector>
 using namespace std;
 
-#endif // __OUT_RESOURCES_H
+#endif // __UTILS_H

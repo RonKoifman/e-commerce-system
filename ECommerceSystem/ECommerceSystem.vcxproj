@@ -149,13 +149,13 @@
     <ClInclude Include="Date.h" />
     <ClInclude Include="Feedback.h" />
     <ClInclude Include="Menu.h" />
-    <ClInclude Include="Utils.h" />
     <ClInclude Include="Product.h" />
     <ClInclude Include="Seller.h" />
     <ClInclude Include="SellerCustomer.h" />
     <ClInclude Include="ShopSystem.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UserAnalyzer.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="Validations.h" />
   </ItemGroup>
   <ItemGroup>

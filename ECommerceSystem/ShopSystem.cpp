@@ -1,7 +1,6 @@
 #include "ShopSystem.h"
 
-ShopSystem::ShopSystem(const string& name) // C'tor
-	: name(name)
+ShopSystem::ShopSystem() // C'tor
 {
 	loadUsers("database.dat"); // Load users data if exists
 }
@@ -16,11 +15,6 @@ ShopSystem::~ShopSystem() // D'tor
 	{
 		delete users[i];
 	}
-}
-
-void ShopSystem::setName(const string& name)
-{
-	this->name = name;
 }
 
 void ShopSystem::showSelectedUsers(const string& selectedUsersType) const
@@ -47,11 +41,6 @@ void ShopSystem::showSelectedUsers(const string& selectedUsersType) const
 	}
 }
 
-const string& ShopSystem::getName() const
-{
-	return name;
-}
-
 const vector<User*>& ShopSystem::getUsers() const
 {
 	return users;
@@ -72,13 +61,26 @@ void ShopSystem::showAllProducts() const
 	}
 	else
 	{
-		cout << name << " products:\n" << endl;
+		cout << "Shop's products:\n" << endl;
 		for (unsigned int i = 0; i < numOfAllProducts; i++)
 		{
 			cout << i + 1 << "." << *allProducts[i] << endl;
 			cout << endl;
 		}
 	}
+}
+
+void ShopSystem::runProgram()
+{
+	bool toContinue = true;
+
+	cout << "Welcome to the shop!\n" << endl;
+	while (toContinue)
+	{
+		toContinue = mainMenu();
+	}
+
+	cout << "Thanks for visiting our shop! See you next time!" << endl;
 }
 
 bool ShopSystem::mainMenu()
@@ -427,7 +429,7 @@ void ShopSystem::searchProducts() const
 
 				if (numOfMatchingProducts == 0) // No matching products found
 				{
-					cout << "No products found. Keep searching! We have it all in " << ShopSystem::name << ".\n" << endl;
+					cout << "No products found. Keep searching!\n" << endl;
 				}
 			}
 		}
@@ -686,7 +688,6 @@ User& ShopSystem::readUserData(UserAnalyzer::UserType type) const
 	int buildingNumber;
 
 	cout << "Thanks for joining in!"<< endl;
-	cout << "We are using an universal and decentralized authentication." << endl;
 	cout << "Please fill in the following fields:\n" << endl;
 
 	Validations::usernameValidation(username, users);

@@ -9,7 +9,6 @@
 class ShopSystem
 {
 private:
-	string name;
 	vector<User*> users;
 	vector<Product*> allProducts;
 
@@ -39,14 +38,14 @@ public:
 		AllProducts = 1, SpecificProductName = 2
 	};
 
-	ShopSystem(const string& name); // C'tor
+	ShopSystem(); // C'tor
 	ShopSystem(const ShopSystem& other) = delete; // Disable copy c'tor
 	const ShopSystem& operator=(const ShopSystem& other) = delete; // Disable operator=
 	~ShopSystem(); // D'tor
 	const ShopSystem& operator+=(User& user);
-	void setName(const string& name);
 	void showSelectedUsers(const string& selectedUsersType) const;
 	void showAllProducts() const;
+	void runProgram();
 	bool mainMenu();
 	bool sellerMenu(User& user);
 	bool customerMenu(User& user);

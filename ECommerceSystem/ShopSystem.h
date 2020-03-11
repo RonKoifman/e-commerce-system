@@ -65,7 +65,6 @@ public:
 	void loadUsers(const char* fileName);
 	void saveUsers(const char* fileName);
 	// Getters
-	const string& getName() const;
 	const vector<User*>& getUsers() const;
 	const vector<Product*>& getAllProducts() const;
 };

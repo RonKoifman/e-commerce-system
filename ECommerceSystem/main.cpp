@@ -4,5 +4,5 @@ int main()
 {
 	ShopSystem shop;
 	
-	shop.runProgram();
+	shop.runShop();
 }

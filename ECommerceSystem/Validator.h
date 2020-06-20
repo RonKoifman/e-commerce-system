@@ -1,5 +1,5 @@
-#ifndef __VALIDATIONS_H
-#define __VALIDATIONS_H
+#ifndef __VALIDATOR_H
+#define __VALIDATOR_H
 
 // Consts declaration
 const int MAX_CHARACTERS = 20;
@@ -9,7 +9,7 @@ const int MAX_FEEDBACK_LENGTH = 90;
 const int MAX_CATEGORIES = 4;
 const int CURRENT_YEAR = 2020;
 
-class Validations
+class Validator
 {
 public:
 	static void cleanBuffer();
@@ -40,4 +40,4 @@ public:
 	static bool areValidUsers(const vector<User*>& users, int& indexUser1, int& indexUser2);
 };
 
-#endif // __VALIDATIONS_H
+#endif // __VALIDATOR_H

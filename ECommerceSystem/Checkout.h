@@ -15,9 +15,9 @@ private:
 	float totalPrice; 
 
 public:
-	Checkout(User& customer); // C'tor
-	Checkout(const Checkout& other) = delete; // Disable copy c'tor
-	const Checkout& operator=(const Checkout& other) = delete; // Disable operator=
+	Checkout(User& customer);
+	Checkout(const Checkout& other) = delete;
+	const Checkout& operator=(const Checkout& other) = delete;
 	void showSellersNames() const;
 	void showProductsNames() const;
 	void calculateTotalPrice();

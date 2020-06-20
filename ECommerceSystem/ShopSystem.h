@@ -38,14 +38,14 @@ public:
 		AllProducts = 1, SpecificProductName = 2
 	};
 
-	ShopSystem(); // C'tor
-	ShopSystem(const ShopSystem& other) = delete; // Disable copy c'tor
-	const ShopSystem& operator=(const ShopSystem& other) = delete; // Disable operator=
-	~ShopSystem(); // D'tor
+	ShopSystem();
+	ShopSystem(const ShopSystem& other) = delete;
+	const ShopSystem& operator=(const ShopSystem& other) = delete;
+	~ShopSystem();
 	const ShopSystem& operator+=(User& user);
 	void showSelectedUsers(const string& selectedUsersType) const;
 	void showAllProducts() const;
-	void runProgram();
+	void runShop();
 	bool mainMenu();
 	bool sellerMenu(User& user);
 	bool customerMenu(User& user);

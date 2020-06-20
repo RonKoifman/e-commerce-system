@@ -1,7 +1,7 @@
 #include "ShopSystem.h"
-#include "Validations.h"
+#include "Validator.h"
 
-void Validations::cleanBuffer()
+void Validator::cleanBuffer()
 {
 	char ch;
 
@@ -11,7 +11,7 @@ void Validations::cleanBuffer()
 	} while (ch != EOF && ch != '\n');
 }
 
-bool Validations::getInput(string& str, const int maxLen)
+bool Validator::getInput(string& str, const int maxLen)
 {
 	getline(cin, str);
 	int len = str.length();
@@ -25,7 +25,7 @@ bool Validations::getInput(string& str, const int maxLen)
 	return true; // Valid length
 }
 
-bool Validations::cinTypeCheck()
+bool Validator::cinTypeCheck()
 {
 	if (cin.fail())
 	{
@@ -37,7 +37,7 @@ bool Validations::cinTypeCheck()
 	return true; // Valid type
 }
 
-bool Validations::checkLettersAndDigits(const string& str)
+bool Validator::checkLettersAndDigits(const string& str)
 {
 	int i = 0;
 
@@ -48,12 +48,14 @@ bool Validations::checkLettersAndDigits(const string& str)
 			cout << "Invalid character found: '" << str[i] << "'" << endl;
 			return false;
 		}
+
 		i++;
 	}
+
 	return true;
 }
 
-bool Validations::checkLettersDigitsAndSpace(const string& str)
+bool Validator::checkLettersDigitsAndSpace(const string& str)
 {
 	int i = 0;
 
@@ -75,13 +77,14 @@ bool Validations::checkLettersDigitsAndSpace(const string& str)
 				return false;
 			}
 		}
+
 		i++;
 	}
 
 	return true;
 }
 
-bool Validations::checkSpecialCharacters(const string& str)
+bool Validator::checkSpecialCharacters(const string& str)
 {
 	int i = 0;
 
@@ -92,12 +95,14 @@ bool Validations::checkSpecialCharacters(const string& str)
 			cout << "Invalid character found: '" << str[i] << "'" << ". Try again!" << endl;
 			return false;
 		}
+
 		i++;
 	}
+
 	return true;
 }
 
-bool Validations::checkLettersAndSpace(const string& str)
+bool Validator::checkLettersAndSpace(const string& str)
 {
 	int i = 0;
 
@@ -119,13 +124,14 @@ bool Validations::checkLettersAndSpace(const string& str)
 				return false;
 			}
 		}
+
 		i++;
 	}
 
 	return true;
 }
 
-void Validations::usernameValidation(string& username, const vector<User*>& users)
+void Validator::usernameValidation(string& username, const vector<User*>& users)
 {
 	bool isValid = false;
 
@@ -152,7 +158,7 @@ void Validations::usernameValidation(string& username, const vector<User*>& user
 	}
 }
 
-void Validations::passwordValidation(string& password)
+void Validator::passwordValidation(string& password)
 {
 	bool isValid = false;
 
@@ -181,7 +187,7 @@ void Validations::passwordValidation(string& password)
 	}
 }
 
-void Validations::countryValidation(string& country)
+void Validator::countryValidation(string& country)
 {
 	bool isValid = false;
 
@@ -207,7 +213,7 @@ void Validations::countryValidation(string& country)
 	}
 }
 
-void Validations::cityValidation(string& city)
+void Validator::cityValidation(string& city)
 {
 	bool isValid = false;
 
@@ -233,7 +239,7 @@ void Validations::cityValidation(string& city)
 	}
 }
 
-void Validations::streetValidation(string& street)
+void Validator::streetValidation(string& street)
 {
 	bool isValid = false;
 
@@ -259,7 +265,7 @@ void Validations::streetValidation(string& street)
 	}
 }
 
-void Validations::buildingNumberValidation(int& buildingNumber)
+void Validator::buildingNumberValidation(int& buildingNumber)
 {
 	bool isValid = false;
 
@@ -279,7 +285,7 @@ void Validations::buildingNumberValidation(int& buildingNumber)
 	}
 }
 
-bool Validations::checkUniqueUsername(const string& username, const vector<User*>& users)
+bool Validator::checkUniqueUsername(const string& username, const vector<User*>& users)
 {
 	unsigned int numOfUsers = users.size();
 
@@ -295,10 +301,14 @@ bool Validations::checkUniqueUsername(const string& username, const vector<User*
 	return true;
 }
 
-void Validations::productNameValidation(string& productName, User& user)
+void Validator::productNameValidation(string& productName, User& user)
 {
-	Seller* seller = dynamic_cast<Seller*>(&user); if (!seller) return;
 	bool isValid = false;
+	Seller* seller = dynamic_cast<Seller*>(&user);
+	if (seller == nullptr)
+	{
+		return;
+	}
 
 	cleanBuffer();
 	while (!isValid)
@@ -330,7 +340,7 @@ void Validations::productNameValidation(string& productName, User& user)
 	}
 }
 
-bool Validations::isProductExists(int productSerialNumber, const vector<Product*>& products)
+bool Validator::isProductExists(int productSerialNumber, const vector<Product*>& products)
 {
 	unsigned int numOfProducts = products.size();
 
@@ -345,7 +355,7 @@ bool Validations::isProductExists(int productSerialNumber, const vector<Product*
 	return false;
 }
 
-bool Validations::isProductNameExists(const string& productName, const vector<Product*>& products)
+bool Validator::isProductNameExists(const string& productName, const vector<Product*>& products)
 {
 	unsigned int numOfProducts = products.size();
 
@@ -360,14 +370,18 @@ bool Validations::isProductNameExists(const string& productName, const vector<Pr
 	return false;
 }
 
-bool Validations::isProductBelongsToUser(User& user, int productSerialNumber)
+bool Validator::isProductBelongsToUser(User& user, int productSerialNumber)
 {
-	SellerCustomer* sc = dynamic_cast<SellerCustomer*>(&user); if (!sc) return false;
+	SellerCustomer* sc = dynamic_cast<SellerCustomer*>(&user);
+	if (sc == nullptr)
+	{
+		return false;
+	}
 
 	return isProductExists(productSerialNumber, sc->getProducts());
 }
 
-void Validations::priceValidation(float& price)
+void Validator::priceValidation(float& price)
 {
 	bool isValid = false;
 
@@ -387,7 +401,7 @@ void Validations::priceValidation(float& price)
 	}
 }
 
-void Validations::categoryValidation(int& category)
+void Validator::categoryValidation(int& category)
 {
 	bool isValid = false;
 
@@ -407,7 +421,7 @@ void Validations::categoryValidation(int& category)
 	}
 }
 
-bool Validations::searchProductSelectionValidation(int& selection)
+bool Validator::searchProductSelectionValidation(int& selection)
 {
 	cout << "Press 1 to show all products in the shop." << endl;
 	cout << "Press 2 to search a product by name." << endl;
@@ -427,7 +441,7 @@ bool Validations::searchProductSelectionValidation(int& selection)
 	}
 }
 
-bool Validations::productSerialNumberValidation(unsigned int& productID, const int numOfAllProducts)
+bool Validator::productSerialNumberValidation(unsigned int& productID, const int numOfAllProducts)
 {
 	cout << "Please provide the serial number of wanted product to add to cart: ";
 	cin >> productID;
@@ -444,7 +458,7 @@ bool Validations::productSerialNumberValidation(unsigned int& productID, const i
 	}
 }
 
-Product* Validations::indexOfCheckoutProductValidation(unsigned int& index, const vector<Product*>& cart, const vector<Product*>& chosenProducts)
+Product* Validator::indexOfCheckoutProductValidation(unsigned int& index, const vector<Product*>& cart, const vector<Product*>& chosenProducts)
 {
 	bool isValidIndex = false;
 	Product* product = nullptr;
@@ -483,7 +497,7 @@ Product* Validations::indexOfCheckoutProductValidation(unsigned int& index, cons
 	return product;
 }
 
-bool Validations::isSellerExists(const User& seller, const vector<User*>& sellers)
+bool Validator::isSellerExists(const User& seller, const vector<User*>& sellers)
 {
 	unsigned int numOfSellers = sellers.size();
 
@@ -498,7 +512,7 @@ bool Validations::isSellerExists(const User& seller, const vector<User*>& seller
 	return false;
 }
 
-void Validations::dateValidation(int& day, int& month, int& year)
+void Validator::dateValidation(int& day, int& month, int& year)
 {
 	cout << "Please enter the day: ";
 	cin >> day;
@@ -528,7 +542,7 @@ void Validations::dateValidation(int& day, int& month, int& year)
 	}
 }
 
-bool Validations::areValidUsers(const vector<User*>& users, int& indexUser1, int& indexUser2)
+bool Validator::areValidUsers(const vector<User*>& users, int& indexUser1, int& indexUser2)
 {
 	string username1, username2;
 	int usersFound = 0;

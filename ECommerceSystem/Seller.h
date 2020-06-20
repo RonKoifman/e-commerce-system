@@ -2,7 +2,7 @@
 #define __SELLER_H
 
 #include "Feedback.h"
-#include "Validations.h"
+#include "Validator.h"
 #include "User.h"
 #include "Array.h"
 
@@ -15,11 +15,11 @@ protected:
 	vector<Product*> products;
 
 public:
-	Seller(const string& username, const string& password, const Address& address); // C'tor
-	Seller(ifstream& inFile); // C'tor for file
-	Seller(const Seller& other) = delete; // Disable copy c'tor
-	const Seller& operator=(const Seller& other) = delete; // Disable operator=
-	virtual ~Seller(); // D'tor
+	Seller(const string& username, const string& password, const Address& address);
+	Seller(ifstream& inFile);
+	Seller(const Seller& other) = delete;
+	const Seller& operator=(const Seller& other) = delete;
+	virtual ~Seller();
 	virtual void show(ostream& os) const override;
 	void showFeedbacks() const;
 	void showProducts() const;

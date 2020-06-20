@@ -12,8 +12,8 @@ private:
 	int buildingNumber;
 
 public:
-	Address(const string& country, const string& city, const string& street, int buildingNumber); // C'tor
-	Address(ifstream& inFile); // C'tor for file
+	Address(const string& country, const string& city, const string& street, int buildingNumber);
+	Address(ifstream& inFile);
 	void save(ofstream& outFile) const;
 	// Setters
 	void setCountry(const string& country);

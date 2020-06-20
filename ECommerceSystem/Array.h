@@ -13,12 +13,12 @@ private:
 	unsigned int size;
 
 public:
-	Array() : arr(nullptr), size(0) {} // C'tor
-	~Array() { delete[] arr; } // D'tor
-	Array(const Array& other) = delete; // Disable copy c'tor
-	const Array& operator=(const Array& other) = delete; // Disable operator=
-	void push_back(const T& newItem); // Add item to array
-	T& operator[](int index) { return arr[index]; } // operator[]
+	Array() : arr(nullptr), size(0) {}
+	~Array() { delete[] arr; }
+	Array(const Array& other) = delete;
+	const Array& operator=(const Array& other) = delete;
+	void push_back(const T& newItem);
+	T& operator[](int index) { return arr[index]; }
 
 	// Getters
 	T* getArr() const { return arr; }

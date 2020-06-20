@@ -1,17 +1,17 @@
 #include "Product.h"
 #include "Seller.h"
 
-Seller::Seller(const string& username, const string& password, const Address& address) // C'tor
+Seller::Seller(const string& username, const string& password, const Address& address)
 	: User(username, password, address)
 {
 }
 
-Seller::Seller(ifstream& inFile) // C'tor for file
+Seller::Seller(ifstream& inFile)
 	: User(inFile)
 {
 }
 
-Seller::~Seller() // D'tor
+Seller::~Seller()
 {
 	unsigned int numOfProducts = products.size();
 	unsigned int numOfFeedbacks = feedbacks.getSize();

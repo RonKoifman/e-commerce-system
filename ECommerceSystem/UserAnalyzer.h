@@ -6,7 +6,12 @@ class User;
 class UserAnalyzer
 {
 public:
-	enum UserType { TypeSeller = 1, TypeCustomer = 2, TypeSellerCustomer = 3 };
+	enum UserType
+	{ 
+		TypeSeller = 1,
+		TypeCustomer = 2,
+		TypeSellerCustomer = 3
+	};
 	static User& loadUser(ifstream& inFile);
 	static UserAnalyzer::UserType getType(const User& user);
 };

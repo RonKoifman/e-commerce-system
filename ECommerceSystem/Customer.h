@@ -13,11 +13,11 @@ protected:
 	vector<Checkout*> orders;
 
 public:
-	Customer(const string& username, const string& password, const Address& address); // C'tor
-	Customer(ifstream& inFile); // C'tor for file
-	Customer(const Customer& other) = delete; // Disable copy c'tor
-	const Customer& operator=(const Customer& other) = delete; // Disable operator=
-	virtual ~Customer(); // D'tor
+	Customer(const string& username, const string& password, const Address& address);
+	Customer(ifstream& inFile);
+	Customer(const Customer& other) = delete;
+	const Customer& operator=(const Customer& other) = delete;
+	virtual ~Customer();
 	bool operator>(const Customer& other) const;
 	float calculateCartTotalAmount() const;
 	virtual void show(ostream& os) const override;

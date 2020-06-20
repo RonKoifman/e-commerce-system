@@ -1,17 +1,17 @@
 #include "Checkout.h"
 #include "Customer.h"
 
-Customer::Customer(const string& username, const string& password, const Address& address) // C'tor
+Customer::Customer(const string& username, const string& password, const Address& address)
 	: User(username, password, address)
 {
 }
 
-Customer::Customer(ifstream& inFile) // C'tor for file
+Customer::Customer(ifstream& inFile)
 	: User(inFile)
 {
 }
 
-Customer::~Customer() // D'tor
+Customer::~Customer()
 {
 	unsigned int numOfOrders = orders.size();
 

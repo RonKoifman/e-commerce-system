@@ -156,7 +156,7 @@
     <ClInclude Include="User.h" />
     <ClInclude Include="UserAnalyzer.h" />
     <ClInclude Include="Utils.h" />
-    <ClInclude Include="Validations.h" />
+    <ClInclude Include="Validator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Address.cpp" />
@@ -172,7 +172,7 @@
     <ClCompile Include="ShopSystem.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="UserAnalyzer.cpp" />
-    <ClCompile Include="Validations.cpp" />
+    <ClCompile Include="Validator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

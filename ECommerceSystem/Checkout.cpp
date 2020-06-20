@@ -1,7 +1,7 @@
 #include "Customer.h"
 #include "Checkout.h"
 
-Checkout::Checkout(User& customer) // C'tor
+Checkout::Checkout(User& customer)
 	: customer(customer), totalPrice(0)
 {
 }
@@ -51,14 +51,18 @@ void Checkout::calculateTotalPrice()
 
 void Checkout::createNewOrder()
 {
-	Customer* customer = dynamic_cast<Customer*>(&this->customer); if (!customer) return;
 	Product* product;
 	unsigned int index = 0;
 	bool toContinue = true;
+	Customer* customer = dynamic_cast<Customer*>(&this->customer);
+	if (customer == nullptr)
+	{
+		return;
+	}
 
 	while (toContinue)
 	{
-		product = Validations::indexOfCheckoutProductValidation(index, customer->getCart(), chosenProducts);
+		product = Validator::indexOfCheckoutProductValidation(index, customer->getCart(), chosenProducts);
 		if (index == -1) // Customer finished to add products to order
 		{
 			toContinue = false;
@@ -68,7 +72,7 @@ void Checkout::createNewOrder()
 			// Add product to the chosen products array
 			chosenProducts.push_back(product);
 			// Only if seller not exists already - add product's seller to the sellers array
-			if (!Validations::isSellerExists(product->getSeller(), sellers))
+			if (!Validator::isSellerExists(product->getSeller(), sellers))
 			{
 				sellers.push_back(&product->getSeller());
 			}

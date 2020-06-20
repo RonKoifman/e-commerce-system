@@ -9,7 +9,13 @@ class Product
 {
 public:
 	// Enum declarations
-	enum Category { Clothing = 1, Kids = 2, Electricity = 3, Office = 4 };
+	enum Category 
+	{ 
+		Clothing = 1,
+		Kids = 2,
+		Electricity = 3,
+		Office = 4 
+	};
 
 private:
 	static unsigned int uniqueID;
@@ -20,9 +26,9 @@ private:
 	const unsigned int serialNumber;
 
 public:
-	Product(const string& name, float price, Product::Category category, User& seller); // C'tor
-	Product(const Product& other) = delete; // Disable copy c'tor
-	const Product& operator=(const Product& other) = delete; // Disable operator=
+	Product(const string& name, float price, Product::Category category, User& seller);
+	Product(const Product& other) = delete;
+	const Product& operator=(const Product& other) = delete;
 	void showCategory() const;
 	// Setters
 	void setName(const string& name);
@@ -35,7 +41,7 @@ public:
 	User& getSeller() const;
 	const unsigned int getSerialNumber() const;
 	// Friends
-	friend class Validations;
+	friend class Validator;
 	friend ostream& operator<<(ostream& os, const Product& product);
 };
 

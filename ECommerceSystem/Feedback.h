@@ -14,9 +14,9 @@ private:
 	string text;
 
 public:
-	Feedback(User& customer, Product& product, const Date& date, const string& text); // C'tor
-	Feedback(const Feedback& other) = delete; // Disable copy c'tor
-	const Feedback& operator=(const Feedback& other) = delete; // Disable operator=
+	Feedback(User& customer, Product& product, const Date& date, const string& text);
+	Feedback(const Feedback& other) = delete;
+	const Feedback& operator=(const Feedback& other) = delete;
 	// Setters
 	void setDate(const Date& date);
 	void setText(const string& text);

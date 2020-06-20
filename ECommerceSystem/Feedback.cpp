@@ -1,6 +1,6 @@
 #include "Feedback.h"
 
-Feedback::Feedback(User& customer, Product& product, const Date& date, const string& text) // C'tor
+Feedback::Feedback(User& customer, Product& product, const Date& date, const string& text)
 	: text(text), date(date), customer(customer), product(product)
 {
 }

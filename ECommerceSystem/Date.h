@@ -11,7 +11,7 @@ private:
 	int year;
 
 public:
-	Date(int day,int month, int year); // C'tor
+	Date(int day,int month, int year);
 	// Setters
 	void setDay(int day);
 	void setMonth(int month);

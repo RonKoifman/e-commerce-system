@@ -12,12 +12,12 @@ protected:
 	string password;
 
 public:
-	User(const string& username, const string& password, const Address& address); // C'tor
-	User(ifstream& inFile); // C'tor for file
-	User(const User& other) = delete; // Disable copy c'tor
-	virtual ~User() {}; // D'tor
-	const User& operator=(const User& other) = delete; // Disable operator=
-	virtual void show(ostream& os) const = 0; // Make user class an abstract class
+	User(const string& username, const string& password, const Address& address);
+	User(ifstream& inFile);
+	User(const User& other) = delete;
+	virtual ~User() {};
+	const User& operator=(const User& other) = delete;
+	virtual void show(ostream& os) const = 0; // Make this class an abstract class
 	void saveType(ofstream& outFile) const;
 	void save(ofstream& outFile) const;
 	// Setters

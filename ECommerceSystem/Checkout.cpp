@@ -36,6 +36,7 @@ ostream& operator<<(ostream& os, const Checkout& checkout)
 		os << i + 1 << "." << *checkout.chosenProducts[i] << endl;
 		os << endl;
 	}
+
 	return os;
 }
 
@@ -55,6 +56,7 @@ void Checkout::createNewOrder()
 	unsigned int index = 0;
 	bool toContinue = true;
 	Customer* customer = dynamic_cast<Customer*>(&this->customer);
+
 	if (customer == nullptr)
 	{
 		return;

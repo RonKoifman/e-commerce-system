@@ -55,6 +55,7 @@ ostream& operator<<(ostream& os, const Product& product)
 	os << "\tCategory: "; product.showCategory();
 	os << "\tSerial number: " << product.serialNumber << endl;
 	os << "\tSeller: " << product.seller.getUsername();
+
 	return os;
 }
 
@@ -65,12 +66,15 @@ void Product::showCategory() const
 	case Clothing:
 		cout << "Clothing" << endl;
 		break;
+
 	case Kids:
 		cout << "Kids" << endl;
 		break;
+
 	case Electricity:
 		cout << "Electricity" << endl;
 		break;
+
 	case Office:
 		cout << "Office" << endl;
 		break;

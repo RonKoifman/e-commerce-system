@@ -11,8 +11,10 @@ User& UserAnalyzer::loadUser(ifstream& inFile)
 	{
 	case TypeSeller:
 		return *new Seller(inFile);
+
 	case TypeCustomer:
 		return *new Customer(inFile);
+
 	default:
 		return *new SellerCustomer(inFile);
 	}

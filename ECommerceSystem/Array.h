@@ -13,17 +13,15 @@ private:
 	unsigned int size;
 
 public:
-	Array() : arr(nullptr), size(0) {}
-	~Array() { delete[] arr; }
+	Array();
+	~Array();
 	Array(const Array& other) = delete;
 	const Array& operator=(const Array& other) = delete;
 	void push_back(const T& newItem);
-	T& operator[](int index) { return arr[index]; }
-
+	T& operator[](int index);
 	// Getters
-	T* getArr() const { return arr; }
-	unsigned int getSize() const { return size; }
-
+	T* getArr() const;
+	unsigned int getSize() const;
 	// Friends
 	friend ostream& operator<<(ostream& os, const Array& arr)
 	{
@@ -46,20 +44,50 @@ public:
 };
 
 template<class T>
+Array<T>::Array() 
+	: arr(nullptr), size(0)
+{
+}
+
+template<class T>
+Array<T>::~Array()
+{
+	delete[] arr;
+}
+
+template<class T>
+T& Array<T>:: operator[](int index) 
+{
+	return arr[index]; 
+}
+
+template<class T>
 void Array<T>::push_back(const T& newItem)
 {
-	T* temp = new T[size + 1]; // Create bigger array to add the new item
+	T* tempArr = new T[size + 1]; // Create bigger array to add the new item
 
 	// Move the pointers from the current array to temp
 	for (unsigned int i = 0; i < size; i++)
 	{
-		temp[i] = arr[i];
+		tempArr[i] = arr[i];
 	}
-	temp[size] = newItem; // Add the new item
+	tempArr[size] = newItem; // Add the new item
 	size++;
 
 	delete[] arr; // Free the current array
-	arr = temp; // Update array to temp
+	arr = tempArr; // Update array to temp
+}
+
+template<class T>
+T* Array<T>::getArr() const 
+{
+	return arr; 
+}
+
+template<class T>
+unsigned int Array<T>::getSize() const
+{
+	return size;
 }
 
 #endif // __ARRAY_H

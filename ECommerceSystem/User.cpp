@@ -9,19 +9,19 @@ User::User(ifstream& inFile)
 	: address(Address(inFile))
 {
 	int len;
-	char temp[MAX_CHARACTERS_TO_READ + 1];
+	char tempStr[MAX_CHARACTERS_TO_READ + 1];
 
-	// Read username
+	// Username
 	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&temp, len);
-	temp[len] = '\0';
-	username = temp;
+	inFile.read((char*)&tempStr, len);
+	tempStr[len] = '\0';
+	username = tempStr;
 
-	// Read password
+	// Password
 	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&temp, len);
-	temp[len] = '\0';
-	password = temp;
+	inFile.read((char*)&tempStr, len);
+	tempStr[len] = '\0';
+	password = tempStr;
 }
 
 void User::saveType(ofstream& outFile) const
@@ -32,15 +32,17 @@ void User::saveType(ofstream& outFile) const
 
 void User::save(ofstream& outFile) const
 {
-	// Save address
+	int len;
+
+	// Address
 	address.save(outFile);
 
-	// Save username
-	int len = username.length();
+	// Username
+	len = username.length();
 	outFile.write((const char*)&len, sizeof(len));
 	outFile.write((const char*)username.c_str(), len);
 
-	// Save password
+	// Password
 	len = password.length();
 	outFile.write((const char*)&len, sizeof(len));
 	outFile.write((const char*)password.c_str(), len);
@@ -85,5 +87,6 @@ void User::show(ostream& os) const
 ostream& operator<<(ostream& os, const User& user)
 {
 	user.show(os);
+
 	return os;
 }

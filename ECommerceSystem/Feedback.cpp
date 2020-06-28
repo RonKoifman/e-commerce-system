@@ -41,5 +41,6 @@ ostream& operator<<(ostream& os, const Feedback& feedback)
 	os << "\tName of the product: " << feedback.product.getName() << endl;
 	os << "\tDate: " << feedback.date << endl;
 	os << "\tText: " << feedback.text;
+
 	return os;
 }

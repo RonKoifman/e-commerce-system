@@ -8,48 +8,48 @@ Address::Address(const string& country, const string& city, const string& street
 Address::Address(ifstream& inFile)
 {
 	int len;
-	char temp[MAX_CHARACTERS_TO_READ + 1];
+	char tempStr[MAX_CHARACTERS_TO_READ + 1];
 
-	// Read country
+	// Country
 	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&temp, len);
-	temp[len] = '\0';
-	country = temp;
+	inFile.read((char*)&tempStr, len);
+	tempStr[len] = '\0';
+	country = tempStr;
 
-	// Read city
+	// City
 	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&temp, len);
-	temp[len] = '\0';
-	city = temp;
+	inFile.read((char*)&tempStr, len);
+	tempStr[len] = '\0';
+	city = tempStr;
 	
-	// Read street
+	// Street
 	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&temp, len);
-	temp[len] = '\0';
-	street = temp;
+	inFile.read((char*)&tempStr, len);
+	tempStr[len] = '\0';
+	street = tempStr;
 
-	// Read building number
+	// Building number
 	inFile.read((char*)&buildingNumber, sizeof(buildingNumber));
 }
 
 void Address::save(ofstream& outFile) const
 {
-	// Save country
+	// Country
 	int len = country.length();
 	outFile.write((const char*)&len, sizeof(len));
 	outFile.write((const char*)country.c_str(), len);
 
-	// Save city
+	// City
 	len = city.length();
 	outFile.write((const char*)&len, sizeof(len));
 	outFile.write((const char*)city.c_str(), len);
 
-	// Save street
+	// Street
 	len = street.length();
 	outFile.write((const char*)&len, sizeof(len));
 	outFile.write((const char*)street.c_str(), len);
 
-	// Save building number
+	// Building number
 	outFile.write((const char*)&buildingNumber, sizeof(buildingNumber));
 }
 
@@ -96,5 +96,6 @@ int Address::getBuildingNumber() const
 ostream& operator<<(ostream& os, const Address& address)
 {
 	os << address.street << " " << address.buildingNumber << ", " << address.city << ", " << address.country;
+
 	return os;
 }

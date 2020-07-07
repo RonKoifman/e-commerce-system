@@ -35,9 +35,11 @@ int Date::getYear() const
 	return year;
 }
 
-ostream& operator<<(ostream& os, const Date& date)
+const string& Date::toString() const
 {
-	os << date.day << "/" << date.month << "/" << date.year;
+	string& dateStr = *new string();
 
-	return os;
+	dateStr.append(to_string(day)).append("/").append(to_string(month)).append("/").append(to_string(year));
+
+	return dateStr;
 }

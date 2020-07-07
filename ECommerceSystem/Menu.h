@@ -6,10 +6,8 @@
 class Menu
 {
 public:
+	static void printLoginMenu();
 	static void printMainMenu();
-	static void printSellerMenu();
-	static void printCustomerMenu();
-	static void printSellerCustomerMenu();
 };
 
 #endif // __MENU_H

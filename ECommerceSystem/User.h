@@ -2,24 +2,39 @@
 #define __USER_H
 
 #include "Address.h"
-#include "UserAnalyzer.h"
+#include "Checkout.h"
+#include "Product.h"
+
+class Feedback;
 
 class User
 {
 protected:
-	Address address;
 	string username;
 	string password;
+	Address address;
+	vector<Product*> productsForSale;
+	vector<Feedback*> feedbacks;
+	vector<Product*> cart;
+	vector<Checkout*> orders;
 
 public:
 	User(const string& username, const string& password, const Address& address);
 	User(ifstream& inFile);
+	~User();
 	User(const User& other) = delete;
-	virtual ~User() {};
 	const User& operator=(const User& other) = delete;
-	virtual void show(ostream& os) const = 0; // Make this class an abstract class
-	void saveType(ofstream& outFile) const;
 	void save(ofstream& outFile) const;
+	void addFeedback(Feedback& newFeedback);
+	void addProductForSale(Product& newProduct);
+	void addProductToCart(Product& chosenProduct);
+	void addOrder(Checkout& newOrder);
+	void initCart();
+	const string& ordersToString() const;
+	const string& productsForSaleToString() const;
+	const string& feedbacksToString() const;
+	const string& cartToString() const;
+	const string& toString() const;
 	// Setters
 	void setUsername(const string& username);
 	void setPassword(const string& password);
@@ -28,11 +43,10 @@ public:
 	const string& getUsername() const;
 	const string& getPassword() const;
 	const Address& getAddress() const;
-	// Friends
-	friend ostream& operator<<(ostream& os, const User& user);
-
-private:
-	static const int MAX_CHARACTERS_TO_READ = 20;
+	const vector<Feedback*>& getFeedbacks() const;
+	const vector<Product*>& getProductsForSale() const;
+	const vector<Product*>& getCart() const;
+	const vector<Checkout*>& getOrders() const;
 };
 
 #endif // __USER_H

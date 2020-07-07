@@ -1,10 +1,10 @@
-#include "Seller.h"
+#include "User.h"
 #include "Product.h"
 
-unsigned int Product::uniqueID = 1000; // Generate unique id for each serial number of a product
+unsigned int Product::uniqueId = 1000; // Generate unique id for each serial number of a product
 
 Product::Product(const string& name, float price, Product::Category category, User& seller)
-	: name(name), serialNumber(uniqueID++), seller(seller), price(price), category(category)
+	: name(name), serialNumber(uniqueId++), seller(seller), price(price), category(category)
 {
 }
 
@@ -48,35 +48,41 @@ const unsigned int Product::getSerialNumber() const
 	return serialNumber;
 }
 
-ostream& operator<<(ostream& os, const Product& product)
+const string& Product::categoryToString() const
 {
-	os << "\tName: " << product.name << endl;
-	os << "\tPrice: $" << product.price << endl;
-	os << "\tCategory: "; product.showCategory();
-	os << "\tSerial number: " << product.serialNumber << endl;
-	os << "\tSeller: " << product.seller.getUsername();
+	string& categoryStr = *new string();
 
-	return os;
-}
-
-void Product::showCategory() const
-{
 	switch (category)
 	{
 	case Clothing:
-		cout << "Clothing" << endl;
+		categoryStr.append("Clothing");
 		break;
 
 	case Kids:
-		cout << "Kids" << endl;
+		categoryStr.append("Kids");
 		break;
 
 	case Electricity:
-		cout << "Electricity" << endl;
+		categoryStr.append("Electricity");
 		break;
 
 	case Office:
-		cout << "Office" << endl;
+		categoryStr.append("Office");
 		break;
 	}
+
+	return categoryStr;
+}
+
+const string& Product::toString() const
+{
+	string& productStr = *new string();
+
+	productStr.append("\tName: ").append(name).append("\n");
+	productStr.append("\tPrice: $").append(to_string(price)).append("\n");
+	productStr.append("\tCategory: ").append(categoryToString()).append("\n");
+	productStr.append("\tSerial number: ").append(to_string(serialNumber)).append("\n");
+	productStr.append("\tSeller: ").append(seller.getUsername());
+
+	return productStr;
 }

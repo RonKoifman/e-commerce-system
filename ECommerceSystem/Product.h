@@ -8,17 +8,17 @@ class User;
 class Product
 {
 public:
-	// Enum declarations
 	enum Category 
 	{ 
 		Clothing = 1,
-		Kids = 2,
-		Electricity = 3,
-		Office = 4 
+		Kids,
+		Electricity,
+		Office 
 	};
+	static const int NUM_OF_CATEGORIES = 4;
 
 private:
-	static unsigned int uniqueID;
+	static unsigned int uniqueId;
 	string name;
 	float price;
 	Category category;
@@ -29,7 +29,8 @@ public:
 	Product(const string& name, float price, Product::Category category, User& seller);
 	Product(const Product& other) = delete;
 	const Product& operator=(const Product& other) = delete;
-	void showCategory() const;
+	const string& categoryToString() const;
+	const string& toString() const;
 	// Setters
 	void setName(const string& name);
 	void setPrice(float price);
@@ -41,8 +42,7 @@ public:
 	User& getSeller() const;
 	const unsigned int getSerialNumber() const;
 	// Friends
-	friend class Validator;
-	friend ostream& operator<<(ostream& os, const Product& product);
+	friend class ShopSystem;
 };
 
 #endif // __PRODUCT_H

@@ -7,25 +7,26 @@ Address::Address(const string& country, const string& city, const string& street
 
 Address::Address(ifstream& inFile)
 {
-	int len;
+	const int MAX_CHARACTERS_TO_READ = 1000;
 	char tempStr[MAX_CHARACTERS_TO_READ + 1];
+	int length;
 
 	// Country
-	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&tempStr, len);
-	tempStr[len] = '\0';
+	inFile.read((char*)&length, sizeof(length));
+	inFile.read((char*)&tempStr, length);
+	tempStr[length] = '\0';
 	country = tempStr;
 
 	// City
-	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&tempStr, len);
-	tempStr[len] = '\0';
+	inFile.read((char*)&length, sizeof(length));
+	inFile.read((char*)&tempStr, length);
+	tempStr[length] = '\0';
 	city = tempStr;
 	
 	// Street
-	inFile.read((char*)&len, sizeof(len));
-	inFile.read((char*)&tempStr, len);
-	tempStr[len] = '\0';
+	inFile.read((char*)&length, sizeof(length));
+	inFile.read((char*)&tempStr, length);
+	tempStr[length] = '\0';
 	street = tempStr;
 
 	// Building number
@@ -35,19 +36,19 @@ Address::Address(ifstream& inFile)
 void Address::save(ofstream& outFile) const
 {
 	// Country
-	int len = country.length();
-	outFile.write((const char*)&len, sizeof(len));
-	outFile.write((const char*)country.c_str(), len);
+	int length = country.length();
+	outFile.write((const char*)&length, sizeof(length));
+	outFile.write((const char*)country.c_str(), length);
 
 	// City
-	len = city.length();
-	outFile.write((const char*)&len, sizeof(len));
-	outFile.write((const char*)city.c_str(), len);
+	length = city.length();
+	outFile.write((const char*)&length, sizeof(length));
+	outFile.write((const char*)city.c_str(), length);
 
 	// Street
-	len = street.length();
-	outFile.write((const char*)&len, sizeof(len));
-	outFile.write((const char*)street.c_str(), len);
+	length = street.length();
+	outFile.write((const char*)&length, sizeof(length));
+	outFile.write((const char*)street.c_str(), length);
 
 	// Building number
 	outFile.write((const char*)&buildingNumber, sizeof(buildingNumber));
@@ -93,9 +94,12 @@ int Address::getBuildingNumber() const
 	return buildingNumber;
 }
 
-ostream& operator<<(ostream& os, const Address& address)
-{
-	os << address.street << " " << address.buildingNumber << ", " << address.city << ", " << address.country;
 
-	return os;
+const string& Address::toString() const
+{
+	string& addressStr = *new string();
+
+	addressStr.append(street).append(" ").append(to_string(buildingNumber)).append(", ").append(city).append(", ").append(country);
+
+	return addressStr;
 }

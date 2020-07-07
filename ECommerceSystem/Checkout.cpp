@@ -1,4 +1,4 @@
-#include "Customer.h"
+#include "User.h"
 #include "Checkout.h"
 
 Checkout::Checkout(User& customer)
@@ -21,88 +21,87 @@ float Checkout::getTotalPrice() const
 	return totalPrice;
 }
 
-User& Checkout::getCustomer() const
+const User& Checkout::getCustomer() const
 {
 	return customer;
 }
 
-ostream& operator<<(ostream& os, const Checkout& checkout)
+void Checkout::updateTotalPrice()
 {
-	unsigned int numOfChosenProducts = checkout.chosenProducts.size();
-
-	os << "Chosen products:\n" << endl;
-	for (unsigned int i = 0; i < numOfChosenProducts; i++)
+	for (Product* product : chosenProducts)
 	{
-		os << i + 1 << "." << *checkout.chosenProducts[i] << endl;
-		os << endl;
-	}
-
-	return os;
-}
-
-void Checkout::calculateTotalPrice()
-{
-	unsigned int numOfChosenProducts = chosenProducts.size();
-
-	for (unsigned int i = 0; i < numOfChosenProducts; i++)
-	{
-		totalPrice += chosenProducts[i]->getPrice();
+		totalPrice += product->getPrice();
 	}
 }
 
-void Checkout::createNewOrder()
+bool Checkout::isSellerExists(User& seller) const
 {
-	Product* product;
-	unsigned int index = 0;
-	bool toContinue = true;
-	Customer* customer = dynamic_cast<Customer*>(&this->customer);
-
-	if (customer == nullptr)
+	for (User* currSeller : sellers)
 	{
-		return;
-	}
-
-	while (toContinue)
-	{
-		product = Validator::indexOfCheckoutProductValidation(index, customer->getCart(), chosenProducts);
-		if (index == -1) // Customer finished to add products to order
+		if (currSeller->getUsername().compare(seller.getUsername()) == 0)
 		{
-			toContinue = false;
-		}
-		else
-		{
-			// Add product to the chosen products array
-			chosenProducts.push_back(product);
-			// Only if seller not exists already - add product's seller to the sellers array
-			if (!Validator::isSellerExists(product->getSeller(), sellers))
-			{
-				sellers.push_back(&product->getSeller());
-			}
+			return true;
 		}
 	}
-	calculateTotalPrice();
+
+	return false;
 }
 
-void Checkout::showSellersNames() const
+void Checkout::addProduct(Product& product)
+{
+	chosenProducts.push_back(&product);
+}
+
+void Checkout::addSeller(User& seller)
+{
+	if (!isSellerExists(seller))
+	{
+		sellers.push_back(&seller);
+	}
+}
+
+const string& Checkout::sellersNamesToString() const
 {
 	unsigned int numOfSellers = sellers.size();
+	string& sellersNames = *new string();
 
-	cout << "\tSellers names: " << sellers[0]->getUsername();
+	sellersNames.append("\tSellers: ").append(sellers[0]->getUsername());
 	for (unsigned int i = 1; i < numOfSellers; i++)
 	{
-		cout << ", " << sellers[i]->getUsername();
+		sellersNames.append(", ").append(sellers[i]->getUsername());
 	}
-	cout << endl;
+
+	sellersNames.append("\n");
+
+	return sellersNames;
 }
 
-void Checkout::showProductsNames() const
+const string& Checkout::productsNamesToString() const
 {
 	unsigned int numOfChosenProducts = chosenProducts.size();
+	string& productsNames = *new string();
 
-	cout << "Products names: " << chosenProducts[0]->getName();
+	productsNames.append("Products: ").append(chosenProducts[0]->getName());
 	for (unsigned int i = 1; i < numOfChosenProducts; i++) 
 	{
-		cout << ", " << chosenProducts[i]->getName();
+		productsNames.append(", ").append(chosenProducts[i]->getName());
 	}
-	cout << endl;
+
+	productsNames.append("\n");
+
+	return productsNames;
+}
+
+const string& Checkout::toString() const
+{
+	unsigned int numOfChosenProducts = chosenProducts.size();
+	string& checkoutStr = *new string();
+
+	checkoutStr.append("Products bought:\n\n");
+	for (unsigned int i = 0; i < numOfChosenProducts; i++)
+	{
+		checkoutStr.append(to_string(i + 1)).append(".").append(chosenProducts[i]->toString()).append("\n\n");
+	}
+
+	return checkoutStr;
 }

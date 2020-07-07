@@ -12,6 +12,7 @@ private:
 
 public:
 	Date(int day,int month, int year);
+	const string& toString() const;
 	// Setters
 	void setDay(int day);
 	void setMonth(int month);
@@ -20,8 +21,6 @@ public:
 	int getDay() const;
 	int getMonth() const;
 	int getYear() const;
-	// Friends
-	friend ostream& operator<<(ostream& os, const Date& date);
 };
 
 #endif // __DATE_H

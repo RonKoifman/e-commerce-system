@@ -2,7 +2,7 @@
 #define __FEEDBACK_H
 
 #include "Date.h"
-#include "Customer.h"
+#include "User.h"
 #include "Product.h"
 
 class Feedback
@@ -17,6 +17,7 @@ public:
 	Feedback(User& customer, Product& product, const Date& date, const string& text);
 	Feedback(const Feedback& other) = delete;
 	const Feedback& operator=(const Feedback& other) = delete;
+	const string& toString() const;
 	// Setters
 	void setDate(const Date& date);
 	void setText(const string& text);
@@ -25,8 +26,6 @@ public:
 	Product& getProduct() const;
 	const Date& getDate() const;
 	const string& getText() const;
-	// Friends
-	friend ostream& operator<<(ostream& os, const Feedback& feedback);
 };
 
 #endif // __FEEDBACK_H

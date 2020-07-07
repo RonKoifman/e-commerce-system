@@ -1,8 +1,8 @@
-#include "ShopSystem.h"
+#include "ShopSystemUI.h"
 
 int main()
 {
-	ShopSystem shop;
+	ShopSystemUI shopSystemUI;
 	
-	shop.runShop();
+	shopSystemUI.runShopSystem();
 }

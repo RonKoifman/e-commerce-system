@@ -35,12 +35,14 @@ const string& Feedback::getText() const
 	return text;
 }
 
-ostream& operator<<(ostream& os, const Feedback& feedback)
+const string& Feedback:: toString() const
 {
-	os << "\tCustomer: " << feedback.customer.getUsername() << endl;
-	os << "\tName of the product: " << feedback.product.getName() << endl;
-	os << "\tDate: " << feedback.date << endl;
-	os << "\tText: " << feedback.text;
+	string& feedbackStr = *new string();
 
-	return os;
+	feedbackStr.append("\tCustomer: ").append(customer.getUsername()).append("\n");
+	feedbackStr.append("\tName of the product: ").append(product.getName()).append("\n");
+	feedbackStr.append("\tDate: ").append(getDate().toString()).append("\n");
+	feedbackStr.append("\tText: ").append(text);
+
+	return feedbackStr;
 }

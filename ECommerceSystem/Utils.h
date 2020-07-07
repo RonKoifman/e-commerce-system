@@ -2,12 +2,13 @@
 #define __UTILS_H
 
 #pragma warning(disable: 4996)
-#pragma warning(disable: 26812)
 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
+#include <thread>
+#include <chrono>
 using namespace std;
 
 #endif // __UTILS_H

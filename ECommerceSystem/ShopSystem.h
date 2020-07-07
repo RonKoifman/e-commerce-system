@@ -1,10 +1,7 @@
 #ifndef __SHOP_SYSTEM_H
 #define __SHOP_SYSTEM_H
 
-#include "Menu.h"
-#include "Checkout.h"
-#include "SellerCustomer.h"
-#include "UserAnalyzer.h"
+#include "User.h"
 
 class ShopSystem
 {
@@ -13,57 +10,25 @@ private:
 	vector<Product*> allProducts;
 
 public:
-	// Enum declarations
-	enum LoginOptions
-	{
-		SignupNewSeller = 1, SignupNewCustomer = 2, SignupNewSC = 3, Login = 4,
-		ViewCustomers = 5, ViewSellers = 6, ViewSC = 7, CompareCarts = 8, Exit = 9
-	};
-	enum SellerOptions
-	{
-		AddNewProduct = 1, SellerSearchProduct = 2, ViewProducts = 3, ViewFeedbacks = 4,
-		SellerPreviousMenu = 5, SellerExit = 6
-	};
-	enum CustomerOptions
-	{
-		CustomerSearchProduct = 1, AddProductToCart = 2, ViewCart = 3, CheckoutAndPlaceOrder = 4,
-		WriteFeedback = 5, CustomerPreviousMenu = 6, CustomerExit = 7
-	};
-	enum SellerCustomerOptions
-	{
-		ViewCustomerMenu = 1, ViewSellerMenu = 2, SCPreviousMenu = 3, SCExit = 4
-	};
-	enum SearchProductOptions
-	{
-		AllProducts = 1, SpecificProductName = 2
-	};
-
 	ShopSystem();
 	ShopSystem(const ShopSystem& other) = delete;
 	const ShopSystem& operator=(const ShopSystem& other) = delete;
 	~ShopSystem();
 	const ShopSystem& operator+=(User& user);
-	void showSelectedUsers(const string& selectedUsersType) const;
-	void showAllProducts() const;
-	void runShop();
-	bool mainMenu();
-	bool sellerMenu(User& user);
-	bool customerMenu(User& user);
-	bool sellerCustomerMenu(User& user);
-	User& readUserData(UserAnalyzer::UserType type) const;
-	Product& readProductData(User& user) const;
-	Date readDate() const;
-	void readTextForFeedback(string& text) const;
-	User* loginUser() const;
-	void searchProducts() const;
-	void addProductToStock(Product& newProduct);
-	void addProductToUserCart(User& user) const;
-	void checkout(User& user) const;
-	void placeOrder(const Checkout& order) const;
-	void writeFeedback(User& user) const;
-	void compareUsersCartsAmount() const;
 	void loadUsers(const char* fileName);
-	void saveUsers(const char* fileName);
+	User& loadUser(ifstream& inFile) const;
+	void saveUsers(const char* fileName) const;
+	void addProductToStock(Product& newProduct);
+	void addNewUser(User& newUser);
+	bool isUsernameExists(string& username, vector<User*> users) const;
+	bool isProductNameExists(const string& productName, vector<Product*> products) const;
+	bool isProductBelongsToUser(User& user, int productId) const;
+	bool isProductExistsInUserCart(User& user, int productId) const;
+	bool isProductExistsInUserOrder(Checkout& order, int productId) const;
+	bool isValidProductId(unsigned int id) const;
+	bool isValidCategory(unsigned int category) const;
+	User* getUserByCredentials(string& username, string& password) const;
+	Product* getProductById(int productSerialNumber, const vector<Product*>& products) const;
 	// Getters
 	const vector<User*>& getUsers() const;
 	const vector<Product*>& getAllProducts() const;

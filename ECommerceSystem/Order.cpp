@@ -1,32 +1,32 @@
 #include "User.h"
-#include "Checkout.h"
+#include "Order.h"
 
-Checkout::Checkout(User& customer)
+Order::Order(User& customer)
 	: customer(customer), totalPrice(0)
 {
 }
 
-const vector<Product*>& Checkout::getChosenProducts() const
+const vector<Product*>& Order::getChosenProducts() const
 {
 	return chosenProducts;
 }
 
-const vector<User*>& Checkout::getSellers() const
+const vector<User*>& Order::getSellers() const
 {
 	return sellers;
 }
 
-float Checkout::getTotalPrice() const
+float Order::getTotalPrice() const
 {
 	return totalPrice;
 }
 
-const User& Checkout::getCustomer() const
+const User& Order::getCustomer() const
 {
 	return customer;
 }
 
-void Checkout::updateTotalPrice()
+void Order::updateTotalPrice()
 {
 	for (Product* product : chosenProducts)
 	{
@@ -34,7 +34,7 @@ void Checkout::updateTotalPrice()
 	}
 }
 
-bool Checkout::isSellerExists(User& seller) const
+bool Order::isSellerExists(User& seller) const
 {
 	for (User* currSeller : sellers)
 	{
@@ -47,12 +47,12 @@ bool Checkout::isSellerExists(User& seller) const
 	return false;
 }
 
-void Checkout::addProduct(Product& product)
+void Order::addProduct(Product& product)
 {
 	chosenProducts.push_back(&product);
 }
 
-void Checkout::addSeller(User& seller)
+void Order::addSeller(User& seller)
 {
 	if (!isSellerExists(seller))
 	{
@@ -60,7 +60,7 @@ void Checkout::addSeller(User& seller)
 	}
 }
 
-const string& Checkout::sellersNamesToString() const
+const string& Order::sellersNamesToString() const
 {
 	unsigned int numOfSellers = sellers.size();
 	string& sellersNames = *new string();
@@ -76,7 +76,7 @@ const string& Checkout::sellersNamesToString() const
 	return sellersNames;
 }
 
-const string& Checkout::productsNamesToString() const
+const string& Order::productsNamesToString() const
 {
 	unsigned int numOfChosenProducts = chosenProducts.size();
 	string& productsNames = *new string();
@@ -92,16 +92,16 @@ const string& Checkout::productsNamesToString() const
 	return productsNames;
 }
 
-const string& Checkout::toString() const
+const string& Order::toString() const
 {
 	unsigned int numOfChosenProducts = chosenProducts.size();
-	string& checkoutStr = *new string();
+	string& orderStr = *new string();
 
-	checkoutStr.append("Products bought:\n\n");
+	orderStr.append("Products bought:\n\n");
 	for (unsigned int i = 0; i < numOfChosenProducts; i++)
 	{
-		checkoutStr.append(to_string(i + 1)).append(".").append(chosenProducts[i]->toString()).append("\n\n");
+		orderStr.append(to_string(i + 1)).append(".").append(chosenProducts[i]->toString()).append("\n\n");
 	}
 
-	return checkoutStr;
+	return orderStr;
 }

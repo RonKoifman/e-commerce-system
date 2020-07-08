@@ -123,7 +123,7 @@ bool ShopSystem::isProductExistsInUserCart(User& user, int productId) const
 	return getProductById(productId, user.getCart()) != nullptr;
 }
 
-bool ShopSystem::isProductExistsInUserOrder(Checkout& order, int productId) const
+bool ShopSystem::isProductExistsInUserOrder(Order& order, int productId) const
 {
 	return getProductById(productId, order.getChosenProducts()) != nullptr;
 }

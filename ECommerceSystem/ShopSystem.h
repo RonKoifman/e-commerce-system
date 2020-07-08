@@ -24,7 +24,7 @@ public:
 	bool isProductNameExists(const string& productName, vector<Product*> products) const;
 	bool isProductBelongsToUser(User& user, int productId) const;
 	bool isProductExistsInUserCart(User& user, int productId) const;
-	bool isProductExistsInUserOrder(Checkout& order, int productId) const;
+	bool isProductExistsInUserOrder(Order& order, int productId) const;
 	bool isValidProductId(unsigned int id) const;
 	bool isValidCategory(unsigned int category) const;
 	User* getUserByCredentials(string& username, string& password) const;

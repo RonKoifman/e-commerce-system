@@ -34,7 +34,7 @@ private:
 	void addNewProductForSale(User& user);
 	bool getValidProductIdToSearch(int& productId) const;
 	bool getValidOrderIndexForFeedback(User& user, int& orderIndex) const;
-	bool getValidProductIndexForFeedback(Checkout& selectedOrder, int& productIndex) const;
+	bool getValidProductIndexForFeedback(Order& selectedOrder, int& productIndex) const;
 	void getFeedbackFromUserAndAddToSeller(Product& chosenProduct, User& customer) const;
 	void showAllUsers() const;
 	void showAllProducts() const;
@@ -45,9 +45,9 @@ private:
 	void viewUserFeedbacks(User& user) const;
 	void addProductToUserCart(User& user) const;
 	void checkoutUserAndPlaceOrder(User& user) const;
-	Checkout& createNewOrder(User& user) const;
-	Product* getProductToAddToOrder(User& user, Checkout& order) const;
-	void placeOrder(Checkout& order) const;
+	Order& createNewOrder(User& user) const;
+	Product* getProductToAddToOrder(User& user, Order& order) const;
+	void placeOrder(Order& order) const;
 	void writeFeedbackToOtherUser(User& user) const;
 
 	enum eLoginOptions

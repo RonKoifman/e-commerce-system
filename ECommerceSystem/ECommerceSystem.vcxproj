@@ -140,7 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Address.h" />
-    <ClInclude Include="Checkout.h" />
+    <ClInclude Include="Order.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Feedback.h" />
     <ClInclude Include="Menu.h" />
@@ -152,7 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Address.cpp" />
-    <ClCompile Include="Checkout.cpp" />
+    <ClCompile Include="Order.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Feedback.cpp" />
     <ClCompile Include="main.cpp" />

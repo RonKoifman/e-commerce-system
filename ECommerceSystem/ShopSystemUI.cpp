@@ -390,7 +390,7 @@ bool ShopSystemUI::getValidOrderIndexForFeedback(User& user, int& orderIndex) co
 	return true;
 }
 
-bool ShopSystemUI::getValidProductIndexForFeedback(Checkout& selectedOrder, int& productIndex) const
+bool ShopSystemUI::getValidProductIndexForFeedback(Order& selectedOrder, int& productIndex) const
 {
 	system("cls");
 	cout << selectedOrder.toString();
@@ -540,7 +540,7 @@ void ShopSystemUI::checkoutUserAndPlaceOrder(User& user) const
 		return;
 	}
 	
-	Checkout& order = createNewOrder(user);
+	Order& order = createNewOrder(user);
 	if (order.getChosenProducts().size() == 0)
 	{
 		cout << endl << "Order cancelled!\n" << endl;
@@ -557,9 +557,9 @@ void ShopSystemUI::checkoutUserAndPlaceOrder(User& user) const
 	waitForKeyToContinue();
 }
 
-Checkout& ShopSystemUI::createNewOrder(User& user) const
+Order& ShopSystemUI::createNewOrder(User& user) const
 {
-	Checkout& order = *new Checkout(user);
+	Order& order = *new Order(user);
 	bool toContinueOrder = true;
 	Product* productToAdd;
 
@@ -585,7 +585,7 @@ Checkout& ShopSystemUI::createNewOrder(User& user) const
 	return order;
 }
 
-void ShopSystemUI::placeOrder(Checkout& order) const
+void ShopSystemUI::placeOrder(Order& order) const
 {
 	bool isPayed = false;
 	float payment;
@@ -622,7 +622,7 @@ void ShopSystemUI::writeFeedbackToOtherUser(User& user) const
 {
 	int orderIndex = -1;
 	int productIndex = -1;
-	Checkout* selectedOrder;
+	Order* selectedOrder;
 	Product* selectedProduct;
 
 	system("cls");
@@ -651,7 +651,7 @@ void ShopSystemUI::writeFeedbackToOtherUser(User& user) const
 	waitForKeyToContinue();
 }
 
-Product* ShopSystemUI::getProductToAddToOrder(User& user, Checkout& order) const
+Product* ShopSystemUI::getProductToAddToOrder(User& user, Order& order) const
 {
 	unsigned int numOfProductsInCart = user.getCart().size();
 	string chosenProductIndexStr;

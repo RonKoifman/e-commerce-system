@@ -2,7 +2,7 @@
 #define __USER_H
 
 #include "Address.h"
-#include "Checkout.h"
+#include "Order.h"
 #include "Product.h"
 
 class Feedback;
@@ -16,7 +16,7 @@ protected:
 	vector<Product*> productsForSale;
 	vector<Feedback*> feedbacks;
 	vector<Product*> cart;
-	vector<Checkout*> orders;
+	vector<Order*> orders;
 
 public:
 	User(const string& username, const string& password, const Address& address);
@@ -28,7 +28,7 @@ public:
 	void addFeedback(Feedback& newFeedback);
 	void addProductForSale(Product& newProduct);
 	void addProductToCart(Product& chosenProduct);
-	void addOrder(Checkout& newOrder);
+	void addOrder(Order& newOrder);
 	void initCart();
 	const string& ordersToString() const;
 	const string& productsForSaleToString() const;
@@ -46,7 +46,7 @@ public:
 	const vector<Feedback*>& getFeedbacks() const;
 	const vector<Product*>& getProductsForSale() const;
 	const vector<Product*>& getCart() const;
-	const vector<Checkout*>& getOrders() const;
+	const vector<Order*>& getOrders() const;
 };
 
 #endif // __USER_H

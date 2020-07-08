@@ -38,7 +38,7 @@ User::~User()
 		delete feedback;
 	}
 
-	for (Checkout* order : orders)
+	for (Order* order : orders)
 	{
 		delete order;
 	}
@@ -97,7 +97,7 @@ const vector<Product*>& User::getCart() const
 	return cart;
 }
 
-const vector<Checkout*>& User::getOrders() const
+const vector<Order*>& User::getOrders() const
 {
 	return orders;
 }
@@ -127,7 +127,7 @@ void User::addProductToCart(Product& chosenProduct)
 	cart.push_back(&chosenProduct);
 }
 
-void User::addOrder(Checkout& newOrder)
+void User::addOrder(Order& newOrder)
 {
 	orders.push_back(&newOrder);
 }

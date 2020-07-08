@@ -1,9 +1,9 @@
-#ifndef __CHECKOUT_H
-#define __CHECKOUT_H
+#ifndef __ORDER_H
+#define __ORDER_H
 
 #include "Product.h"
 
-class Checkout
+class Order
 {
 private:
 	vector<Product*> chosenProducts;
@@ -12,9 +12,9 @@ private:
 	float totalPrice; 
 
 public:
-	Checkout(User& customer);
-	Checkout(const Checkout& other) = delete;
-	const Checkout& operator=(const Checkout& other) = delete;
+	Order(User& customer);
+	Order(const Order& other) = delete;
+	const Order& operator=(const Order& other) = delete;
 	const string& toString() const;
 	const string& sellersNamesToString() const;
 	const string& productsNamesToString() const;
@@ -29,4 +29,4 @@ public:
 	float getTotalPrice() const;
 };
 
-#endif // __CHECKOUT_H
+#endif // __ORDER_H

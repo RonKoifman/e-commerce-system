@@ -112,7 +112,7 @@ void ShopSystemUI::runLoginMenu(bool& toExit)
 	Menu::printLoginMenu();
 	getPositiveNumberFromUser("Your selection: ", userChoice);
 
-	switch ((LoginOptions)userChoice)
+	switch ((eLoginOptions)userChoice)
 	{
 	case Signup:
 		signupUser(toExit);
@@ -143,7 +143,7 @@ void ShopSystemUI::runMainMenu(User& user, bool& toExit)
 		Menu::printMainMenu();
 		getPositiveNumberFromUser("Your selection: ", userChoice);
 
-		switch ((RegisteredUserOptions)userChoice)
+		switch ((eRegisteredUserOptions)userChoice)
 		{
 		case AddNewProductForSale:
 			addNewProductForSale(user);
@@ -294,7 +294,7 @@ void ShopSystemUI::searchProducts() const
 	}
 
 	getPositiveNumberFromUser(msgToUser, userChoice);
-	switch ((SearchProductsOptions)userChoice)
+	switch ((eSearchProductsOptions)userChoice)
 	{
 	case AllProducts:
 		showAllProducts();
@@ -718,7 +718,7 @@ Product& ShopSystemUI::readProductData(User& user) const
 	getPositiveNumberFromUser("Price: ", price);
 	getCategoryInputFromUser("Category (choose from the following: 1-Clothing, 2-Kids, 3-Electricity, 4-Office): ", category);
 
-	return *new Product(productName, price, (Product::Category)category, user);
+	return *new Product(productName, price, (Product::eCategory)category, user);
 }
 
 Date ShopSystemUI::readDate() const

@@ -94,7 +94,6 @@ int Address::getBuildingNumber() const
 	return buildingNumber;
 }
 
-
 const string& Address::toString() const
 {
 	string& addressStr = *new string();

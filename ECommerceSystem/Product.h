@@ -8,7 +8,7 @@ class User;
 class Product
 {
 public:
-	enum Category 
+	enum eCategory 
 	{ 
 		Clothing = 1,
 		Kids,
@@ -21,12 +21,12 @@ private:
 	static unsigned int uniqueId;
 	string name;
 	float price;
-	Category category;
+	eCategory category;
 	User& seller;
 	const unsigned int serialNumber;
 
 public:
-	Product(const string& name, float price, Product::Category category, User& seller);
+	Product(const string& name, float price, eCategory category, User& seller);
 	Product(const Product& other) = delete;
 	const Product& operator=(const Product& other) = delete;
 	const string& categoryToString() const;
@@ -34,11 +34,11 @@ public:
 	// Setters
 	void setName(const string& name);
 	void setPrice(float price);
-	void setCategory(Product::Category category);
+	void setCategory(eCategory category);
 	// Getters
 	const string& getName() const;
 	float getPrice() const;
-	Product::Category getCategory() const;
+	eCategory getCategory() const;
 	User& getSeller() const;
 	const unsigned int getSerialNumber() const;
 	// Friends

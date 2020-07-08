@@ -3,7 +3,7 @@
 
 unsigned int Product::uniqueId = 1000; // Generate unique id for each serial number of a product
 
-Product::Product(const string& name, float price, Product::Category category, User& seller)
+Product::Product(const string& name, float price, eCategory category, User& seller)
 	: name(name), serialNumber(uniqueId++), seller(seller), price(price), category(category)
 {
 }
@@ -18,7 +18,7 @@ void Product::setPrice(float price)
 	this->price = price;
 }
 
-void Product::setCategory(Product::Category category)
+void Product::setCategory(eCategory category)
 {
 	this->category = category;
 }
@@ -33,7 +33,7 @@ float Product::getPrice() const
 	return price;
 }
 
-Product::Category Product::getCategory() const
+Product::eCategory Product::getCategory() const
 {
 	return category;
 }

@@ -222,7 +222,6 @@ const string& User::cartToString() const
 	return cartStr;
 }
 
-
 const string& User::toString() const
 {
 	string& userStr = *new string();

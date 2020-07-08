@@ -50,13 +50,13 @@ private:
 	void placeOrder(Checkout& order) const;
 	void writeFeedbackToOtherUser(User& user) const;
 
-	enum LoginOptions
+	enum eLoginOptions
 	{
 		Signup = 1,
 		Login,
 		LoginMenuExit
 	};
-	enum RegisteredUserOptions
+	enum eRegisteredUserOptions
 	{
 		AddNewProductForSale = 1,
 		SearchProducts,
@@ -71,7 +71,7 @@ private:
 		Logout,
 		MainMenuExit
 	};
-	enum SearchProductsOptions
+	enum eSearchProductsOptions
 	{
 		AllProducts = 1,
 		SpecificProductName

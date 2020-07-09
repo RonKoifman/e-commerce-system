@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-void Menu::printLoginMenu()
+void Menu::displayLoginMenu()
 {
 	cout << "====================================Login Menu====================================" << endl;
 	cout << "Press 1 to signup as a new user." << endl;
@@ -9,7 +9,7 @@ void Menu::printLoginMenu()
 	cout << "==================================================================================" << endl;
 }
 
-void Menu::printMainMenu()
+void Menu::displayMainMenu()
 {
 	cout << "====================================Main Menu====================================" << endl;
 	cout << "Press 1 to add a new product for sale." << endl;

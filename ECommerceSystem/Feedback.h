@@ -17,7 +17,7 @@ public:
 	Feedback(User& customer, Product& product, const Date& date, const string& text);
 	Feedback(const Feedback& other) = delete;
 	const Feedback& operator=(const Feedback& other) = delete;
-	const string& toString() const;
+	const string toString() const;
 	// Setters
 	void setDate(const Date& date);
 	void setText(const string& text);

@@ -60,10 +60,10 @@ void Order::addSeller(User& seller)
 	}
 }
 
-const string& Order::sellersNamesToString() const
+const string Order::sellersNamesToString() const
 {
 	unsigned int numOfSellers = sellers.size();
-	string& sellersNames = *new string();
+	string sellersNames;
 
 	sellersNames.append("\tSellers: ").append(sellers[0]->getUsername());
 	for (unsigned int i = 1; i < numOfSellers; i++)
@@ -76,10 +76,10 @@ const string& Order::sellersNamesToString() const
 	return sellersNames;
 }
 
-const string& Order::productsNamesToString() const
+const string Order::productsNamesToString() const
 {
 	unsigned int numOfChosenProducts = chosenProducts.size();
-	string& productsNames = *new string();
+	string productsNames;
 
 	productsNames.append("Products: ").append(chosenProducts[0]->getName());
 	for (unsigned int i = 1; i < numOfChosenProducts; i++) 
@@ -92,10 +92,10 @@ const string& Order::productsNamesToString() const
 	return productsNames;
 }
 
-const string& Order::toString() const
+const string Order::toString() const
 {
 	unsigned int numOfChosenProducts = chosenProducts.size();
-	string& orderStr = *new string();
+	string orderStr;
 
 	orderStr.append("Products bought:\n\n");
 	for (unsigned int i = 0; i < numOfChosenProducts; i++)

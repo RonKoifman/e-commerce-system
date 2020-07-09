@@ -35,9 +35,9 @@ int Date::getYear() const
 	return year;
 }
 
-const string& Date::toString() const
+const string Date::toString() const
 {
-	string& dateStr = *new string();
+	string dateStr;
 
 	dateStr.append(to_string(day)).append("/").append(to_string(month)).append("/").append(to_string(year));
 

@@ -48,9 +48,9 @@ const unsigned int Product::getSerialNumber() const
 	return serialNumber;
 }
 
-const string& Product::categoryToString() const
+const string Product::categoryToString() const
 {
-	string& categoryStr = *new string();
+	string categoryStr;
 
 	switch (category)
 	{
@@ -74,9 +74,9 @@ const string& Product::categoryToString() const
 	return categoryStr;
 }
 
-const string& Product::toString() const
+const string Product::toString() const
 {
-	string& productStr = *new string();
+	string productStr;
 
 	productStr.append("\tName: ").append(name).append("\n");
 	productStr.append("\tPrice: $").append(to_string(price)).append("\n");

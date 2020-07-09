@@ -15,9 +15,9 @@ public:
 	Order(User& customer);
 	Order(const Order& other) = delete;
 	const Order& operator=(const Order& other) = delete;
-	const string& toString() const;
-	const string& sellersNamesToString() const;
-	const string& productsNamesToString() const;
+	const string toString() const;
+	const string sellersNamesToString() const;
+	const string productsNamesToString() const;
 	bool isSellerExists(User& seller) const;
 	void updateTotalPrice();
 	void addProduct(Product& product);

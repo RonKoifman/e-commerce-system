@@ -35,9 +35,9 @@ const string& Feedback::getText() const
 	return text;
 }
 
-const string& Feedback:: toString() const
+const string Feedback:: toString() const
 {
-	string& feedbackStr = *new string();
+	string feedbackStr;
 
 	feedbackStr.append("\tCustomer: ").append(customer.getUsername()).append("\n");
 	feedbackStr.append("\tName of the product: ").append(product.getName()).append("\n");

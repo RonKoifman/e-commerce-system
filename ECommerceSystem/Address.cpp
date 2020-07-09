@@ -94,9 +94,9 @@ int Address::getBuildingNumber() const
 	return buildingNumber;
 }
 
-const string& Address::toString() const
+const string Address::toString() const
 {
-	string& addressStr = *new string();
+	string addressStr;
 
 	addressStr.append(street).append(" ").append(to_string(buildingNumber)).append(", ").append(city).append(", ").append(country);
 

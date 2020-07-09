@@ -3,6 +3,6 @@
 int main()
 {
 	ShopSystemUI shopSystemUI;
-	
+
 	shopSystemUI.runShopSystem(); 
 }

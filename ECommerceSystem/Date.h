@@ -12,7 +12,7 @@ private:
 
 public:
 	Date(int day,int month, int year);
-	const string& toString() const;
+	const string toString() const;
 	// Setters
 	void setDay(int day);
 	void setMonth(int month);

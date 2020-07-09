@@ -137,10 +137,10 @@ void User::initCart()
 	cart.clear();
 }
 
-const string& User::ordersToString() const
+const string User::ordersToString() const
 {
 	unsigned int numOfOrders = orders.size();
-	string& ordersStr = *new string();
+	string ordersStr;
 
 	if (numOfOrders == 0)
 	{
@@ -161,10 +161,10 @@ const string& User::ordersToString() const
 	return ordersStr;
 }
 
-const string& User::productsForSaleToString() const
+const string User::productsForSaleToString() const
 {
 	unsigned int numOfProducts = productsForSale.size();
-	string& productsStr = *new string();
+	string productsStr;
 
 	if (numOfProducts == 0)
 	{
@@ -181,10 +181,10 @@ const string& User::productsForSaleToString() const
 	return productsStr;
 }
 
-const string& User::feedbacksToString() const
+const string User::feedbacksToString() const
 {
 	unsigned int numOfFeedbacks = feedbacks.size();
-	string& feedbacksStr = *new string();
+	string feedbacksStr;
 
 	if (numOfFeedbacks == 0)
 	{
@@ -201,10 +201,10 @@ const string& User::feedbacksToString() const
 	return feedbacksStr;
 }
 
-const string& User::cartToString() const
+const string User::cartToString() const
 {
 	unsigned int numOfProductsInCart = cart.size();
-	string& cartStr = *new string();
+	string cartStr;
 
 	if (numOfProductsInCart == 0)
 	{
@@ -222,9 +222,9 @@ const string& User::cartToString() const
 	return cartStr;
 }
 
-const string& User::toString() const
+const string User::toString() const
 {
-	string& userStr = *new string();
+	string userStr;
 
 	userStr.append("Username: ").append(username).append("\n\n");
 	userStr.append("Address: ").append(address.toString()).append("\n\n");

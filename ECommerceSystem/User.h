@@ -30,11 +30,11 @@ public:
 	void addProductToCart(Product& chosenProduct);
 	void addOrder(Order& newOrder);
 	void initCart();
-	const string& ordersToString() const;
-	const string& productsForSaleToString() const;
-	const string& feedbacksToString() const;
-	const string& cartToString() const;
-	const string& toString() const;
+	const string ordersToString() const;
+	const string productsForSaleToString() const;
+	const string feedbacksToString() const;
+	const string cartToString() const;
+	const string toString() const;
 	// Setters
 	void setUsername(const string& username);
 	void setPassword(const string& password);

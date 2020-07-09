@@ -29,8 +29,8 @@ public:
 	Product(const string& name, float price, eCategory category, User& seller);
 	Product(const Product& other) = delete;
 	const Product& operator=(const Product& other) = delete;
-	const string& categoryToString() const;
-	const string& toString() const;
+	const string categoryToString() const;
+	const string toString() const;
 	// Setters
 	void setName(const string& name);
 	void setPrice(float price);

@@ -3,7 +3,8 @@
 An e-commerce system app for making transactions with other users. 
 
 The system uses binary files for handling users' data and provides the following functionalities:
-- Create new user accounts or login to an existing account.
+- Create new user accounts.
+- Login to an existing account.
 - Add products for sale.
 - Search for products with an option to filter by name.
 - Add products to cart.

@@ -1,7 +1,6 @@
 #ifndef __SHOP_SYSTEM_UI_H
 #define __SHOP_SYSTEM_UI_H
 
-#include "Menu.h"
 #include "ShopSystem.h"
 #include "Feedback.h"
 
@@ -9,12 +8,13 @@ class ShopSystemUI
 {
 private:
 	ShopSystem shopSystem;
-	Menu menu;
 
 public:
 	void runShopSystem();
 
 private:
+	void showLoginMenu() const;
+	void showMainMenu() const;
 	bool isEmptyString(string& str) const;
 	bool isValidPositiveIntNumber(string& str) const;
 	void getNonEmptyStringFromUser(const char* msgToUser, string& userInput) const;

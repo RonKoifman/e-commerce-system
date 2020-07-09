@@ -5,9 +5,18 @@
 
 class Menu
 {
+private:
+	string loginMenu;
+	string mainMenu;
+
 public:
-	static void displayLoginMenu();
-	static void displayMainMenu();
+	Menu();
+	const string& loginMenuToString() const;
+	const string& mainMenuToString() const;
+
+private:
+	void initLoginMenu();
+	void initMainMenu();
 };
 
 #endif // __MENU_H

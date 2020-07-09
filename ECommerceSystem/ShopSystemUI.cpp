@@ -109,7 +109,7 @@ void ShopSystemUI::runLoginMenu(bool& toExit)
 	int userChoice;
 
 	system("cls");
-	Menu::displayLoginMenu();
+	cout << menu.loginMenuToString();
 	getPositiveNumberFromUser("Your selection: ", userChoice);
 
 	switch ((eLoginOptions)userChoice)
@@ -140,7 +140,7 @@ void ShopSystemUI::runMainMenu(User& user, bool& toExit)
 	while (!toExit && !toLogout)
 	{
 		system("cls");
-		Menu::displayMainMenu();
+		cout << menu.mainMenuToString();
 		getPositiveNumberFromUser("Your selection: ", userChoice);
 
 		switch ((eRegisteredUserOptions)userChoice)

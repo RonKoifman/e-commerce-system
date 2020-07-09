@@ -9,6 +9,7 @@ class ShopSystemUI
 {
 private:
 	ShopSystem shopSystem;
+	Menu menu;
 
 public:
 	void runShopSystem();
